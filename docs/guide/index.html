@@ -1,0 +1,536 @@
+<title>راهنمای تصویری گنجینه</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&display=swap">
+<style>
+/* Layout: a manual — sticky contents rail on the right (RTL), chapters on the left, every screen in a framed window. */
+:root{
+  --bg:#f1f4f9; --paper:#ffffff; --ink:#1f2328; --ink-2:#4a5260; --ink-3:#6b7380;
+  --line:#e1e6ee; --accent:#1a73e8; --accent-soft:#e8f0fe; --accent-ink:#1559b8;
+  --term:#0f1624; --term-ink:#d6deeb; --term-dim:#7d8aa3; --term-hi:#7cc4ff; --warn:#b06000; --warn-soft:#fff4e0;
+  --shadow:0 1px 2px rgba(31,35,40,.06),0 8px 28px rgba(31,35,40,.08);
+  --font:"Vazirmatn",Tahoma,"Segoe UI",system-ui,sans-serif; --mono:ui-monospace,"Cascadia Mono",Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f141c; --paper:#171d27; --ink:#e7eaf0; --ink-2:#b4bccb; --ink-3:#8b95a7;
+  --line:#2a3240; --accent:#7ab0ff; --accent-soft:#1c2a42; --accent-ink:#9cc3ff;
+  --term:#0a0f18; --term-ink:#d6deeb; --term-dim:#6f7c94; --term-hi:#7cc4ff; --warn:#f0b459; --warn-soft:#2c2414;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 28px rgba(0,0,0,.35); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f141c; --paper:#171d27; --ink:#e7eaf0; --ink-2:#b4bccb; --ink-3:#8b95a7;
+  --line:#2a3240; --accent:#7ab0ff; --accent-soft:#1c2a42; --accent-ink:#9cc3ff;
+  --term:#0a0f18; --term-ink:#d6deeb; --term-dim:#6f7c94; --term-hi:#7cc4ff; --warn:#f0b459; --warn-soft:#2c2414;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 28px rgba(0,0,0,.35); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.95 var(--font);direction:rtl;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding-block:40px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;grid-template-columns:240px minmax(0,1fr);gap:48px}
+@media (max-width:900px){.wrap{grid-template-columns:minmax(0,1fr);gap:24px;padding-block:24px 64px}}
+
+/* contents rail */
+.toc{position:sticky;top:calc(24px + env(safe-area-inset-top,0px));align-self:start;max-height:calc(100vh - 48px);overflow:auto;padding-left:4px}
+.toc .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;margin-bottom:18px}
+.toc .brand svg{width:32px;height:32px;flex:none}
+.toc ol{list-style:none;margin:0;padding:0;counter-reset:c}
+.toc li{counter-increment:c}
+.toc a{display:flex;gap:10px;align-items:baseline;padding:6px 10px;border-radius:9px;color:var(--ink-2);text-decoration:none;font-size:14.5px;line-height:1.6}
+.toc a::before{content:counter(c,persian);color:var(--ink-3);font-size:12.5px;min-width:16px}
+.toc a:hover{background:var(--accent-soft);color:var(--accent-ink)}
+.toc a.on{background:var(--accent-soft);color:var(--accent-ink);font-weight:700}
+@media (max-width:900px){.toc{position:static;max-height:none;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:18px}
+  .toc ol{columns:2;column-gap:12px}}
+@media (max-width:480px){.toc ol{columns:1}}
+
+/* hero */
+.hero{padding:8px 0 28px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.hero .eyebrow{font-size:13px;letter-spacing:.02em;color:var(--accent-ink);font-weight:700}
+.hero h1{font-size:clamp(30px,4.4vw,44px);line-height:1.3;margin:6px 0 12px;font-weight:800;text-wrap:balance}
+.hero p{color:var(--ink-2);max-width:62ch;margin:0}
+.addr{display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:8px 14px;border-radius:12px;background:var(--paper);border:1px solid var(--line);font:500 14.5px var(--mono);direction:ltr;max-width:100%;overflow-wrap:anywhere}
+.addr b{color:var(--accent-ink);font-weight:600}
+
+main{min-width:0}
+section{padding-top:44px;scroll-margin-top:16px}
+section > h2{font-size:26px;line-height:1.4;margin:0 0 6px;font-weight:800;text-wrap:balance;display:flex;align-items:baseline;gap:12px}
+section > h2 .n{font-size:14px;font-weight:700;color:var(--accent-ink);background:var(--accent-soft);border-radius:8px;padding:0 9px;line-height:1.9}
+section > p.lead{color:var(--ink-2);margin:0 0 18px;max-width:68ch}
+h3{font-size:18px;margin:26px 0 6px;font-weight:700}
+p{margin:0 0 12px;max-width:70ch}
+.muted{color:var(--ink-3)}
+
+/* framed screenshot */
+figure{margin:16px 0 22px}
+.win{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+.win .bar{display:flex;align-items:center;gap:10px;height:34px;padding:0 12px;border-bottom:1px solid var(--line);direction:ltr}
+.win .dots{display:flex;gap:6px}.win .dots i{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.win .url{flex:1;min-width:0;font:12.5px var(--mono);color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:var(--bg);border-radius:7px;padding:2px 10px}
+.win button.img{all:unset;display:block;cursor:zoom-in;width:100%}
+.win img{display:block;width:100%;height:auto;max-width:100%}
+.win button.img:focus-visible{outline:3px solid var(--accent);outline-offset:-3px}
+figcaption{font-size:14px;color:var(--ink-3);margin-top:8px;max-width:70ch}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.phones{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;max-width:760px}
+.phones .win{border-radius:22px}
+@media (max-width:700px){.pair{grid-template-columns:minmax(0,1fr)}.phones{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* lists of parts */
+.parts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 22px;margin:8px 0 6px;padding:0;list-style:none}
+.parts li{display:flex;gap:10px;align-items:baseline}
+.parts li b{flex:none;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-size:13px;display:inline-grid;place-items:center;line-height:1;transform:translateY(5px)}
+.parts li span{min-width:0}
+@media (max-width:640px){.parts{grid-template-columns:minmax(0,1fr)}}
+ol.steps{margin:6px 0 12px;padding-inline-start:22px;list-style:persian}
+ol.steps li{margin:4px 0;padding-inline-start:4px}
+ol.steps li::marker{color:var(--accent-ink);font-weight:700}
+ul.dots{margin:6px 0 12px;padding-inline-start:20px}
+ul.dots li{margin:3px 0}
+kbd{font:600 12.5px var(--mono);padding:1px 7px;border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;background:var(--paper);direction:ltr;display:inline-block}
+code{font:500 14px var(--mono);background:var(--accent-soft);color:var(--accent-ink);padding:1px 7px;border-radius:6px;direction:ltr;unicode-bidi:isolate;overflow-wrap:anywhere}
+
+.note{border-inline-start:3px solid var(--warn);background:var(--warn-soft);padding:12px 16px;border-radius:0 10px 10px 0;margin:14px 0;max-width:72ch}
+.note b{color:var(--warn)}
+.tip{border-inline-start:3px solid var(--accent);background:var(--accent-soft);padding:12px 16px;border-radius:0 10px 10px 0;margin:14px 0;max-width:72ch}
+
+/* console */
+.term{background:var(--term);color:var(--term-ink);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);margin:16px 0 8px}
+.term .bar{display:flex;align-items:center;justify-content:space-between;height:32px;padding:0 14px;font:12.5px var(--mono);color:var(--term-dim);direction:ltr;border-bottom:1px solid rgba(255,255,255,.07)}
+.term pre{margin:0;padding:14px 16px;overflow-x:auto;font:13px/1.7 var(--mono);direction:ltr;text-align:left;white-space:pre}
+.term .d{color:var(--term-dim)}.term .h{color:var(--term-hi)}.term .k{color:#ffd479}
+
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--paper);margin:12px 0}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:14.5px}
+th,td{text-align:right;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--ink-2);background:var(--bg)}
+tr:last-child td{border-bottom:0}
+td:first-child{white-space:nowrap}
+
+footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);color:var(--ink-3);font-size:14px}
+
+/* zoom */
+.zoom{position:fixed;inset:0;z-index:50;background:rgba(10,14,22,.86);display:grid;place-items:center;padding:calc(16px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));cursor:zoom-out}
+.zoom img{max-width:100%;max-height:100%;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.zoom button{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));left:max(14px,env(safe-area-inset-left,0px));all:unset;color:#fff;font-size:15px;padding:6px 14px;border:1px solid rgba(255,255,255,.35);border-radius:10px;cursor:pointer}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+
+<div class="wrap">
+<nav class="toc" aria-label="فهرست">
+  <div class="brand"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="11" width="26" height="17" rx="3" fill="#1a73e8"/><path d="M3 14a8 8 0 0 1 8-8h10a8 8 0 0 1 8 8v1H3z" fill="#4f95f0"/><rect x="9" y="6" width="3" height="22" fill="#1559b8" opacity=".45"/><rect x="20" y="6" width="3" height="22" fill="#1559b8" opacity=".45"/><circle cx="16" cy="18.5" r="2.4" fill="#fff"/><rect x="15" y="19" width="2" height="4.5" rx="1" fill="#fff"/></svg>گنجینه</div>
+  <ol>
+    <li><a href="#start">راه‌اندازی سرور</a></li>
+    <li><a href="#login">ورود کاربران</a></li>
+    <li><a href="#home">صفحه‌ی اصلی</a></li>
+    <li><a href="#upload">آپلود و پوشه‌ی جدید</a></li>
+    <li><a href="#files">کار با فایل‌ها</a></li>
+    <li><a href="#send-to">ارسال برای همکار یا واحد</a></li>
+    <li><a href="#spaces">پوشه‌ی من، سیستم‌ها و واحدها</a></li>
+    <li><a href="#inbox">فایل‌های دریافتی از شعب</a></li>
+    <li><a href="#settings">تنظیمات</a></li>
+    <li><a href="#bin">سطل زباله</a></li>
+    <li><a href="#mobile">حالت تیره و موبایل</a></li>
+    <li><a href="#uploader">ارسال با خود برنامه</a></li>
+    <li><a href="#commands">دستورها و نکته‌ها</a></li>
+  </ol>
+</nav>
+
+<main>
+<header class="hero">
+  <div class="eyebrow">راهنمای تصویری · نسخه‌ی ۵٫۰</div>
+  <h1>گنجینه؛ سرور امن فایل برای شبکه‌ی داخلی</h1>
+  <p>این راهنما همه‌ی بخش‌های برنامه را با تصویر واقعی نشان می‌دهد: از اجرای اول روی سرور تا آپلود، ارسال برای همکار، پوشه‌ی واحدها، صفحه‌ی ارسال شعب و تنظیمات. فایل‌ها روی سرور رمزنگاری می‌شوند و ورود با کد شش‌رقمی Authenticator است.</p>
+  <div class="addr">http://<b>192.168.1.10</b>/Temporary_Listen_Addresses/</div>
+  <p class="muted" style="margin-top:10px;font-size:14px">به جای 192.168.1.10، IP سرور خودتان را بگذارید. نام‌ها، IPها و فایل‌های داخل تصویرها نمونه هستند. روی هر تصویر بزنید تا بزرگ شود.</p>
+</header>
+
+<!-- 1 -->
+<section id="start">
+  <h2><span class="n">۱</span>راه‌اندازی سرور</h2>
+  <p class="lead">برنامه فقط یک فایل است: <code>LanFileServer.exe</code>. آن را روی کامپیوتری که نقش سرور دارد اجرا کنید. نصب و دسترسی ادمین لازم نیست و فایروال تغییر نمی‌کند.</p>
+  <ol class="steps">
+    <li>بار اول یک <b>رمز عبور</b> (حداقل ۸ حرف انگلیسی یا عدد) انتخاب کنید و دوباره تکرار کنید. همه‌ی فایل‌ها با همین رمز قفل می‌شوند و هر بار اجرای برنامه آن را می‌پرسد.</li>
+    <li>برنامه می‌پرسد «کلید قبلی Authenticator را دارید؟». اگر قبلا گوشی‌ها را تنظیم کرده‌اید کلید را بزنید؛ وگرنه Enter.</li>
+    <li>پنجره آدرس‌های سرور را نشان می‌دهد و صفحه‌ی QR را خودش در مرورگر باز می‌کند.</li>
+  </ol>
+  <div class="term" role="img" aria-label="پنجره‌ی برنامه هنگام اجرا">
+    <div class="bar"><span>LanFileServer.exe</span><span>●</span></div>
+<pre><span class="d">==============================================</span>
+ LAN File Server v5.0 - first run
+ Choose a password. It is asked every time the program starts.
+ All stored files are encrypted with it.
+ <span class="k">!! If you forget it, the files can NOT be recovered by anyone.</span>
+ New password (min 8 characters, English letters/digits): ********
+ Repeat password: ********
+ If your Authenticator app already has a key for this server, type it now
+ so the same codes keep working (Enter = make a new key):
+<span class="d">==============================================</span>
+ Ganjineh - LAN File Server v5.0
+ Shared folder (encrypted): D:\Ganjineh\shared
+ Data (vault.json, key): D:\Ganjineh
+ Open in browser on other computers (try in this order):
+   -- port 80 via Windows web server (works when other ports are blocked):
+   <span class="h">http://192.168.1.10/Temporary_Listen_Addresses/</span>
+   <span class="h">http://localhost/Temporary_Listen_Addresses/</span>
+ Login: TOTP code (Google/Microsoft Authenticator)
+ Authenticator setup (QR) on this computer (next 15 minutes):
+   <span class="h">http://localhost/Temporary_Listen_Addresses/setup</span>
+   Manual key: XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX
+ Close this window to stop the server.
+<span class="d">==============================================</span></pre>
+  </div>
+  <p class="muted" style="font-size:14px">تا این پنجره باز است سرور کار می‌کند. با بستن آن سرور خاموش می‌شود.</p>
+
+  <h3>اتصال گوشی به Authenticator</h3>
+  <p>صفحه‌ی <b>راه‌اندازی رمز</b> تا ۱۵ دقیقه بعد از هر اجرای برنامه، فقط روی خود سرور باز می‌شود. با Google Authenticator یا Microsoft Authenticator کد QR را اسکن کنید، یا کلید دستی زیر آن را وارد کنید. از این به بعد گوشی هر ۳۰ ثانیه یک کد شش‌رقمی تازه می‌سازد.</p>
+  <figure>
+    <div class="win"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">localhost/Temporary_Listen_Addresses/setup</div></div>
+    <button class="img" type="button"><img src="img/02-setup.png" width="1280" height="800" loading="lazy" alt="صفحه‌ی راه‌اندازی Authenticator با کد QR و کلید دستی"></button></div>
+    <figcaption>صفحه‌ی QR. این صفحه از سیستم‌های دیگر شبکه باز نمی‌شود.</figcaption>
+  </figure>
+  <div class="note"><b>مهم:</b> فایل <code>vault.json</code> و پوشه‌ی <code>shared</code> را هرگز پاک نکنید. کلید رمزنگاری و کلید Authenticator داخل vault.json است. اگر رمز فراموش شود، فایل‌ها قابل بازیابی نیستند.</div>
+</section>
+
+<!-- 2 -->
+<section id="login">
+  <h2><span class="n">۲</span>ورود کاربران</h2>
+  <p class="lead">سیستم‌های دیگر در مرورگر آدرس سرور را باز می‌کنند (اسلش آخر لازم است). نام و نام خانوادگی و کد شش‌رقمی Authenticator را می‌زنند و «ورود» را می‌زنند.</p>
+  <figure>
+    <div class="win"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">192.168.1.10/Temporary_Listen_Addresses/login</div></div>
+    <button class="img" type="button"><img src="img/01-login.png" width="1280" height="800" loading="lazy" alt="صفحه‌ی ورود با فیلد نام و شش خانه‌ی کد"></button></div>
+    <figcaption>نامی که این‌جا زده می‌شود برای مدیر در «تنظیمات» کنار IP آن سیستم دیده می‌شود. ورود تا ۱۲ ساعت معتبر است.</figcaption>
+  </figure>
+  <div class="tip">کسی که فقط می‌خواهد فایل بفرستد کد لازم ندارد و می‌تواند از <a href="#inbox">صفحه‌ی ارسال</a> استفاده کند.</div>
+</section>
+
+<!-- 3 -->
+<section id="home">
+  <h2><span class="n">۳</span>صفحه‌ی اصلی</h2>
+  <p class="lead">بعد از ورود، «فضای مشترک» باز می‌شود: پوشه‌ای که همه‌ی کاربران وارد‌شده می‌بینند.</p>
+  <figure>
+    <div class="win"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">192.168.1.10/Temporary_Listen_Addresses/</div></div>
+    <button class="img" type="button"><img src="img/03-dashboard.png" width="1280" height="800" loading="lazy" alt="صفحه‌ی اصلی گنجینه با نوار کناری، جستجو، فیلترها و فهرست فایل‌ها"></button></div>
+  </figure>
+  <ul class="parts">
+    <li><b>۱</b><span><strong>نوار کناری (راست):</strong> دکمه‌ی «جدید»، فضای مشترک، فایل‌های دریافتی از شعب، واحدها، پوشه‌ی سیستم‌ها و سطل زباله.</span></li>
+    <li><b>۲</b><span><strong>جستجو:</strong> بالای صفحه؛ با <kbd>Ctrl</kbd> + <kbd>K</kbd> هم باز می‌شود.</span></li>
+    <li><b>۳</b><span><strong>دکمه‌های بالا (چپ):</strong> نام شما، خروج، تنظیمات (فقط مدیران) و حالت روشن یا تیره.</span></li>
+    <li><b>۴</b><span><strong>ابزار پوشه:</strong> بارگذاری مجدد، نمای کارتی یا فهرستی، ارسال برای همکار.</span></li>
+    <li><b>۵</b><span><strong>فیلترها:</strong> همه، پوشه‌ها، اسناد، تصاویر و…؛ فقط نوع‌هایی که در پوشه هست نشان داده می‌شود.</span></li>
+    <li><b>۶</b><span><strong>فضای سرور:</strong> پایین نوار کناری، فضای آزاد دیسک سرور.</span></li>
+  </ul>
+  <p class="muted" style="font-size:14.5px">ستون‌های «نام»، «آخرین تغییر» و «اندازه» با یک کلیک مرتب می‌شوند.</p>
+</section>
+
+<!-- 4 -->
+<section id="upload">
+  <h2><span class="n">۴</span>آپلود و پوشه‌ی جدید</h2>
+  <p class="lead">دکمه‌ی <b>جدید</b> چهار گزینه دارد: آپلود فایل، آپلود پوشه با همه‌ی زیرپوشه‌ها، پوشه‌ی جدید و ارسال برای شخص یا واحد.</p>
+  <div class="pair">
+    <figure>
+      <div class="win"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">…/Temporary_Listen_Addresses/</div></div>
+      <button class="img" type="button"><img src="img/04-new-menu.png" width="1280" height="800" loading="lazy" alt="منوی دکمه‌ی جدید"></button></div>
+      <figcaption>منوی «جدید».</figcaption>
+    </figure>
+    <figure>
+      <div class="win"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">…/Temporary_Listen_Addresses/</div></div>
+      <button class="img" type="button"><img src="img/11-upload.png" width="1280" height="800" loading="lazy" alt="پنجره‌ی پیشرفت آپلود"></button></div>
+      <figcaption>پنجره‌ی پیشرفت آپلود، پایین صفحه.</figcaption>
+    </figure>
+  </div>
+  <ul class="dots">
+    <li>فایل یا پوشه را می‌شود مستقیم از ویندوز روی صفحه <b>کشید و رها کرد</b>؛ ساختار پوشه‌ها حفظ می‌شود.</li>
+    <li>آپلودها سه‌تایی هم‌زمان انجام می‌شوند. پنجره‌ی پیشرفت نوار کل، «توقف» و «تلاش دوباره» دارد و کوچک می‌شود.</li>
+    <li>اگر نام فایل تکراری باشد، فایل جدید با نام تازه کنار قبلی ذخیره می‌شود و چیزی روی هم نوشته نمی‌شود.</li>
+  </ul>
+</section>
+
+<!-- 5 -->
+<section id="files">
+  <h2><span class="n">۵</span>کار با فایل‌ها</h2>
+  <h3>نمای کارتی و فهرستی</h3>
+  <p>دکمه‌ی چهارخانه بالای پوشه بین فهرست و کارت جابه‌جا می‌کند. در نمای کارتی، عکس‌ها پیش‌نمایش کوچک دارند.</p>
+  <figure>
+    <div class="win"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">…/Temporary_Listen_Addresses/</div></div>
+    <button class="img" type="button"><img src="img/05-grid.png" width="1280" height="800" loading="lazy" alt="نمای کارتی فایل‌ها"></button></div>
+  </figure>
+
+  <h3>منوی هر فایل و انتخاب چندتایی</h3>
+  <p>دکمه‌ی سه‌نقطه کنار هر فایل (یا کلیک راست) منوی پیش‌نمایش، دانلود، تغییر نام و حذف را باز می‌کند. با تیک زدن چند مورد، نوار آبی بالای فهرست ظاهر می‌شود: دانلود همه با هم (به‌صورت zip) یا حذف.</p>
+  <div class="pair">
+    <figure>
+      <div class="win"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">…/Temporary_Listen_Addresses/</div></div>
+      <button class="img" type="button"><img src="img/06-file-menu.png" width="1280" height="800" loading="lazy" alt="منوی سه‌نقطه‌ی یک فایل"></button></div>
+      <figcaption>منوی فایل با میان‌برهای صفحه‌کلید.</figcaption>
+    </figure>
+    <figure>
+      <div class="win"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">…/Temporary_Listen_Addresses/</div></div>
+      <button class="img" type="button"><img src="img/07-selection.png" width="1280" height="800" loading="lazy" alt="دو فایل انتخاب‌شده و نوار عملیات"></button></div>
+      <figcaption>دو فایل انتخاب شده.</figcaption>
+    </figure>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>کلید</th><th>کار</th></tr></thead>
+    <tbody>
+      <tr><td><kbd>Enter</kbd></td><td>پیش‌نمایش یا باز کردن پوشه</td></tr>
+      <tr><td><kbd>F2</kbd></td><td>تغییر نام</td></tr>
+      <tr><td><kbd>Del</kbd></td><td>انتقال به سطل زباله</td></tr>
+      <tr><td><kbd>Ctrl</kbd> + <kbd>K</kbd></td><td>جستجو</td></tr>
+      <tr><td><kbd>Shift</kbd> / <kbd>Ctrl</kbd> + کلیک</td><td>انتخاب چند مورد</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>پیش‌نمایش و جستجو</h3>
+  <p>دو بار کلیک روی عکس، PDF یا فایل متنی آن را داخل مرورگر نشان می‌دهد؛ با فلش‌ها به فایل بعدی و قبلی بروید. جستجو هم‌زمان با تایپ، فایل‌ها و پوشه‌ها را پیدا می‌کند.</p>
+  <div class="pair">
+    <figure>
+      <div class="win"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">…/Temporary_Listen_Addresses/</div></div>
+      <button class="img" type="button"><img src="img/08-preview.png" width="1280" height="800" loading="lazy" alt="پیش‌نمایش تصویر"></button></div>
+      <figcaption>پیش‌نمایش عکس.</figcaption>
+    </figure>
+    <figure>
+      <div class="win"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">…/Temporary_Listen_Addresses/</div></div>
+      <button class="img" type="button"><img src="img/09-search.png" width="1280" height="800" loading="lazy" alt="جستجوی کلمه‌ی گزارش"></button></div>
+      <figcaption>جستجوی «گزارش».</figcaption>
+    </figure>
+  </div>
+  <div class="note"><b>امنیت:</b> فایل‌های HTML و مشابه آن هیچ‌وقت داخل مرورگر اجرا نمی‌شوند و فقط دانلود می‌شوند.</div>
+</section>
+
+<!-- 6 -->
+<section id="send-to">
+  <h2><span class="n">۶</span>ارسال برای همکار یا واحد</h2>
+  <p class="lead">دکمه‌ی کاغذ‌پرنده بالای پوشه (یا «جدید › ارسال برای شخص یا واحد…») فهرست سیستم‌ها و واحدها را نشان می‌دهد. فایل یا پوشه مستقیم به پوشه‌ی او می‌رود.</p>
+  <figure>
+    <div class="win"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">…/Temporary_Listen_Addresses/</div></div>
+    <button class="img" type="button"><img src="img/10-send-to.png" width="1280" height="800" loading="lazy" alt="پنجره‌ی ارسال برای شخص یا واحد"></button></div>
+    <figcaption>فرستنده فقط می‌فرستد و محتوای پوشه‌ی گیرنده را نمی‌بیند.</figcaption>
+  </figure>
+</section>
+
+<!-- 7 -->
+<section id="spaces">
+  <h2><span class="n">۷</span>پوشه‌ی من، سیستم‌ها و واحدها</h2>
+  <p class="lead">گنجینه سه نوع پوشه دارد. فضای مشترک برای همه است؛ دو نوع دیگر را مدیر در تنظیمات می‌سازد.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>پوشه</th><th>چه کسی می‌بیند</th><th>بقیه</th></tr></thead>
+    <tbody>
+      <tr><td>فضای مشترک</td><td>همه‌ی کاربران وارد‌شده</td><td>—</td></tr>
+      <tr><td>پوشه‌ی من (سیستم)</td><td>فقط همان IP و مدیر</td><td>فقط می‌توانند به آن فایل بفرستند</td></tr>
+      <tr><td>پوشه‌ی واحد</td><td>اعضای واحد (چند IP) و مدیر</td><td>فقط می‌توانند به آن فایل بفرستند</td></tr>
+    </tbody>
+  </table></div>
+  <div class="pair">
+    <figure>
+      <div class="win"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">…/Temporary_Listen_Addresses/</div></div>
+      <button class="img" type="button"><img src="img/14-system-folder.png" width="1280" height="800" loading="lazy" alt="پوشه‌ی اختصاصی یک سیستم"></button></div>
+      <figcaption>پوشه‌ی اختصاصی یک سیستم. هر کاربر پوشه‌ی خودش را با نام «پوشه‌ی من» می‌بیند.</figcaption>
+    </figure>
+    <figure>
+      <div class="win"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">…/Temporary_Listen_Addresses/</div></div>
+      <button class="img" type="button"><img src="img/12-unit-folder.png" width="1280" height="800" loading="lazy" alt="پوشه‌ی مشترک واحد مالی با آدرس ارسال"></button></div>
+      <figcaption>پوشه‌ی واحد «مالی» با آدرس ارسال اختصاصی آن.</figcaption>
+    </figure>
+  </div>
+  <h3>کپی آدرس</h3>
+  <p>هر جا آدرس ارسال نشان داده می‌شود، با کلیک روی خود آدرس یا دکمه‌ی <b>کپی</b> کنارش، آدرس کپی می‌شود و پیام «آدرس کپی شد» می‌آید. بعد می‌شود آن را برای شعب فرستاد.</p>
+  <figure>
+    <div class="win"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">…/Temporary_Listen_Addresses/</div></div>
+    <button class="img" type="button"><img src="img/13-copied.png" width="1280" height="800" loading="lazy" alt="پیام آدرس کپی شد"></button></div>
+  </figure>
+</section>
+
+<!-- 8 -->
+<section id="inbox">
+  <h2><span class="n">۸</span>فایل‌های دریافتی از شعب</h2>
+  <p class="lead">شعب و همکاران بیرون از سیستم‌های تعریف‌شده، بدون کد Authenticator فایل می‌فرستند. فقط می‌فرستند و چیزی نمی‌بینند.</p>
+  <h3>صفحه‌ی ارسال</h3>
+  <p>آدرس کوتاه ارسال: <code>http://192.168.1.10/Temporary_Listen_Addresses/s</code>. فرستنده کد پرسنلی (مثلا <code>12345</code> یا <code>a12345</code>) و کد شعبه را می‌زند، فایل یا پوشه را می‌کشد یا انتخاب می‌کند و «ارسال» را می‌زند.</p>
+  <div class="pair">
+    <figure>
+      <div class="win"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">192.168.1.10/Temporary_Listen_Addresses/s</div></div>
+      <button class="img" type="button"><img src="img/21-send-page-filled.png" width="1280" height="800" loading="lazy" alt="صفحه‌ی ارسال فایل با کد پرسنلی و کد شعبه"></button></div>
+      <figcaption>صفحه‌ی ارسال عمومی.</figcaption>
+    </figure>
+    <figure>
+      <div class="win"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">192.168.1.10/Temporary_Listen_Addresses/m</div></div>
+      <button class="img" type="button"><img src="img/22-unit-send-page.png" width="1280" height="800" loading="lazy" alt="صفحه‌ی ارسال اختصاصی واحد مالی"></button></div>
+      <figcaption>صفحه‌ی ارسال اختصاصی واحد «مالی» با کد <code>m</code>.</figcaption>
+    </figure>
+  </div>
+  <h3>دیدن فایل‌های رسیده</h3>
+  <p>فایل‌ها در «فایل‌های دریافتی از شعب» به ترتیب <b>شعبه › تاریخ شمسی › کد پرسنلی</b> پوشه‌بندی می‌شوند. فایل‌های صفحه‌ی ارسال هر واحد به همین شکل داخل پوشه‌ی همان واحد می‌روند.</p>
+  <div class="pair">
+    <figure>
+      <div class="win"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">…/Temporary_Listen_Addresses/</div></div>
+      <button class="img" type="button"><img src="img/15-inbox.png" width="1280" height="800" loading="lazy" alt="پوشه‌ی فایل‌های دریافتی با پوشه‌ی هر شعبه"></button></div>
+      <figcaption>یک پوشه برای هر شعبه.</figcaption>
+    </figure>
+    <figure>
+      <div class="win"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">…/Temporary_Listen_Addresses/</div></div>
+      <button class="img" type="button"><img src="img/16-inbox-branch.png" width="1280" height="800" loading="lazy" alt="داخل پوشه‌ی یک شعبه، پوشه‌ی تاریخ"></button></div>
+      <figcaption>داخل شعبه: پوشه‌ی تاریخ، و داخل آن پوشه‌ی کد پرسنلی.</figcaption>
+    </figure>
+  </div>
+  <div class="tip">فایل <code>Send-Files.url</code> میان‌بُر همین صفحه است. آن را روی دسکتاپ سیستم‌های شعب بگذارید.</div>
+</section>
+
+<!-- 9 -->
+<section id="settings">
+  <h2><span class="n">۹</span>تنظیمات</h2>
+  <p class="lead">دکمه‌ی چرخ‌دنده بالای صفحه، فقط برای مدیران. مدیر یعنی خود کامپیوتر سرور، و IPهایی که در تب «مدیران» اضافه شوند.</p>
+
+  <h3>سیستم‌ها و واحدها</h3>
+  <p>یک <b>سیستم</b> یعنی یک IP با نام و پوشه‌ی اختصاصی. یک <b>واحد</b> یعنی یک پوشه‌ی مشترک برای چند IP (پرسنل یک بخش). نوع را انتخاب کنید، نام و IP را بزنید و «افزودن». برای IP کافی است فقط عدد آخر را بزنید (مثلا <code>45</code>) و Enter.</p>
+  <figure>
+    <div class="win"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">…/Temporary_Listen_Addresses/</div></div>
+    <button class="img" type="button"><img src="img/17a-settings-units.png" width="1280" height="800" loading="lazy" alt="تب سیستم‌ها و واحدها"></button></div>
+    <figcaption>با دکمه‌ی مداد اعضای واحد یا IP سیستم را عوض کنید. سیستم فقط وقتی پوشه‌اش خالی باشد حذف می‌شود.</figcaption>
+  </figure>
+
+  <h3>ارسال به واحد</h3>
+  <p>«ارسال فایل برای واحد» نامی است که روی صفحه‌ی ارسال دیده می‌شود (مثلا بازرسی؛ خالی یعنی خاموش). «چه کسی فایل‌های رسیده را ببیند» یا فقط مدیران است یا مدیران به‌علاوه‌ی اعضای یک واحد. پایین‌تر، برای هر واحد یک کد کوتاه (مثلا <code>m</code>) بزنید تا صفحه‌ی ارسال اختصاصی خودش را داشته باشد.</p>
+  <figure>
+    <div class="win"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">…/Temporary_Listen_Addresses/</div></div>
+    <button class="img" type="button"><img src="img/17b-settings-send.png" width="1280" height="800" loading="lazy" alt="تب ارسال به واحد"></button></div>
+    <figcaption>کدهای <code>s</code>، <code>login</code>، <code>setup</code> و <code>logout</code> رزرو هستند.</figcaption>
+  </figure>
+
+  <div class="pair">
+    <figure>
+      <div class="win"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">…/Temporary_Listen_Addresses/</div></div>
+      <button class="img" type="button"><img src="img/17c-settings-net.png" width="1280" height="800" loading="lazy" alt="تب شبکه، رنج IP"></button></div>
+      <figcaption><b>شبکه:</b> سه بخش اول IP شبکه (مثلا <code>192.168.1.</code>) تا هنگام افزودن فقط عدد آخر را بزنید.</figcaption>
+    </figure>
+    <figure>
+      <div class="win"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">…/Temporary_Listen_Addresses/</div></div>
+      <button class="img" type="button"><img src="img/17d-settings-admins.png" width="1280" height="800" loading="lazy" alt="تب مدیران"></button></div>
+      <figcaption><b>مدیران:</b> دسترسی کامل را به IP سیستم‌های دیگر هم بدهید. این فهرست فقط روی خود سرور تغییر می‌کند.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 10 -->
+<section id="bin">
+  <h2><span class="n">۱۰</span>سطل زباله</h2>
+  <p class="lead">چیزی که حذف می‌شود اول به سطل زباله می‌رود و رمزنگاری‌شده می‌ماند. از نوار کناری «سطل زباله» را باز کنید، مورد را تیک بزنید و «بازگرداندن» یا «حذف برای همیشه» را بزنید.</p>
+  <div class="pair">
+    <figure>
+      <div class="win"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">…/Temporary_Listen_Addresses/</div></div>
+      <button class="img" type="button"><img src="img/18-bin.png" width="1280" height="800" loading="lazy" alt="پنجره‌ی سطل زباله"></button></div>
+      <figcaption>پنجره‌ی سطل زباله.</figcaption>
+    </figure>
+    <figure>
+      <div class="win"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">…/Temporary_Listen_Addresses/</div></div>
+      <button class="img" type="button"><img src="img/17e-settings-bin.png" width="1280" height="800" loading="lazy" alt="تنظیم مدت نگهداری سطل زباله"></button></div>
+      <figcaption>تنظیمات › سطل زباله: پاک شدن خودکار بعد از ۷ تا ۳۶۵ روز (پیش‌فرض ۳۰) یا هرگز.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 11 -->
+<section id="mobile">
+  <h2><span class="n">۱۱</span>حالت تیره و موبایل</h2>
+  <p class="lead">دکمه‌ی خورشید بالای صفحه حالت تیره را روشن و خاموش می‌کند. همه‌ی صفحه‌ها روی گوشی هم کار می‌کنند: منو با دکمه‌ی سه‌خط باز می‌شود و دکمه‌ی آبی گوشه‌ی صفحه همان «جدید» است.</p>
+  <figure>
+    <div class="win"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">…/Temporary_Listen_Addresses/</div></div>
+    <button class="img" type="button"><img src="img/19-dark.png" width="1280" height="800" loading="lazy" alt="صفحه‌ی اصلی در حالت تیره"></button></div>
+  </figure>
+  <div class="phones">
+    <figure><div class="win"><button class="img" type="button"><img src="img/23-mobile.png" width="780" height="1688" loading="lazy" alt="صفحه‌ی اصلی روی گوشی"></button></div><figcaption>صفحه‌ی اصلی</figcaption></figure>
+    <figure><div class="win"><button class="img" type="button"><img src="img/24-mobile-menu.png" width="780" height="1688" loading="lazy" alt="منوی کناری روی گوشی"></button></div><figcaption>منو</figcaption></figure>
+    <figure><div class="win"><button class="img" type="button"><img src="img/25-mobile-send.png" width="780" height="1688" loading="lazy" alt="صفحه‌ی ارسال روی گوشی"></button></div><figcaption>صفحه‌ی ارسال</figcaption></figure>
+  </div>
+</section>
+
+<!-- 12 -->
+<section id="uploader">
+  <h2><span class="n">۱۲</span>ارسال با خود برنامه</h2>
+  <p class="lead">برای پوشه‌های خیلی بزرگ، روی سیستم فرستنده هم می‌شود از همان <code>LanFileServer.exe</code> استفاده کرد. برنامه‌ی جداگانه‌ای لازم نیست.</p>
+  <ul class="dots">
+    <li>فایل یا پوشه را روی <code>LanFileServer.exe</code> یا <code>Uploader.bat</code> بکشید، یا <code>Uploader.bat</code> را دو بار کلیک کنید.</li>
+    <li>IP سرور را بدهید (بار بعد خودش پیشنهاد می‌دهد) و کد Authenticator را بزنید.</li>
+    <li>فایلی که با همان نام و اندازه روی سرور هست دوباره فرستاده نمی‌شود؛ اگر ارسال نیمه‌کاره ماند، فقط دوباره اجرا کنید.</li>
+  </ul>
+  <div class="term" role="img" aria-label="پنجره‌ی ارسال با برنامه">
+    <div class="bar"><span>LanFileServer.exe -upload</span><span>●</span></div>
+<pre><span class="d">==============================================</span>
+ LAN File Server - Uploader v1.0
+ Sends files and folders (with sub-folders) to the server.
+<span class="d">==============================================</span>
+ Server address (e.g. 192.168.1.10): 192.168.1.10
+ Looking for the server...
+ Found LAN File Server 5.0 at <span class="h">http://192.168.1.10/Temporary_Listen_Addresses/</span>
+ 6-digit Authenticator code: 482913
+ Logged in.
+ 2 file(s) in 2 folder(s), 14 MB.
+ Folder on the server to put them in [Enter = top level]: گزارش‌ها
+  ok  [1/2] /اسناد/a.pdf  7.1 MB
+  ok  [2/2] /اسناد/زیرپوشه/b.pdf  6.9 MB
+<span class="d">==============================================</span>
+ Done in 3s: 2 sent (14 MB), 0 already there, 0 failed.
+ On the server they are in: /گزارش‌ها</pre>
+  </div>
+</section>
+
+<!-- 13 -->
+<section id="commands">
+  <h2><span class="n">۱۳</span>دستورها و نکته‌ها</h2>
+  <p class="lead">این گزینه‌ها را می‌شود بعد از نام برنامه در cmd نوشت، مثلا <code>LanFileServer.exe -show-key</code>.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>دستور</th><th>کار</th></tr></thead>
+    <tbody>
+      <tr><td><code>-upload</code></td><td>حالت ارسال فایل به سرور (همان کار Uploader.bat)</td></tr>
+      <tr><td><code>-autostart on</code></td><td>اجرای خودکار با روشن شدن ویندوز، بدون ادمین؛ رمز فقط برای همین کاربر ویندوز ذخیره می‌شود</td></tr>
+      <tr><td><code>-autostart off</code></td><td>خاموش کردن اجرای خودکار و پاک کردن رمز ذخیره‌شده</td></tr>
+      <tr><td><code>-change-password</code></td><td>عوض کردن رمز عبور</td></tr>
+      <tr><td><code>-set-totp KEY</code></td><td>استفاده از یک کلید Authenticator قبلی تا کدهای گوشی‌ها عوض نشوند</td></tr>
+      <tr><td><code>-reset-totp</code></td><td>ساخت کلید Authenticator جدید (کدهای قبلی دیگر کار نمی‌کنند)</td></tr>
+      <tr><td><code>-data "D:\Ganjineh"</code></td><td>محل vault.json و داده‌ها را دستی تعیین می‌کند</td></tr>
+      <tr><td><code>-readonly</code></td><td>فقط خواندن: آپلود، حذف و تغییر نام خاموش</td></tr>
+      <tr><td><code>-session-hours 12</code></td><td>مدت اعتبار هر ورود</td></tr>
+      <tr><td><code>-port 9000</code></td><td>علاوه بر آدرس اصلی، روی این پورت هم سرویس بدهد</td></tr>
+    </tbody>
+  </table></div>
+  <h3>به‌روزرسانی بدون از دست دادن فایل‌ها</h3>
+  <p>exe جدید را در هر پوشه‌ای اجرا کنید. برنامه محل vault.json قبلی را به خاطر دارد و اگر پیدا نکرد، Desktop، Downloads، Documents و درایوها را می‌گردد. اگر چند تا پیدا کند، می‌پرسد کدام.</p>
+  <div class="note"><b>اگر سیستمی وصل نمی‌شود:</b> مطمئن شوید آدرس با <code>/Temporary_Listen_Addresses/</code> و اسلش آخر باز می‌شود، پنجره‌ی برنامه روی سرور باز است، و IP سرور عوض نشده است. اگر IP یک سیستم عوض شود، مدیر باید IP جدید را در تنظیمات ویرایش کند.</div>
+</section>
+
+<footer>گنجینه ۵٫۰ · سرور امن فایل برای شبکه‌ی داخلی · فایل‌ها روی سرور رمزنگاری‌شده نگه داشته می‌شوند.</footer>
+</main>
+</div>
+
+<script>
+// click-to-zoom for screenshots
+(function () {
+  let box = null;
+  function close() { if (box) { box.remove(); box = null; } }
+  document.addEventListener("click", function (e) {
+    const b = e.target.closest("button.img");
+    if (!b) return;
+    const img = b.querySelector("img");
+    close();
+    box = document.createElement("div");
+    box.className = "zoom";
+    box.setAttribute("role", "dialog");
+    box.setAttribute("aria-label", img.alt);
+    box.innerHTML = '<button type="button">بستن</button>';
+    const big = document.createElement("img");
+    big.src = img.src; big.alt = img.alt;
+    box.appendChild(big);
+    box.addEventListener("click", close);
+    document.body.appendChild(box);
+    box.querySelector("button").focus();
+  });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+
+  // highlight the current chapter in the contents
+  const links = [...document.querySelectorAll(".toc a")];
+  const map = new Map(links.map(a => [a.getAttribute("href").slice(1), a]));
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(es => {
+      es.forEach(en => { if (en.isIntersecting) { links.forEach(l => l.classList.remove("on")); const a = map.get(en.target.id); if (a) a.classList.add("on"); } });
+    }, { rootMargin: "-20% 0px -70% 0px" });
+    document.querySelectorAll("main section[id]").forEach(s => io.observe(s));
+  }
+})();
+</script>

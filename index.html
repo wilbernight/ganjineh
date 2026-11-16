@@ -1,0 +1,1477 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>گنجینه</title>
+<link rel="icon" href="/favicon.svg">
+<link rel="stylesheet" href="/assets/app.css?v=10">
+<script>try{var t=localStorage.getItem("lfs-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<style>
+/* ================= 6.0 — Drive-style layout ================= */
+html,body{overflow-x:hidden}
+body{background:var(--surface)}
+.shell{display:grid;grid-template-columns:256px minmax(0,1fr);grid-template-rows:72px minmax(0,1fr);height:100vh}
+/* sidebar */
+.side{grid-column:1;grid-row:1/-1;display:flex;flex-direction:column;padding:14px 0 14px;background:var(--surface);border-inline-end:1px solid var(--border);min-height:0;overflow:auto}
+.brand{display:flex;align-items:center;gap:12px;height:44px;padding:0 24px;margin-bottom:18px;cursor:pointer}
+.brand img{width:36px;height:36px}
+.brand b{font-size:21px;font-weight:800;color:var(--text);letter-spacing:-.2px}
+.new-btn{display:inline-flex;align-items:center;gap:14px;align-self:flex-start;height:52px;margin:0 16px 18px;padding:0 26px 0 22px;border:0;border-radius:999px;background:var(--surface);color:var(--text);font:inherit;font-size:16px;font-weight:600;cursor:pointer;
+  box-shadow:0 1px 2px rgba(60,64,67,.3),0 1px 3px 1px rgba(60,64,67,.15);transition:box-shadow .15s,background .15s}
+.new-btn:hover{box-shadow:0 1px 3px rgba(60,64,67,.3),0 4px 8px 3px rgba(60,64,67,.15);background:color-mix(in srgb,var(--primary) 4%,var(--surface))}
+.new-btn .plus svg{width:26px;height:26px;display:block;fill:none;stroke-width:3;stroke-linecap:round}
+/* animated + New */
+.new-btn{position:relative;overflow:hidden;animation:nb-in .7s cubic-bezier(.2,1.4,.4,1) both .15s}
+.new-btn .plus{display:block;transition:transform .45s cubic-bezier(.3,1.7,.45,1);animation:nb-spin .9s cubic-bezier(.2,1.2,.4,1) both .25s}
+.new-btn .plus path{stroke-dasharray:16;stroke-dashoffset:0;animation:nb-draw .6s ease-out both .35s}
+.new-btn .plus path+path{animation-delay:.5s}
+.new-btn>span:last-child{transition:letter-spacing .3s}
+.new-btn:hover .plus{transform:rotate(90deg) scale(1.12)}
+.new-btn:active{transform:scale(.97)}
+.new-btn.open .plus{transform:rotate(135deg) scale(1.05)}
+.new-btn.open{background:var(--primary-soft);box-shadow:0 1px 3px rgba(60,64,67,.3),0 4px 8px 3px rgba(60,64,67,.15)}
+.new-btn .rip,#upBtn .rip{position:absolute;border-radius:50%;background:color-mix(in srgb,var(--primary) 22%,transparent);transform:scale(0);animation:nb-rip .6s ease-out forwards;pointer-events:none}
+#upBtn .rip{background:rgba(255,255,255,.35)}
+#upBtn{overflow:hidden}
+#upBtn svg{transition:transform .45s cubic-bezier(.3,1.7,.45,1)}
+#upBtn.open svg{transform:rotate(135deg)}
+@keyframes nb-in{from{opacity:0;transform:translateY(-6px) scale(.7)}}
+@keyframes nb-spin{from{transform:rotate(-270deg) scale(.3)}}
+@keyframes nb-draw{from{stroke-dashoffset:16}}
+@keyframes nb-rip{to{transform:scale(2.6);opacity:0}}
+.nav{display:flex;flex-direction:column;gap:1px;padding-inline-end:12px}
+.nav h6{margin:14px 0 4px;padding:12px 28px 0;border-top:1px solid var(--border);font-size:13px;font-weight:600;color:var(--text-3)}
+.nav button{display:flex;align-items:center;gap:18px;height:40px;padding:0 26px;border:0;border-radius:0 999px 999px 0;background:none;color:var(--text);cursor:pointer;text-align:start;font-size:14.5px;font-weight:500;min-width:0}
+[dir="rtl"] .nav button{border-radius:999px 0 0 999px}
+.nav button span.l{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav button:hover{background:var(--surface-2)}
+.nav button.on{color:var(--on-soft);background:var(--primary-soft);font-weight:700}
+.nav button svg.i{width:20px;height:20px;color:var(--text-2)}
+.nav button.on svg.i{color:var(--on-soft)}
+.nav button .av{width:22px;height:22px;font-size:12.5px}
+.nav button[hidden]{display:none}
+.nav2{margin-top:6px;padding-top:6px;border-top:1px solid var(--border)}
+.nav2:not(:has(button:not([hidden]):not(.mob))){display:none}
+.nav .mob{display:none}
+.store{margin:auto 0 0;padding:16px 26px 4px;border-top:1px solid var(--border)}
+.store[hidden]{display:none}
+.st-h{display:flex;align-items:center;gap:14px;margin-bottom:10px;color:var(--text)}
+.st-h svg{width:20px;height:20px;color:var(--text-2)}
+.st-h b{font-size:14.5px;font-weight:600}
+.st-bar{height:4px;border-radius:4px;background:var(--surface-3);overflow:hidden;margin:0 0 8px}
+.st-bar i{display:block;height:100%;background:var(--primary);border-radius:4px}
+.st-bar.low i{background:var(--danger)}
+.store small{display:block;font-size:13px;color:var(--text-3)}
+.store .st-low{color:var(--danger)}
+.ver{padding:4px 26px 0;font-size:12.5px;color:var(--text-3)}
+.side-scrim{display:none}
+/* top bar */
+.top{grid-column:2;grid-row:1;display:flex;align-items:center;gap:16px;padding:0 24px;border-bottom:1px solid var(--border);background:var(--surface);position:relative;z-index:20}
+.menu-btn{display:none}
+.search{position:relative;flex:1;max-width:720px;height:48px;display:flex;align-items:center;gap:12px;padding:0 18px;border-radius:24px;background:var(--bg);transition:background .15s,box-shadow .15s}
+.search>svg{width:20px;height:20px;color:var(--text-2);flex:none}
+.search input{flex:1;min-width:0;height:100%;border:0;outline:0;background:none;font-size:16px;color:var(--text)}
+.search input::placeholder{color:var(--text-3)}
+.search input::-webkit-search-cancel-button{display:none}
+.search:focus-within{background:var(--surface);box-shadow:0 1px 1px rgba(65,69,73,.3),0 1px 3px 1px rgba(65,69,73,.15)}
+.search.open{border-radius:24px 24px 0 0;box-shadow:0 1px 3px 1px rgba(60,64,67,.15),0 4px 8px 3px rgba(60,64,67,.1)}
+.q-x{width:36px;height:36px;border:0;border-radius:50%;background:none;color:var(--text-2);cursor:pointer;display:grid;place-items:center}
+.q-x:hover{background:var(--surface-2)}
+.q-x[hidden]{display:none}
+.sugg{position:absolute;top:100%;inset-inline:0;padding:0 0 10px;background:var(--surface);border-radius:0 0 24px 24px;border-top:1px solid var(--border);box-shadow:0 8px 14px rgba(60,64,67,.15);max-height:min(70vh,520px);overflow:auto}
+.sugg[hidden]{display:none}
+.sg{display:flex;align-items:center;gap:14px;width:100%;height:44px;padding:0 22px;border:0;background:none;color:var(--text);font:inherit;font-size:14.5px;cursor:pointer;text-align:start}
+.sg:hover,.sg.kb{background:var(--primary-soft)}
+.sg:hover .sg-n,.sg.kb .sg-n{color:var(--on-soft)}
+.sg-i{width:20px;height:20px;display:grid;place-items:center;flex:none}
+.sg-i svg{width:20px;height:20px}
+.sg>svg.i{width:18px;height:18px;color:var(--text-3)}
+.sg-n{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text-2)}
+.sg-n b{color:var(--text);font-weight:700}
+.sg-w{display:flex;align-items:center;gap:6px;font-size:13.5px;color:var(--text-3);white-space:nowrap}
+.sg-w svg{width:16px;height:16px}
+.sg-h{display:flex;align-items:center;justify-content:space-between;padding:12px 22px 4px;margin-top:6px;border-top:1px solid var(--border);font-size:13px;color:var(--text-3)}
+.sg-h button{border:0;background:none;color:var(--primary);font:inherit;font-weight:700;cursor:pointer;padding:0}
+.sg-none{padding:14px 22px;font-size:14px;color:var(--text-3)}
+.top-acts{display:flex;align-items:center;gap:4px;margin-inline-start:auto}
+.ticon{width:40px;height:40px;border:0;border-radius:50%;background:none;color:var(--text-2);cursor:pointer;display:grid;place-items:center;text-decoration:none}
+.ticon:hover{background:var(--surface-2);color:var(--text)}
+.ticon svg{width:21px;height:21px}
+.ticon[hidden]{display:none}
+.host{display:flex;align-items:center;gap:8px;margin-inline-end:10px;font-size:13.5px;color:var(--text-3)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--success);box-shadow:0 0 0 3px var(--success-soft)}
+.me{display:flex;align-items:center;gap:12px;margin-inline-start:12px;white-space:nowrap;cursor:default}
+.me .av{width:36px;height:36px;border-radius:50%;font-size:16px;order:2}
+.me .mt{order:1;text-align:end}
+.me .mt b{display:block;font-size:14.5px;font-weight:600;line-height:1.3}
+.me .mt small{display:block;font-size:13px;color:var(--text-3)}
+/* page header (white) */
+.content{grid-column:2;grid-row:2;overflow:auto;min-height:0;background:var(--bg);padding:0 0 40px}
+.dash{display:none}
+.phead{position:relative;padding:20px 40px 16px;background:var(--surface);border-bottom:1px solid var(--border)}
+.ph-row{display:flex;align-items:center;gap:16px}
+.hero-t{flex:1;min-width:0}
+.crumbs{display:flex;align-items:center;flex-wrap:wrap;gap:2px;font-size:13.5px;min-height:18px}
+.crumbs:not(:has(svg)){display:none}
+.crumbs button{border:0;background:none;padding:1px 4px;border-radius:6px;cursor:pointer;color:var(--text-3);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.crumbs button:hover{color:var(--primary)}
+.crumbs button:last-child{display:none}
+.crumbs svg{width:14px;height:14px;color:var(--text-3)}
+.crumbs svg:last-of-type{display:none}
+.ptitle{display:inline-flex;align-items:center;gap:6px;max-width:100%;margin:0 -10px;padding:2px 10px;border:0;border-radius:10px;background:none;color:var(--text);cursor:pointer}
+.ptitle:hover{background:var(--surface-2)}
+.ptitle svg{width:20px;height:20px;color:var(--text-2)}
+#ptitle{margin:0;font-size:22px;font-weight:600;line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tools{display:flex;align-items:center;gap:6px}
+#upBtn{display:none}
+.filters{margin-top:14px;flex-wrap:wrap;gap:10px}
+.fl{font-size:13.5px;color:var(--text-3)}
+.stats{margin-inline-start:auto;font-size:13px;color:var(--text-3);white-space:nowrap}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:0}
+.chips[hidden]{display:none}
+.chips button{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 12px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface);color:var(--text);font-size:14px;font-weight:500;cursor:pointer;transition:background .12s,border-color .12s}
+.chips button svg{width:16px;height:16px;color:var(--folder)}
+.chips button:hover{background:var(--surface-2)}
+.chips button.on{background:var(--primary-soft);border-color:var(--primary-soft);color:var(--on-soft)}
+.chips button.on svg{color:var(--primary)}
+.chips button .c{font-size:13px;color:var(--text-3)}
+.chips button[hidden]{display:none}
+.cols{display:block;padding:24px 40px 0}
+.maincol{min-width:0}
+.rail{display:none}
+h2.sec{margin:0 0 14px;font-size:14.5px;font-weight:600;color:var(--text-2)}
+h2.sec:not(:first-child){margin-top:30px}
+/* folders: Drive tiles */
+.fcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
+.fcard{position:relative;display:flex;align-items:center;gap:14px;height:56px;padding:0 10px 0 16px;border-radius:10px;background:var(--surface);box-shadow:0 1px 2px rgba(60,64,67,.12);user-select:none;transition:box-shadow .12s,background .12s}
+.fcard:hover{box-shadow:0 1px 3px rgba(60,64,67,.2),0 4px 10px rgba(60,64,67,.08)}
+.fcard .cb{display:none;width:24px;height:24px;flex:none;align-items:center;justify-content:center;cursor:pointer}
+.fcard .cb input{width:18px;height:18px;margin:0;cursor:pointer}
+.fcard:hover .cb,.fcard.sel .cb,.fcards.selecting .cb{display:flex}
+.fcard:hover .fc-ic,.fcard.sel .fc-ic,.fcards.selecting .fc-ic{display:none}
+.fc-ic{display:grid;place-items:center;cursor:pointer;flex:none}
+.fold{width:24px;height:24px;fill:var(--folder);stroke:none}
+.fc-n{flex:1;min-width:0;cursor:pointer}
+.fc-n b{display:block;font-size:14.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fcard .more{opacity:0;color:var(--text-2)}
+.fcard:hover .more,.fcard.sel .more{opacity:1}
+.fcard.sel{background:var(--primary-soft);box-shadow:none}
+.fcard.sel .fold{fill:var(--primary)}
+.fcard.sel .fc-n b{color:var(--on-soft)}
+/* files: Drive table */
+.panel{display:block;background:none}
+.thead,.tr{display:grid;grid-template-columns:40px minmax(0,1fr) 200px 140px 48px;align-items:center}
+.thead{height:44px;font-size:13.5px;font-weight:500;color:var(--text-2);border-bottom:1px solid var(--border-strong)}
+.thead button{border:0;background:none;color:inherit;font:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:4px;padding:2px 0}
+.thead button:hover{color:var(--text)}
+.thead button svg{width:15px;height:15px;opacity:0}
+.thead button.on{color:var(--text);font-weight:600}
+.thead button.on svg{opacity:.8}
+.thead button.on.asc svg{transform:rotate(180deg)}
+.tr{height:56px;border-bottom:1px solid var(--border);user-select:none;transition:background .1s}
+.tr:hover{background:var(--row-hover)}
+.tr.sel{background:var(--primary-soft);border-bottom-color:color-mix(in srgb,var(--primary) 18%,var(--border))}
+.tr.sel .nm b{color:var(--on-soft)}
+.tr.cut{opacity:.5}
+.cell-n{display:flex;align-items:center;gap:16px;min-width:0;padding-inline-end:12px}
+.cell-n .nm{min-width:0;cursor:pointer}
+.cell-n .nm b{display:block;font-weight:600;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cell-n .nm b:hover{color:var(--primary)}
+.cell-n .nm small{display:none;font-size:13px;color:var(--text-3)}
+.cell-d,.cell-s{font-size:14px;color:var(--text-2)}
+.cb{display:grid;place-items:center}
+.cb input{appearance:none;width:18px;height:18px;border:2px solid var(--text-3);border-radius:3px;background:var(--surface);cursor:pointer;display:grid;place-items:center;margin:0}
+.cb input:checked,.cb input:indeterminate{background:var(--primary);border-color:var(--primary)}
+.cb input:checked::after{content:"";width:9px;height:5px;border:2px solid #fff;border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px)}
+.cb input:indeterminate::after{content:"";width:8px;height:2px;background:#fff}
+.tr .cb input{opacity:0}
+.tr:hover .cb input,.tr.sel .cb input,.panel.selecting .cb input{opacity:1}
+.more{opacity:0;color:var(--text-2)}
+.tr:hover .more,.tr.sel .more{opacity:1}
+.fi{width:24px;height:24px;flex:none;display:grid;place-items:center;border-radius:4px;overflow:hidden}
+.fi img{width:100%;height:100%;object-fit:cover;border-radius:4px}
+.fi svg{width:22px;height:26px}
+.fi .fold{width:24px;height:24px}
+/* card view */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+.gc{position:relative;display:flex;flex-direction:column;background:var(--surface);border-radius:10px;border:1px solid var(--border);overflow:hidden;user-select:none;transition:box-shadow .12s}
+.gc:hover{box-shadow:0 1px 3px rgba(60,64,67,.2),0 4px 10px rgba(60,64,67,.08)}
+.gc.sel{background:var(--primary-soft);border-color:var(--primary-soft)}
+.gc .pv{height:140px;margin:0;display:grid;place-items:center;background:var(--surface-2);cursor:pointer;overflow:hidden;border-bottom:1px solid var(--border)}
+.gc .pv img{width:100%;height:100%;object-fit:cover}
+.gc .pv svg{width:52px;height:60px}
+.gc .pv .fold{width:64px;height:64px}
+.gc .meta{padding:10px 8px 10px 14px;display:flex;align-items:center;gap:6px}
+.gc .meta div{min-width:0;flex:1}
+.gc .meta b{display:block;font-weight:600;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gc .meta small{font-size:13px;color:var(--text-3)}
+.gc .cb{position:absolute;top:10px;inset-inline-start:10px}
+.gc .cb input{opacity:0}
+.gc:hover .cb input,.gc.sel .cb input,.grid.selecting .cb input{opacity:1}
+/* banner */
+.banner{display:flex;align-items:center;gap:14px;padding:14px 16px;margin:0 0 18px;border-radius:14px;background:var(--surface);box-shadow:var(--shadow-sm);border:1px solid var(--border)}
+.banner .bi{width:42px;height:42px;flex:none;border-radius:12px;display:grid;place-items:center;background:var(--primary-soft);color:var(--primary)}
+.banner>div:nth-child(2){flex:1;min-width:0}
+.banner b{display:block;font-size:15px}
+.banner small{display:block;font-size:13.5px;color:var(--text-2)}
+.curl{display:inline-flex;align-items:center;gap:6px;vertical-align:middle;max-width:100%}
+.curl .u{cursor:pointer;border-bottom:1px dashed currentColor;word-break:break-all}
+.curl .u:hover{color:var(--primary,#2563eb)}
+.curl .cb{display:inline-flex;align-items:center;gap:4px;height:26px;padding:0 9px;border:1px solid var(--border,#d0d5dd);border-radius:7px;background:var(--surface,#fff);color:inherit;font:inherit;font-size:12.5px;cursor:pointer;flex:none}
+.curl .cb:hover{border-color:var(--primary,#2563eb)}
+.curl .cb svg{width:14px;height:14px}
+.banner .back{flex:none;height:38px;font-size:14px}
+/* selection bar */
+.selbar{display:none;align-items:center;gap:6px;height:52px;padding:0 10px;margin:0 0 14px;border-radius:14px;background:var(--text);color:var(--surface);box-shadow:var(--shadow-lg)}
+.selbar.show{display:flex}
+.selbar b{font-weight:600;padding:0 6px;font-size:15px}
+.selbar .btn{height:36px;border:0;background:rgba(255,255,255,.12);color:inherit}
+.selbar .btn:hover{background:rgba(255,255,255,.22)}
+.selbar .btn.icon{width:36px}
+.selbar .sp{flex:1}
+/* empty / loading */
+.empty{padding:56px 24px;text-align:center;color:var(--text-2);background:var(--surface);border-radius:16px;box-shadow:var(--shadow-sm)}
+.empty svg.ill{width:190px;height:148px;margin-bottom:12px}
+.empty h3{margin:0 0 6px;font-size:18px;font-weight:800;color:var(--text)}
+.empty p{margin:0 0 20px;font-size:15px}
+.skel{height:58px;border-radius:12px;background:var(--surface);display:flex;align-items:center;gap:14px;padding:0 54px;margin-bottom:8px}
+.skel i{display:block;height:12px;border-radius:6px;background:linear-gradient(90deg,var(--surface-2),var(--surface-3),var(--surface-2));background-size:200% 100%;animation:sh 1.2s infinite}
+@keyframes sh{to{background-position:-200% 0}}
+/* dropzone */
+#drop{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;background:color-mix(in srgb,var(--primary) 12%,transparent);backdrop-filter:blur(2px)}
+#drop.show{display:flex}
+#drop div{display:flex;flex-direction:column;align-items:center;gap:8px;background:var(--surface);border:2px dashed var(--primary);border-radius:20px;padding:36px 56px;box-shadow:var(--shadow-lg)}
+#drop svg{width:40px;height:40px;color:var(--primary)}
+#drop b{font-size:17px}
+#drop small{color:var(--text-3)}
+/* menus */
+.menu{position:fixed;z-index:60;min-width:230px;padding:6px;background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-lg);display:none;animation:pop .12s ease}
+.menu.show{display:block}
+.menu button{display:flex;align-items:center;gap:12px;width:100%;height:40px;padding:0 12px;border:0;border-radius:9px;background:none;cursor:pointer;color:var(--text);text-align:start;font-size:14.5px}
+.menu button:hover{background:var(--surface-2)}
+.menu button svg{width:18px;height:18px;color:var(--text-2)}
+.menu button.dz,.menu button.dz svg{color:var(--danger)}
+.menu button.dz:hover{background:var(--danger-soft)}
+.menu button .kbd{margin-inline-start:auto}
+.menu hr{border:0;border-top:1px solid var(--border);margin:6px 4px}
+@keyframes pop{from{opacity:0;transform:scale(.97)}}
+/* dialogs (title, close, grey fields, pill actions) */
+.scrim{position:fixed;inset:0;z-index:70;background:rgba(18,20,19,.38);display:none;align-items:center;justify-content:center;padding:16px}
+.scrim.show{display:flex}
+.dlg{position:relative;width:100%;max-width:460px;max-height:calc(100vh - 32px);overflow:auto;background:var(--surface);border-radius:16px;box-shadow:var(--shadow-lg);padding:24px;animation:pop .15s ease}
+.dlg-x{position:absolute;top:20px;inset-inline-end:18px;width:34px;height:34px;border:0;border-radius:50%;background:none;color:var(--text);cursor:pointer;display:grid;place-items:center}
+.dlg-x:hover{background:var(--surface-2)}
+.dlg .ic{display:none}
+.dlg h3{margin:0 0 4px;padding-inline-end:44px;font-size:20px;font-weight:800}
+.dlg h3+p{color:var(--text-3)}
+.dlg>p{margin:0 0 18px;padding-bottom:16px;border-bottom:1px solid var(--border);color:var(--text-2);font-size:14.5px;word-break:break-word}
+.dlg .input{margin-bottom:18px}
+.dlg .acts{display:flex;gap:10px;justify-content:flex-end;margin-top:10px}
+.dlg .acts .btn{min-width:96px;height:42px}
+.dlg .acts .btn:not(.primary):not(.danger){background:var(--surface-2);border-color:transparent}
+.dlg .acts .btn:not(.primary):not(.danger):hover{background:var(--surface-3)}
+.dlg.wide{max-width:620px}
+/* preview */
+.pvw{position:fixed;inset:0;z-index:80;background:rgba(14,16,15,.92);display:none;flex-direction:column}
+.pvw.show{display:flex}
+.pvw .bar{height:64px;display:flex;align-items:center;gap:10px;padding:0 16px;color:#eceeed}
+.pvw .bar b{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
+.pvw .bar .btn{background:rgba(255,255,255,.1);border-color:transparent;color:#eceeed}
+.pvw .bar .btn:hover{background:rgba(255,255,255,.18)}
+.pvw .stage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:0 72px 24px;position:relative}
+.pvw .stage img,.pvw .stage video{max-width:100%;max-height:100%;border-radius:10px}
+.pvw .stage iframe{width:100%;height:100%;border:0;border-radius:10px;background:#fff}
+.pvw .stage pre{width:100%;max-width:960px;height:100%;overflow:auto;margin:0;padding:20px;border-radius:12px;background:#1a1d1c;color:#dfe3e1;font:13px/1.6 ui-monospace,Consolas,monospace;white-space:pre-wrap;direction:ltr;text-align:left}
+.pvw .stage audio{width:min(520px,100%)}
+.pvw .nav-b{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;border:0;background:rgba(255,255,255,.12);color:#fff;cursor:pointer;display:grid;place-items:center}
+.pvw .nav-b:hover{background:rgba(255,255,255,.22)}
+.pvw .prev{right:12px}.pvw .next{left:12px}
+.pvw .nofile{color:#c5cbc8;text-align:center}
+.pvw .nofile svg{width:72px;height:84px}
+/* uploads */
+.upl{position:fixed;bottom:20px;inset-inline-end:20px;z-index:55;width:380px;max-width:calc(100% - 24px);background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-lg);display:none;overflow:hidden}
+.upl.show{display:block}
+.upl .hd{display:flex;align-items:center;gap:6px;padding:12px 12px 12px 16px;font-weight:700;border-bottom:1px solid var(--border)}
+.upl .hd span{flex:1}
+.upl .list{max-height:280px;overflow:auto}
+.upl.min .list{display:none}
+.ui{display:flex;align-items:center;gap:12px;padding:10px 16px}
+.ui .fi{width:28px;height:28px}
+.ui .fi svg{width:24px;height:28px}
+.ui div.t{flex:1;min-width:0}
+.ui b{display:block;font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ui small{font-size:13px;color:var(--text-3)}
+.ui .pb{height:5px;border-radius:5px;background:var(--surface-3);margin-top:5px;overflow:hidden}
+.ui .pb i{display:block;height:100%;width:0;background:var(--primary);transition:width .15s}
+.ui.ok .pb i{background:var(--success)}
+.ui.err .pb i{background:var(--danger)}
+.ui .st{width:20px;height:20px;color:var(--text-3)}
+.ui.ok .st{color:var(--success)}
+.ui.err .st{color:var(--danger)}
+.upl .sum{padding:10px 16px;font-size:13px;color:var(--text-3);border-bottom:1px solid var(--border)}
+.upl .sum .pb{height:5px;border-radius:5px;background:var(--surface-3);overflow:hidden;margin-bottom:6px}
+.upl .sum .pb i{display:block;height:100%;width:0;background:var(--primary);transition:width .2s}
+.upl .sum.done .pb i{background:var(--success)}
+.upl .sum .row{display:flex;gap:8px;align-items:center}
+.upl .sum .row span{flex:1}
+.upl.min .sum{border-bottom:0}
+/* toasts */
+.toasts{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:90;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none}
+.toast{display:flex;align-items:center;gap:10px;padding:12px 18px;border-radius:12px;background:var(--text);color:var(--surface);box-shadow:var(--shadow-lg);font-size:14.5px;animation:tin .2s ease;pointer-events:auto;max-width:calc(100vw - 32px)}
+.toast svg{width:18px;height:18px}
+.toast.ok svg{color:#7bcf98}.toast.err svg{color:#ff8f7d}
+@keyframes tin{from{opacity:0;transform:translateY(8px)}}
+/* avatars, pickers, admin */
+.av{width:26px;height:26px;flex:none;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;color:#fff;background:var(--primary)}
+.av svg{width:15px;height:15px}
+.plist{display:flex;flex-direction:column;gap:8px;max-height:min(52vh,420px);overflow:auto;margin:0 0 16px;padding:2px}
+.pi{display:flex;align-items:center;gap:12px;width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:12px;background:var(--surface);cursor:pointer;text-align:start;color:var(--text)}
+.pi:hover{border-color:var(--primary);background:var(--primary-soft)}
+.pi.on{border-color:var(--primary);background:var(--primary-soft)}
+.pi .av{width:36px;height:36px;font-size:15px}
+.pi .t{flex:1;min-width:0}
+.pi .t b{display:block;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pi .t small{display:block;color:var(--text-3);font-size:13px}
+.pi .x{display:flex;gap:4px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.two .pi{flex-direction:column;align-items:center;text-align:center;padding:20px 10px;gap:8px}
+.two .pi svg{width:28px;height:28px;color:var(--primary)}
+.two .pi small{color:var(--text-3);font-size:13px}
+.frm{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;margin:0 0 8px}
+.frm .input{margin:0}
+.frm.two{grid-template-columns:1fr auto}
+.ttl{display:grid;gap:10px;margin:0 0 16px;padding:14px;border-radius:14px;background:var(--surface-2)}
+.ttl .tr,.tr.pfx{display:flex;align-items:center;gap:8px;height:auto;border:0;padding:0;grid-template-columns:none;background:none;box-shadow:none}
+.ttl .tr:hover,.tr.pfx:hover{box-shadow:none;border:0}
+.tr.pfx{margin:0 0 10px}
+.tr.pfx label,.ttl label{font-size:14px;font-weight:700;color:var(--text);white-space:nowrap}
+.ttl label{min-width:140px}
+.tr.pfx .input{width:180px;height:40px;margin:0;text-align:left}
+.ttl small{font-size:13px;color:var(--text-3);line-height:1.8}
+.ttl .input{flex:1;min-width:0;margin:0;height:40px;background:var(--surface)}
+.ipbox{display:flex;flex-wrap:wrap;align-items:center;gap:6px;min-height:48px;padding:6px 10px;margin:0 0 6px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);direction:ltr;cursor:text}
+.ipbox:focus-within{border-color:var(--primary);background:var(--surface);box-shadow:var(--ring)}
+.ipbox .chip{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 4px 0 10px;border-radius:999px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:14px;font-weight:600;font-variant-numeric:tabular-nums}
+.ipbox .chip button{width:22px;height:22px;border:0;border-radius:50%;background:none;color:var(--text-2);cursor:pointer;display:grid;place-items:center;font-size:16px;line-height:1}
+.ipbox .chip button:hover{background:var(--surface-3)}
+.ipbox .pre{color:var(--text-3);font-size:15px;font-variant-numeric:tabular-nums;padding-left:4px}
+.ipbox input{flex:1;min-width:150px;height:32px;border:0;outline:0;background:none;color:var(--text);font:inherit;font-size:15px;padding:0}
+.hint{font-size:13px;color:var(--text-3);margin:0 0 14px}
+.sec-t{font-size:16px;font-weight:800;color:var(--text);margin:20px 0 10px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 9px;border-radius:999px;border:1px solid var(--border);font-size:13px;color:var(--text-2);direction:ltr}
+.empty-s{padding:16px;text-align:center;color:var(--text-3);font-size:14px;border:1px dashed var(--border-strong);border-radius:12px}
+.kseg{display:flex;padding:3px;margin:4px 0 14px;border-radius:999px;background:var(--surface-2);border:1px solid var(--border)}
+.kseg button{flex:1;height:38px;border:0;border-radius:999px;background:none;color:var(--text-2);font:inherit;font-size:14.5px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
+.kseg button .i{width:16px;height:16px}
+.kseg button.on{background:var(--surface);color:var(--text);box-shadow:var(--shadow-sm)}
+.kseg button:disabled{opacity:.4;cursor:default}
+/* settings tabs, recycle bin */
+.stabs{display:flex;gap:4px;padding:4px;margin:0 0 18px;border-radius:999px;background:var(--surface-2);border:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
+.stabs::-webkit-scrollbar{display:none}
+.stabs button{flex:1 0 auto;display:flex;align-items:center;justify-content:center;gap:7px;height:38px;padding:0 14px;border:0;border-radius:999px;background:none;color:var(--text-2);font:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap}
+.stabs button svg{width:16px;height:16px}
+.stabs button:hover{color:var(--text)}
+.stabs button.on{background:var(--surface);color:var(--primary);box-shadow:var(--shadow-sm)}
+.dlg section[hidden]{display:none}
+.dlg section{min-height:260px}
+.field{display:grid;gap:8px;margin:0 0 14px}
+.sp-row .sp-code{width:150px;height:36px;margin:0;text-align:left}
+.sp-row .t a{color:var(--primary);text-decoration:none;word-break:break-all}
+.sp-row .t a:hover{text-decoration:underline}
+@media (max-width:640px){.sp-row{flex-wrap:wrap}.sp-row .sp-code{flex:1}}
+.field label{font-size:14px;font-weight:700}
+.field .input{margin:0}
+.pacts{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
+.binbar{display:flex;align-items:center;gap:8px;padding:8px 12px;margin:0 0 10px;border-radius:12px;background:var(--surface-2);font-size:14px;color:var(--text-2)}
+.binbar .sp,.dlg .acts .sp{flex:1}
+.btn.danger-o{color:var(--danger)}
+.btn.danger-o:hover:not(:disabled){background:var(--danger-soft);border-color:var(--danger)}
+.binl{max-height:min(56vh,460px)}
+.bi{cursor:pointer}
+.bi.on{border-color:var(--primary);background:var(--primary-soft)}
+.bi .fi{background:var(--surface-2);color:var(--text-2)}
+.bi .fi svg{width:18px;height:18px}
+.bi .t small{white-space:normal;line-height:1.7}
+.bi .sz{font-size:13.5px;color:var(--text-3);white-space:nowrap}
+@media (max-width:640px){.stabs button span{display:none}.stabs button.on span{display:inline}.dlg .acts{flex-wrap:wrap}.binbar{flex-wrap:wrap}}
+/* Drive overrides for shared pieces */
+.banner{box-shadow:none;border-radius:10px;background:var(--surface);border:1px solid var(--border)}
+.banner .bi{background:var(--primary-soft);color:var(--primary);border-radius:50%}
+.selbar{height:48px;border-radius:10px;background:var(--primary-soft);color:var(--on-soft);box-shadow:none}
+.selbar .btn{background:none;border:0;color:var(--on-soft)}
+.selbar .btn:hover{background:color-mix(in srgb,var(--primary) 12%,transparent)}
+.empty{box-shadow:none;background:none}
+.skel{background:none;border-bottom:1px solid var(--border);border-radius:0;height:56px;margin:0;padding:0 50px}
+.dlg{border-radius:12px}
+.dlg h3{font-weight:600}
+.menu{border-radius:8px;padding:6px 0}
+.menu button{border-radius:0;height:36px;padding:0 18px}
+.toast{border-radius:6px;background:#323232;color:#fff}
+/* responsive */
+@media (max-width:1180px){.host{display:none}.thead,.tr{grid-template-columns:40px minmax(0,1fr) 160px 110px 48px}}
+@media (max-width:860px){
+  .shell{grid-template-columns:1fr;grid-template-rows:64px minmax(0,1fr)}
+  .menu-btn{display:inline-flex}
+  .top{grid-column:1;padding:0 8px;gap:6px}
+  .search{height:44px;padding:0 14px}
+  .content{grid-column:1;padding:0 0 96px}
+  .phead{padding:14px 16px 12px}
+  .cols{padding:16px 16px 0}
+  .side{position:fixed;inset-block:0;inset-inline-start:0;width:280px;z-index:65;transform:translateX(105%);transition:transform .22s ease;box-shadow:var(--shadow-lg)}
+  .side.open{transform:none}
+  .side-scrim.show{display:block;position:fixed;inset:0;z-index:64;background:rgba(32,33,36,.45)}
+  .new-btn{display:none}
+  #upBtn{display:inline-flex;position:fixed;bottom:20px;inset-inline-end:16px;z-index:40;height:56px;width:56px;padding:0;border-radius:16px;box-shadow:0 4px 12px rgba(26,115,232,.4)}
+  #upBtn span{display:none}
+  .me .mt{display:none}
+  .me{margin:0}
+  .me .av{width:32px;height:32px}
+  .top-acts .ticon:not(#themeBtn){display:none}
+  .fl,.stats{display:none}
+  .filters{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-inline:-16px;padding-inline:16px}
+  .filters::-webkit-scrollbar{display:none}
+  .chips{flex-wrap:nowrap}
+  .chips button{flex:none}
+  .tools .ticon#shareBtn{display:none}
+  .nav2{display:flex!important}
+  .nav .mob:not([hidden]){display:flex}
+}
+@media (max-width:640px){
+  .thead{display:none}
+  .tr{grid-template-columns:36px minmax(0,1fr) 44px;height:60px}
+  .cell-d,.cell-s{display:none}
+  .cell-n .nm small{display:block}
+  .more,.fcard .more{opacity:1}
+  .fcards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .fcard{padding:0 6px 0 12px;gap:10px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .gc .pv{height:100px}
+  #ptitle{font-size:19px}
+  .banner{flex-wrap:wrap}.banner .back{width:100%}
+  .pvw .stage{padding:0 8px 16px}
+  .pvw .nav-b{display:none}
+  .frm{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15V4m0 0 4 4m-4-4L8 8"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11m0 0 4-4m-4 4-4-4"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></symbol>
+  <symbol id="i-folder-plus" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M12 10v6m-3-3h6"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5h3.6l2 2h7.4A2.5 2.5 0 0 1 21 9.5v8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M15 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h3"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6m4-6v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="12" cy="19" r="1.3"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-chev-r" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5m0 3h.01"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-files" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/></symbol>
+  <symbol id="i-video" viewBox="0 0 24 24"><rect x="3" y="5" width="13" height="14" rx="2"/><path d="m16 10 5-3v10l-5-3"/></symbol>
+  <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V6l11-2v12"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
+  <symbol id="i-archive" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="5" rx="1"/><path d="M5 9v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9M10 13h4"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v6c0 4.5 3 7.7 7 9 4-1.3 7-4.5 7-9V6z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></symbol>
+  <symbol id="i-logout" viewBox="0 0 24 24"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 8l-4 4 4 4M6 12h10"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.9-3.9M4 4v4h4M4 13a8 8 0 0 0 14.9 3.9M20 20v-4h-4"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-open" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"/></symbol>
+  <symbol id="i-zip" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M11 5h1m-1 3h1m-1 3h1m-1 3h2v3h-2z"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M21 3 10 14M21 3l-7 18-4-7-7-4z"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6.5 6.5 0 0 1 3.5 6"/></symbol>
+  <symbol id="i-folder-up" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M12 16v-6m0 0 3 3m-3-3-3 3"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-server" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></symbol>
+</svg>
+
+<div class="shell">
+  <aside class="side" id="side">
+    <div class="brand" id="brand" title="فضای مشترک"><img src="/favicon.svg" alt=""><b>گنجینه</b></div>
+    <button class="new-btn w" id="newBtn"><span class="plus"><svg viewBox="0 0 24 24"><path d="M12 4v16" stroke="#1a73e8"/><path d="M4 12h16" stroke="#34a853"/></svg></span><span>جدید</span></button>
+    <nav class="nav" id="spaces"></nav>
+    <nav class="nav nav2"><button id="binBtn" hidden><svg class="i"><use href="#i-trash"/></svg><span class="l">سطل زباله</span></button><button class="mob" id="admBtn2" hidden><svg class="i"><use href="#i-settings"/></svg><span class="l">تنظیمات</span></button><button class="mob" id="outBtn2"><svg class="i"><use href="#i-logout"/></svg><span class="l">خروج</span></button></nav>
+    <div class="store" id="store" hidden></div>
+    <div class="ver" id="ver"></div>
+  </aside>
+  <div class="side-scrim" id="sideScrim"></div>
+
+  <header class="top">
+    <button class="btn ghost icon menu-btn" id="menuBtn" title="منو"><svg class="i"><use href="#i-menu"/></svg></button>
+    <div class="search" id="searchBox">
+      <svg class="i"><use href="#i-search"/></svg>
+      <input id="q" type="search" placeholder="برای جستجو Ctrl + K را بزنید" autocomplete="off" spellcheck="false">
+      <button class="q-x" id="qClear" title="پاک کردن" hidden><svg class="i"><use href="#i-x"/></svg></button>
+      <div class="sugg" id="sugg" hidden></div>
+    </div>
+    <div class="top-acts">
+      <div class="host" id="host" title="سرور"><span class="dot"></span><span id="hostName">سرور</span></div>
+      <button class="ticon" id="themeBtn" title="حالت روشن / تیره"><svg class="i"><use href="#i-moon"/></svg></button>
+      <button class="ticon" id="admBtn" title="تنظیمات" hidden><svg class="i"><use href="#i-settings"/></svg></button>
+      <a class="ticon" href="/logout" title="خروج"><svg class="i"><use href="#i-logout"/></svg></a>
+      <div class="me" id="me" hidden></div>
+    </div>
+  </header>
+
+  <main class="content" id="content">
+    <section class="dash" id="dash" hidden></section>
+    <div id="heroIc" hidden></div>
+    <div class="phead">
+      <div class="ph-row">
+        <div class="hero-t"><div class="crumbs" id="crumbs"></div><button class="ptitle" id="ptitleBtn"><h1 id="ptitle"></h1><svg class="i"><use href="#i-down"/></svg></button></div>
+        <div class="tools">
+          <button class="ticon w" id="shareBtn" title="ارسال برای همکار یا واحد" hidden><svg class="i"><use href="#i-send"/></svg></button>
+          <button class="ticon" id="vToggle" title="نمای فهرست / کارتی"><svg class="i"><use href="#i-grid"/></svg></button>
+          <button class="ticon" id="refBtn" title="بارگذاری مجدد"><svg class="i"><use href="#i-refresh"/></svg></button>
+          <span id="vList" hidden></span><span id="vGrid" hidden></span>
+        </div>
+      </div>
+      <div class="ph-row filters">
+        <span class="fl">فیلترها:</span>
+        <nav class="chips" id="nav">
+          <button data-f="all" class="on"><svg class="i"><use href="#i-files"/></svg>همه</button>
+          <button data-f="folder"><svg class="i"><use href="#i-folder"/></svg>پوشه‌ها<span class="c num"></span></button>
+          <button data-f="doc"><svg class="i"><use href="#i-doc"/></svg>اسناد<span class="c num"></span></button>
+          <button data-f="image"><svg class="i"><use href="#i-image"/></svg>تصاویر<span class="c num"></span></button>
+          <button data-f="video"><svg class="i"><use href="#i-video"/></svg>ویدیو<span class="c num"></span></button>
+          <button data-f="audio"><svg class="i"><use href="#i-music"/></svg>صوتی<span class="c num"></span></button>
+          <button data-f="archive"><svg class="i"><use href="#i-archive"/></svg>فشرده<span class="c num"></span></button>
+        </nav>
+        <span class="stats num" id="stats"></span>
+      </div>
+      <button class="btn primary w" id="upBtn"><svg class="i"><use href="#i-plus"/></svg><span>جدید</span></button>
+    </div>
+    <div class="cols">
+      <div class="maincol">
+        <div id="banner"></div>
+        <div class="selbar" id="selbar">
+          <button class="btn icon" id="selClear" title="لغو انتخاب"><svg class="i"><use href="#i-x"/></svg></button>
+          <b id="selCount"></b>
+          <div class="sp"></div>
+          <button class="btn" id="selZip"><svg class="i"><use href="#i-download"/></svg><span>دانلود</span></button>
+          <button class="btn w" id="selDel"><svg class="i"><use href="#i-trash"/></svg><span>حذف</span></button>
+        </div>
+        <div id="view"></div>
+      </div>
+      <aside class="rail" id="rail" hidden></aside>
+    </div>
+  </main>
+</div>
+
+<input type="file" id="fileIn" multiple hidden>
+<input type="file" id="dirIn" webkitdirectory multiple hidden>
+<div id="drop"><div><svg class="i"><use href="#i-upload"/></svg><b>رها کنید تا آپلود شود</b><small id="dropTo"></small></div></div>
+<div class="menu" id="menu"></div>
+<div class="scrim" id="scrim"><div class="dlg" id="dlg"></div></div>
+<div class="pvw" id="pvw"><div class="bar"><button class="btn icon" id="pvClose"><svg class="i"><use href="#i-x"/></svg></button><b id="pvName"></b><span id="pvIdx" class="num" style="color:#9aa3b5;font-size:14px"></span><button class="btn" id="pvDl"><svg class="i"><use href="#i-download"/></svg><span>دانلود</span></button></div><div class="stage" id="pvStage"></div></div>
+<div class="upl" id="upl"><div class="hd"><span id="uplTitle"></span><button class="btn ghost sm" id="uplRetry" hidden>تلاش دوباره</button><button class="btn ghost sm icon" id="uplMin"><svg class="i"><use href="#i-down"/></svg></button><button class="btn ghost sm icon" id="uplClose"><svg class="i"><use href="#i-x"/></svg></button></div><div class="sum" id="uplSum"><div class="pb"><i id="uplBar"></i></div><div class="row"><span id="uplInfo" class="num"></span><button class="btn ghost sm" id="uplStop">توقف</button></div></div><div class="list" id="uplList"></div></div>
+<div class="toasts" id="toasts"></div>
+
+<script>
+"use strict";
+const $ = s => document.querySelector(s);
+const S = {cur: "/", items: [], ro: false, view: "list", sort: {k: "name", asc: true}, filter: "all", q: "", sel: new Set(), anchor: null, loading: true, admin: false, me: null, people: [], ip: ""};
+try { S.view = localStorage.getItem("lfs-view") || "list"; const so = JSON.parse(localStorage.getItem("lfs-sort") || "null"); if (so) S.sort = so; } catch {}
+
+/* ---------- helpers ---------- */
+const enc = p => p.split("/").map(encodeURIComponent).join("/");
+const join = (a, b) => (a.endsWith("/") ? a : a + "/") + b;
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const faNum = s => String(s).replace(/\d/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]);
+const fmt = n => { if (n < 1024) return faNum(n) + " بایت"; const u = ["کیلوبایت","مگابایت","گیگابایت","ترابایت"]; let i = -1; do { n /= 1024; i++ } while (n >= 1024 && i < 3); return faNum(n.toFixed(n < 10 ? 1 : 0)) + " " + u[i]; };
+const dfmt = new Intl.DateTimeFormat("fa-IR", {year: "numeric", month: "short", day: "numeric"});
+const tfmt = new Intl.DateTimeFormat("fa-IR", {hour: "2-digit", minute: "2-digit"});
+function when(t) {
+  const d = new Date(t * 1000), now = new Date(), diff = (now - d) / 1000;
+  if (diff < 60) return "همین حالا";
+  if (diff < 3600) return faNum(Math.floor(diff / 60)) + " دقیقه پیش";
+  if (d.toDateString() === now.toDateString()) return "امروز، " + tfmt.format(d);
+  const y = new Date(now); y.setDate(now.getDate() - 1);
+  if (d.toDateString() === y.toDateString()) return "دیروز، " + tfmt.format(d);
+  return dfmt.format(d);
+}
+const icon = (id, cls = "i") => `<svg class="${cls}"><use href="#i-${id}"/></svg>`;
+const ext = n => { const i = n.lastIndexOf("."); return i > 0 ? n.slice(i + 1).toLowerCase() : ""; };
+const TYPES = {
+  image: {re: /^(jpe?g|png|gif|webp|bmp|svg|heic|avif|ico)$/, c: "#0ea5e9"},
+  video: {re: /^(mp4|mkv|avi|mov|webm|wmv|m4v|flv)$/, c: "#8b5cf6"},
+  audio: {re: /^(mp3|wav|ogg|m4a|flac|aac|wma)$/, c: "#ec4899"},
+  archive: {re: /^(zip|rar|7z|tar|gz|bz2|xz|iso)$/, c: "#a16207"},
+  pdf: {re: /^pdf$/, c: "#e11d48"},
+  word: {re: /^(docx?|rtf|odt)$/, c: "#2563eb"},
+  sheet: {re: /^(xlsx?|csv|ods)$/, c: "#16a34a"},
+  slide: {re: /^(pptx?|odp)$/, c: "#ea580c"},
+  code: {re: /^(txt|md|log|json|xml|html?|css|js|ts|py|go|java|c|cpp|cs|sql|ini|cfg|yml|yaml|bat|ps1|sh)$/, c: "#64748b"},
+  app: {re: /^(exe|msi|apk|dmg|deb)$/, c: "#475569"},
+};
+function kind(it) {
+  if (it.isDir) return "folder";
+  const e = ext(it.name);
+  for (const k in TYPES) if (TYPES[k].re.test(e)) return k;
+  return "file";
+}
+const group = k => ({folder: "folder", image: "image", video: "video", audio: "audio", archive: "archive", pdf: "doc", word: "doc", sheet: "doc", slide: "doc", code: "doc"}[k] || "");
+const FOLDER = `<svg class="fold" viewBox="0 0 24 24"><path d="M3 6.5A1.5 1.5 0 0 1 4.5 5h4.4l2 2h8.6A1.5 1.5 0 0 1 21 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5z"/></svg>`;
+function fileSvg(it) {
+  const k = kind(it);
+  if (k === "folder") return FOLDER;
+  const c = (TYPES[k] || {c: "#94a3b8"}).c, e = esc(ext(it.name).slice(0, 4).toUpperCase() || "FILE");
+  return `<svg viewBox="0 0 32 40"><path d="M4 1h16l10 10v25a3 3 0 0 1-3 3H4a3 3 0 0 1-3-3V4a3 3 0 0 1 3-3z" fill="${c}" opacity=".14"/><path d="M4 1h16l10 10v25a3 3 0 0 1-3 3H4a3 3 0 0 1-3-3V4a3 3 0 0 1 3-3z" fill="none" stroke="${c}" stroke-opacity=".45"/><path d="M20 1v7a3 3 0 0 0 3 3h7" fill="${c}" opacity=".35"/><rect x="3" y="22" width="${Math.max(16, e.length * 6 + 6)}" height="11" rx="2.5" fill="${c}"/><text x="${3 + Math.max(16, e.length * 6 + 6) / 2}" y="30.2" text-anchor="middle" font-size="7.2" font-weight="700" fill="#fff" font-family="Segoe UI,Arial,sans-serif">${e}</text></svg>`;
+}
+const thumb = (it, p) => kind(it) === "image" && !/svg|heic/.test(ext(it.name)) ? `<img loading="lazy" src="/dl${enc(p)}?view=1" alt="" onerror="this.replaceWith(document.createRange().createContextualFragment(this.dataset.f))" data-f='${fileSvg(it).replace(/'/g, "&#39;")}'>` : fileSvg(it);
+
+async function api(url, body) {
+  const r = await fetch(url, body ? {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)} : {cache: "no-store"});
+  if (r.status === 401) { location.href = "/login"; throw new Error("login"); }
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(errFa(j.error || r.statusText));
+  return j;
+}
+const errFa = e => ({"invalid name": "نام نامعتبر است", "name already exists": "این نام از قبل وجود دارد", "cannot create folder (exists?)": "پوشه ساخته نشد؛ شاید از قبل وجود دارد", "read-only mode": "سرور در حالت فقط‌خواندنی است", "folder not found": "پوشه پیدا نشد", "cannot delete": "حذف انجام نشد", "cannot rename": "تغییر نام انجام نشد", "private folder": "این پوشه اختصاصی است و شما به آن دسترسی ندارید", "admin only": "فقط مدیران به این بخش دسترسی دارند", "server only": "فقط روی خود سرور قابل تغییر است", "folder not empty": "پوشه‌ی این سیستم خالی نیست؛ اول فایل‌هایش را حذف کنید", "ip required": "حداقل یک IP وارد کنید", "invalid path": "مسیر نامعتبر است", "upload failed": "ذخیره‌ی فایل روی سرور انجام نشد", "bad upload": "آپلود نامعتبر بود", "upload interrupted": "آپلود نیمه‌کاره قطع شد", "not found": "پیدا نشد"}[e] || (/^ip already used by /.test(e) ? "این IP قبلا برای «" + e.slice(19) + "» ثبت شده" : /^invalid ip: /.test(e) ? "IP نامعتبر: " + e.slice(12) : e));
+
+/* ---------- toasts ---------- */
+function toast(msg, type = "ok") {
+  const t = document.createElement("div");
+  t.className = "toast " + type;
+  t.innerHTML = icon(type === "ok" ? "check" : "alert") + "<span>" + esc(msg) + "</span>";
+  $("#toasts").appendChild(t);
+  setTimeout(() => { t.style.transition = ".25s"; t.style.opacity = "0"; setTimeout(() => t.remove(), 260); }, 2800);
+}
+
+/* ---------- copy link ---------- */
+function copyUrl(url) {
+  return `<span class="curl" dir="ltr"><span class="u num" data-copy="${esc(url)}" title="کلیک = کپی">${esc(url)}</span><button type="button" class="cb" data-copy="${esc(url)}" title="کپی آدرس">${icon("copy")}<span dir="rtl">کپی</span></button></span>`;
+}
+async function copyText(t) {
+  try { if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(t); return true; } } catch (e) {}
+  const a = document.createElement("textarea");
+  a.value = t; a.setAttribute("readonly", ""); a.style.cssText = "position:fixed;top:-1000px;opacity:0";
+  document.body.appendChild(a); a.select();
+  let ok = false; try { ok = document.execCommand("copy"); } catch (e) {}
+  a.remove(); return ok;
+}
+document.addEventListener("click", async e => {
+  const el = e.target.closest("[data-copy]");
+  if (!el) return;
+  e.preventDefault(); e.stopPropagation();
+  if (await copyText(el.dataset.copy)) toast("آدرس کپی شد"); else toast("کپی نشد؛ آدرس را دستی انتخاب کنید", "err");
+});
+
+/* ---------- dialog ---------- */
+function dialog({title, text = "", input = null, ok = "تایید", danger = false, ic = "edit"}) {
+  return new Promise(res => {
+    const d = $("#dlg");
+    d.className = "dlg";
+    d.innerHTML = `<button class="dlg-x" data-r="0" title="بستن">${icon("x")}</button><div class="ic ${danger ? "dz" : ""}">${icon(ic)}</div><h3>${esc(title)}</h3>${text ? `<p>${esc(text)}</p>` : ""}` +
+      (input !== null ? `<input class="input" id="dlgIn" value="${esc(input)}" autocomplete="off">` : "") +
+      `<div class="acts"><button class="btn" data-r="0">انصراف</button><button class="btn ${danger ? "danger" : "primary"}" data-r="1">${esc(ok)}</button></div>`;
+    $("#scrim").classList.add("show");
+    const inp = $("#dlgIn");
+    const done = v => { $("#scrim").classList.remove("show"); document.removeEventListener("keydown", kd, true); res(v); };
+    const val = () => inp ? inp.value.trim() : true;
+    const kd = e => { if (e.key === "Escape") { e.stopPropagation(); done(null); } else if (e.key === "Enter") { e.preventDefault(); e.stopPropagation(); done(val() || null); } };
+    document.addEventListener("keydown", kd, true);
+    d.querySelectorAll("[data-r]").forEach(b => b.onclick = () => done(b.dataset.r === "1" ? (val() || null) : null));
+    $("#scrim").onclick = e => { if (e.target.id === "scrim") done(null); };
+    if (inp) { inp.focus(); const dot = inp.value.lastIndexOf("."); inp.setSelectionRange(0, dot > 0 ? dot : inp.value.length); }
+    else d.querySelector("[data-r='1']").focus();
+  });
+}
+
+/* ---------- data ---------- */
+async function load(p, keepSel) {
+  S.loading = !S.items.length || p !== S.cur;
+  if (S.loading) render();
+  try { const items = await api("/api/list?path=" + encodeURIComponent(p)); S.items = items; S.cur = p; }
+  catch (e) { if (e.message === "login") return; toast(e.message, "err"); S.loading = false; if (p !== "/") return load(p.startsWith("/:") && p.split("/").length > 2 ? spaceRoot(p) : "/"); render(); return; }
+  S.loading = false;
+  if (!keepSel) { S.sel.clear(); S.anchor = null; }
+  else for (const n of [...S.sel]) if (!S.items.some(i => i.name === n)) S.sel.delete(n);
+  history.replaceState(null, "", "#" + S.cur);
+  closeSide();
+  render();
+}
+// Persian-aware search key: unify Arabic/Persian letter variants, digits, ZWNJ/spaces, diacritics
+const nz = s => s.normalize("NFC").toLowerCase()
+  .replace(/[\u064A\u0649\u06CC\u06D0]/g, "\u06CC").replace(/[\u0643\u06A9]/g, "\u06A9")
+  .replace(/[\u0629\u06C0\u06C1\u06D5]/g, "\u0647").replace(/[\u0622\u0623\u0625\u0671]/g, "\u0627")
+  .replace(/\u0624/g, "\u0648").replace(/[\u06F0-\u06F9]/g, d => d.charCodeAt(0) - 0x06F0).replace(/[\u0660-\u0669]/g, d => d.charCodeAt(0) - 0x0660)
+  .replace(/[\u064B-\u065F\u0670\u0640\u200C\u200D\u200E\u200F\u202A-\u202E]/g, "")
+  .replace(/[\s_\-.]+/g, " ").trim();
+function visible() {
+  const q = nz(S.q);
+  let l = S.items.filter(i => (!q || nz(i.name).includes(q) || nz(i.name).replace(/ /g, "").includes(q.replace(/ /g, ""))) && (S.filter === "all" || group(kind(i)) === S.filter));
+  const {k, asc} = S.sort, m = asc ? 1 : -1;
+  const coll = new Intl.Collator("fa", {numeric: true, sensitivity: "base"});
+  l.sort((a, b) => {
+    if (a.isDir !== b.isDir) return a.isDir ? -1 : 1;
+    if (k === "size") return (a.size - b.size) * m || coll.compare(a.name, b.name);
+    if (k === "mtime") return (a.mtime - b.mtime) * m || coll.compare(a.name, b.name);
+    return coll.compare(a.name, b.name) * m;
+  });
+  return l;
+}
+
+/* ---------- render ---------- */
+function render() {
+  renderCrumbs(); renderNav(); renderSpaces(); renderBanner(); renderStore();
+  const v = $("#view");
+  let list = visible();
+  $("#vToggle use").setAttribute("href", S.view === "list" ? "#i-grid" : "#i-list"); $("#vToggle").title = S.view === "list" ? "نمای کارتی" : "نمای فهرست";
+  const files = S.items.filter(i => !i.isDir), dirs = S.items.length - files.length;
+  $("#stats").textContent = S.loading ? "در حال بارگذاری…" : [dirs ? faNum(dirs) + " پوشه" : "", files.length ? faNum(files.length) + " فایل" : "", files.length ? fmt(files.reduce((s, i) => s + i.size, 0)) : "", spaceOf(S.cur) ? (spaceOf(S.cur).kind === "inbox" ? "ارسالی‌ها" : isUnit(spaceOf(S.cur)) ? "واحد" : "اختصاصی") : ""].filter(Boolean).join(" · ") || "خالی";
+  if (S.loading) { v.innerHTML = `<div class="panel">${Array.from({length: 6}, (_, i) => `<div class="skel"><i style="width:36px;height:36px;border-radius:8px"></i><i style="width:${30 + (i * 13) % 35}%"></i></div>`).join("")}</div>`; renderSel(); return; }
+  if (!list.length) { v.innerHTML = emptyHtml(); renderSel(); const b = $("#emptyUp"); if (b) b.onclick = e => { e.stopPropagation(); upMenu(b.getBoundingClientRect()); }; return; }
+  if (S.view === "grid") {
+    v.innerHTML = `<div class="grid ${S.sel.size ? "selecting" : ""}">` + list.map(it => {
+      const p = join(S.cur, it.name);
+      return `<div class="gc ${S.sel.has(it.name) ? "sel" : ""}" data-n="${esc(it.name)}">
+        <label class="cb"><input type="checkbox" ${S.sel.has(it.name) ? "checked" : ""}></label>
+        <div class="pv" data-open>${thumb(it, p)}</div>
+        <div class="meta"><div><b title="${esc(it.name)}">${esc(it.name)}</b><small class="num">${it.isDir ? "پوشه" : fmt(it.size)}</small></div>
+        <button class="btn ghost sm icon" data-more>${icon("more")}</button></div></div>`;
+    }).join("") + "</div>";
+  } else {
+    const all = list.length && list.every(i => S.sel.has(i.name)), some = list.some(i => S.sel.has(i.name));
+    const sh = (k, t, c) => `<div class="${c || ""}"><button data-sort="${k}" class="${S.sort.k === k ? "on" + (S.sort.asc ? " asc" : "") : ""}">${t}${icon("down")}</button></div>`;
+    const dl = list.filter(i => i.isDir), fl = list.filter(i => !i.isDir);
+    const fcards = dl.length ? `<h2 class="sec">پوشه‌ها</h2><div class="fcards ${S.sel.size ? "selecting" : ""}">` + dl.map(it => `<div class="fcard ${S.sel.has(it.name) ? "sel" : ""}" data-n="${esc(it.name)}" title="${esc(it.name)} · ${when(it.mtime)}"><label class="cb"><input type="checkbox" ${S.sel.has(it.name) ? "checked" : ""}></label><span class="fc-ic" data-open>${FOLDER}</span><span class="fc-n" data-open><b>${esc(it.name)}</b></span><button class="btn ghost sm icon more" data-more>${icon("more")}</button></div>`).join("") + `</div>` : "";
+    list = fl;
+    v.innerHTML = fcards + (fl.length ? `<h2 class="sec">فایل‌ها</h2>` : "") + (!fl.length ? "" : `<div class="panel ${S.sel.size ? "selecting" : ""}"><div class="thead"><label class="cb"><input type="checkbox" id="selAll" ${all ? "checked" : ""}></label>${sh("name", "نام")}${sh("mtime", "آخرین تغییر", "hd-d")}${sh("size", "اندازه", "hd-s")}<div></div></div>` +
+      list.map(it => {
+        const p = join(S.cur, it.name), meta = it.isDir ? "پوشه" : fmt(it.size);
+        return `<div class="tr ${S.sel.has(it.name) ? "sel" : ""}" data-n="${esc(it.name)}">
+          <label class="cb"><input type="checkbox" ${S.sel.has(it.name) ? "checked" : ""}></label>
+          <div class="cell-n"><div class="fi" data-open>${thumb(it, p)}</div><div class="nm" data-open><b title="${esc(it.name)}">${esc(it.name)}</b><small class="num">${meta} · ${when(it.mtime)}</small></div></div>
+          <div class="cell-d num">${when(it.mtime)}</div>
+          <div class="cell-s num">${it.isDir ? "—" : fmt(it.size)}</div>
+          <div><button class="btn ghost sm icon more" data-more>${icon("more")}</button></div></div>`;
+      }).join("") + "</div>");
+    list = visible();
+    const sa = $("#selAll"); if (sa) { sa.indeterminate = some && !all; sa.onchange = () => { list.forEach(i => sa.checked ? S.sel.add(i.name) : S.sel.delete(i.name)); render(); }; }
+    v.querySelectorAll("[data-sort]").forEach(b => b.onclick = () => { const k = b.dataset.sort; S.sort = {k, asc: S.sort.k === k ? !S.sort.asc : k === "name"}; try { localStorage.setItem("lfs-sort", JSON.stringify(S.sort)); } catch {} render(); });
+  }
+  v.querySelectorAll("[data-n]").forEach(el => bindItem(el, list));
+  renderSel();
+}
+function emptyHtml() {
+  const searching = S.q || S.filter !== "all";
+  return `<div class="panel"><div class="empty">
+    <svg class="ill" viewBox="0 0 180 140" fill="none"><ellipse cx="90" cy="124" rx="62" ry="8" fill="var(--surface-3)"/><path d="M38 40a8 8 0 0 1 8-8h28l10 10h50a8 8 0 0 1 8 8v58a8 8 0 0 1-8 8H46a8 8 0 0 1-8-8z" fill="var(--primary-soft)" stroke="var(--primary)" stroke-opacity=".35" stroke-width="2"/><path d="M38 58a8 8 0 0 1 8-8h88a8 8 0 0 1 8 8v50a8 8 0 0 1-8 8H46a8 8 0 0 1-8-8z" fill="var(--surface)" stroke="var(--primary)" stroke-opacity=".35" stroke-width="2"/>${searching ? `<circle cx="88" cy="82" r="13" stroke="var(--primary)" stroke-width="3"/><path d="m98 92 9 9" stroke="var(--primary)" stroke-width="3" stroke-linecap="round"/>` : `<path d="M90 96V72m0 0 9 9m-9-9-9 9" stroke="var(--primary)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`}</svg>
+    <h3>${searching ? "موردی پیدا نشد" : (spaceOf(S.cur) && S.cur === spaceRoot(S.cur) ? "پوشه‌ی اختصاصی هنوز خالی است" : "این پوشه خالی است")}</h3>
+    <p>${searching ? "عبارت جستجو یا فیلتر نوع فایل را تغییر دهید." : (S.ro ? "هنوز فایلی در این پوشه قرار نگرفته است." : "فایل یا پوشه را به اینجا بکشید یا از دکمه‌ی زیر استفاده کنید.")}</p>
+    ${!searching && !S.ro ? `<button class="btn primary" id="emptyUp">${icon("upload")}آپلود</button>` : ""}</div></div>`;
+}
+function renderCrumbs() {
+  const sp = spaceOf(S.cur), rootP = spaceRoot(S.cur);
+  const parts = S.cur.slice(rootP.length).split("/").filter(Boolean);
+  const rootName = sp ? (S.me && S.me.id === sp.id ? "پوشه‌ی من" : sp.name) : "فضای مشترک";
+  let h = (sp ? `<button data-p="/">فضای مشترک</button>` + icon("chev") : "") + `<button data-p="${esc(rootP)}">${sp ? icon("lock").replace('class="i"', 'class="i" style="width:15px;height:15px;vertical-align:-2px;margin-inline-end:4px"') : ""}${esc(rootName)}</button>`, acc = rootP === "/" ? "" : rootP;
+  for (const x of parts) { acc += "/" + x; h += icon("chev") + `<button data-p="${esc(acc)}">${esc(x)}</button>`; }
+  $("#crumbs").innerHTML = h;
+  $("#ptitle").textContent = parts.at(-1) || rootName;
+  $("#heroIc").innerHTML = parts.length ? icon("files") : (sp ? avatar(sp) : icon("globe"));
+  $("#crumbs").querySelectorAll("button").forEach(b => b.onclick = () => load(b.dataset.p));
+  $("#dropTo").textContent = "به «" + (parts.at(-1) || rootName) + "»";
+  document.title = (parts.at(-1) || rootName) + " · گنجینه";
+}
+function renderNav() {
+  const cnt = {}; S.items.forEach(i => { const g = group(kind(i)); if (g) cnt[g] = (cnt[g] || 0) + 1; });
+  let any = false;
+  document.querySelectorAll("#nav button").forEach(b => { const f = b.dataset.f; b.classList.toggle("on", f === S.filter); const c = b.querySelector(".c"); if (c) c.textContent = cnt[f] ? faNum(cnt[f]) : ""; if (f !== "all") { b.hidden = !cnt[f] && S.filter !== f; any = any || !b.hidden; } });
+  $("#nav").hidden = !any;
+}
+function renderSel() {
+  const n = S.sel.size;
+  $("#selbar").classList.toggle("show", n > 0);
+  $("#selCount").textContent = faNum(n) + " مورد انتخاب شد";
+}
+
+/* ---------- interactions ---------- */
+function bindItem(el, list) {
+  const name = el.dataset.n, it = S.items.find(i => i.name === name);
+  const cb = el.querySelector(".cb input");
+  cb.onclick = e => { e.stopPropagation(); toggleSel(name, e.shiftKey, list); };
+  el.querySelectorAll("[data-open]").forEach(o => o.onclick = e => { e.stopPropagation(); if (e.ctrlKey || e.metaKey || e.shiftKey) return clickSel(e, name, list); open(it); });
+  el.querySelector("[data-more]").onclick = e => {
+    e.stopPropagation(); const r = e.currentTarget.getBoundingClientRect(); // read before render() replaces the button
+    if (!S.sel.has(name)) { S.sel.clear(); S.sel.add(name); render(); }
+    showMenu(r, it);
+  };
+  el.onclick = e => clickSel(e, name, list);
+  el.ondblclick = () => open(it);
+  el.oncontextmenu = e => { e.preventDefault(); if (!S.sel.has(name)) { S.sel.clear(); S.sel.add(name); S.anchor = name; render(); } showMenu({left: e.clientX, right: e.clientX, top: e.clientY, bottom: e.clientY}, it); };
+}
+function clickSel(e, name, list) {
+  if (e.shiftKey && S.anchor) {
+    const a = list.findIndex(i => i.name === S.anchor), b = list.findIndex(i => i.name === name);
+    if (!(e.ctrlKey || e.metaKey)) S.sel.clear();
+    list.slice(Math.min(a, b), Math.max(a, b) + 1).forEach(i => S.sel.add(i.name));
+  } else if (e.ctrlKey || e.metaKey || S.sel.size) {
+    S.sel.has(name) ? S.sel.delete(name) : S.sel.add(name); S.anchor = name;
+  } else { S.sel.clear(); S.sel.add(name); S.anchor = name; }
+  render();
+}
+function toggleSel(name, shift, list) {
+  if (shift && S.anchor) return clickSel({shiftKey: true, ctrlKey: true}, name, list);
+  S.sel.has(name) ? S.sel.delete(name) : S.sel.add(name); S.anchor = name; render();
+}
+
+function showMenu(r, it) {
+  const m = $("#menu"), multi = S.sel.size > 1;
+  const b = (a, ic, t, k, cls = "") => `<button data-a="${a}" class="${cls}">${icon(ic)}<span>${t}</span>${k ? `<span class="kbd">${k}</span>` : ""}</button>`;
+  m.innerHTML = multi
+    ? b("zip", "download", `دانلود ${faNum(S.sel.size)} مورد (zip)`) + (S.ro ? "" : "<hr>" + b("del", "trash", "حذف موارد انتخاب‌شده", "Del", "dz"))
+    : (it.isDir ? b("open", "open", "باز کردن", "Enter") + b("zip", "zip", "دانلود به‌صورت zip") : b("open", "eye", "پیش‌نمایش", "Enter") + b("dl", "download", "دانلود")) +
+      (S.ro ? "" : "<hr>" + b("ren", "edit", "تغییر نام", "F2") + b("del", "trash", "حذف", "Del", "dz"));
+  m.classList.add("show");
+  const W = m.offsetWidth, H = m.offsetHeight;
+  let x = r.right - W, y = r.bottom + 4;
+  if (x < 8) x = Math.min(r.left, innerWidth - W - 8);
+  if (y + H > innerHeight - 8) y = Math.max(8, r.top - H - 4);
+  m.style.left = Math.max(8, x) + "px"; m.style.top = y + "px";
+  m.querySelectorAll("button").forEach(btn => btn.onclick = () => { hideMenu(); act(btn.dataset.a, it); });
+}
+const hideMenu = () => { $("#menu").classList.remove("show"); $("#newBtn").classList.remove("open"); $("#upBtn").classList.remove("open"); };
+function ripple(b, e) {
+  const r = b.getBoundingClientRect(), d = Math.max(r.width, r.height), s = document.createElement("span");
+  s.className = "rip"; s.style.width = s.style.height = d + "px";
+  s.style.left = ((e.clientX || r.left + r.width / 2) - r.left - d / 2) + "px"; s.style.top = ((e.clientY || r.top + r.height / 2) - r.top - d / 2) + "px";
+  b.appendChild(s); setTimeout(() => s.remove(), 650);
+}
+document.addEventListener("click", e => { if (!e.target.closest("#menu")) hideMenu(); });
+addEventListener("resize", hideMenu); $("#content").addEventListener("scroll", hideMenu);
+
+function selected() { return S.items.filter(i => S.sel.has(i.name)); }
+async function act(a, it) {
+  try {
+    if (a === "open") return open(it);
+    if (a === "dl") return download(it);
+    if (a === "zip") return zipDl(S.sel.size > 1 ? selected().map(i => i.name) : [it.name]);
+    if (a === "ren") return rename(it);
+    if (a === "del") return del(S.sel.size > 1 ? selected() : [it]);
+  } catch (e) { if (e.message !== "login") toast(e.message, "err"); }
+}
+function download(it) { const a = document.createElement("a"); a.href = "/dl" + enc(join(S.cur, it.name)); a.download = it.name; document.body.appendChild(a); a.click(); a.remove(); }
+function zipDl(names) {
+  if (names.length === 1) { const it = S.items.find(i => i.name === names[0]); if (it && !it.isDir) return download(it); }
+  location.href = "/api/zip?path=" + encodeURIComponent(S.cur) + names.map(n => "&n=" + encodeURIComponent(n)).join("");
+  toast("آماده‌سازی فایل zip…");
+}
+async function rename(it) {
+  const n = await dialog({title: "تغییر نام", text: it.isDir ? "نام جدید پوشه را وارد کنید." : "نام جدید فایل را وارد کنید.", input: it.name, ok: "ذخیره"});
+  if (!n || n === it.name) return;
+  try { await api("/api/rename", {path: join(S.cur, it.name), name: n}); S.sel.clear(); S.sel.add(n); await load(S.cur, true); toast("نام تغییر کرد"); }
+  catch (e) { if (e.message !== "login") toast(e.message, "err"); }
+}
+async function del(list) {
+  if (!list.length || S.ro) return;
+  const one = list.length === 1, hasDir = list.some(i => i.isDir);
+  const ok = await dialog({title: one ? `حذف «${list[0].name}»؟` : `حذف ${faNum(list.length)} مورد؟`, text: (hasDir ? "پوشه‌ها با همه‌ی محتوایشان " : "") + "به سطل زباله می‌روند؛ مدیر سرور می‌تواند آن‌ها را بازیابی کند.", ok: "انتقال به سطل زباله", danger: true, ic: "trash"});
+  if (!ok) return;
+  let fail = 0;
+  for (const it of list) { try { await api("/api/delete", {path: join(S.cur, it.name)}); } catch (e) { if (e.message === "login") return; fail++; } }
+  await load(S.cur);
+  fail ? toast(faNum(fail) + " مورد حذف نشد", "err") : toast(one ? "حذف شد" : faNum(list.length) + " مورد حذف شد");
+}
+async function mkdir() {
+  const n = await dialog({title: "پوشه‌ی جدید", text: "یک نام برای پوشه انتخاب کنید.", input: "پوشه جدید", ok: "ساختن", ic: "folder-plus"});
+  if (!n) return;
+  try { await api("/api/mkdir", {path: S.cur, name: n}); S.sel.clear(); S.sel.add(n); await load(S.cur, true); toast("پوشه ساخته شد"); }
+  catch (e) { if (e.message !== "login") toast(e.message, "err"); }
+}
+
+/* ---------- preview ---------- */
+let PV = {list: [], i: 0};
+const noOpen = it => /^(html?|xhtml|shtml|mht|mhtml|svg|svgz|xml|xsl|js|mjs|hta)$/.test(ext(it.name));
+function open(it) {
+  if (it.isDir) return load(join(S.cur, it.name));
+  if (noOpen(it)) return download(it); // web pages: download only, never opened
+  const list = visible().filter(i => !i.isDir && !noOpen(i));
+  PV = {list, i: list.findIndex(i => i.name === it.name)};
+  $("#pvw").classList.add("show"); showPv();
+}
+function showPv() {
+  const it = PV.list[PV.i], url = "/dl" + enc(join(S.cur, it.name)), k = kind(it), e = ext(it.name), st = $("#pvStage");
+  $("#pvName").textContent = it.name;
+  $("#pvIdx").textContent = PV.list.length > 1 ? faNum(PV.i + 1) + " از " + faNum(PV.list.length) : "";
+  let h;
+  if (k === "image") h = `<img src="${url}?view=1" alt="">`;
+  else if (k === "video") h = `<video src="${url}?view=1" controls autoplay></video>`;
+  else if (k === "audio") h = `<audio src="${url}?view=1" controls autoplay></audio>`;
+  else if (k === "pdf") h = `<iframe src="${url}?view=1"></iframe>`;
+  else if (k === "code" && it.size < 2e6) { h = `<pre>در حال بارگذاری…</pre>`; fetch(url + "?view=1").then(r => r.text()).then(t => { const p = st.querySelector("pre"); if (p) p.textContent = t; }); }
+  else h = `<div class="nofile">${fileSvg(it)}<p>پیش‌نمایش برای این نوع فایل در دسترس نیست.</p><p class="num" style="color:#8a93a6">${fmt(it.size)}</p><button class="btn primary" id="pvDl2">${icon("download")}دانلود فایل</button></div>`;
+  st.innerHTML = h + (PV.list.length > 1 ? `<button class="nav-b prev" id="pvPrev">${icon("chev-r")}</button><button class="nav-b next" id="pvNext">${icon("chev")}</button>` : "");
+  const d2 = $("#pvDl2"); if (d2) d2.onclick = () => download(it);
+  if ($("#pvPrev")) { $("#pvPrev").onclick = () => pvGo(-1); $("#pvNext").onclick = () => pvGo(1); }
+}
+const pvGo = d => { PV.i = (PV.i + d + PV.list.length) % PV.list.length; showPv(); };
+const pvClose = () => { $("#pvw").classList.remove("show"); $("#pvStage").innerHTML = ""; };
+$("#pvClose").onclick = pvClose;
+$("#pvDl").onclick = () => download(PV.list[PV.i]);
+$("#pvStage").onclick = e => { if (e.target.id === "pvStage") pvClose(); };
+
+/* ---------- uploads (files, whole folders, send to someone) ---------- */
+const UQ = {items: [], active: 0, stopped: false, made: new Map(), bytes: 0, done: 0, t0: 0, xhrs: new Set()};
+const MAXROWS = 150, PAR = 3;
+function pickFiles(dest = S.cur) { if (S.ro) return; UQ.pickDest = dest; $("#fileIn").click(); }
+function pickDir(dest = S.cur) { if (S.ro) return; UQ.pickDest = dest; $("#dirIn").click(); }
+const spaceRoot = p => p.startsWith("/:") ? "/" + p.split("/")[1] : "/";
+// entries: [{f: File, rel: "folder/sub/name.ext" or "name.ext"}]
+function enqueue(entries, dest = S.cur) {
+  if (S.ro || !entries.length) return;
+  if (!UQ.items.some(i => i.st === "wait" || i.st === "up")) { UQ.items = []; UQ.bytes = 0; UQ.done = 0; UQ.t0 = Date.now(); $("#uplList").innerHTML = ""; UQ.made = new Map(); }
+  UQ.stopped = false;
+  for (const {f, rel} of entries) {
+    const dir = rel.includes("/") ? rel.slice(0, rel.lastIndexOf("/")) : "";
+    UQ.items.push({id: "u" + Math.random().toString(36).slice(2), f, dest: dir ? join(dest, dir) : dest, base: dest, rel, st: "wait"});
+  }
+  $("#upl").classList.add("show"); $("#upl").classList.remove("min");
+  uplHead(); pump();
+}
+function uplHead() {
+  const it = UQ.items, tot = it.length, ok = it.filter(i => i.st === "ok").length, err = it.filter(i => i.st === "err").length;
+  const total = it.reduce((s, i) => s + i.f.size, 0), sent = UQ.done + it.filter(i => i.st === "up").reduce((s, i) => s + (i.p || 0), 0);
+  const busy = ok + err < tot && !UQ.stopped;
+  $("#uplTitle").textContent = busy ? `در حال آپلود ${faNum(ok + err + 1)} از ${faNum(tot)}` : (UQ.stopped && ok + err < tot ? "آپلود متوقف شد" : err ? `${faNum(ok)} آپلود شد، ${faNum(err)} ناموفق` : `${faNum(ok)} فایل آپلود شد`);
+  $("#uplBar").style.width = (total ? Math.min(100, sent / total * 100) : (tot ? 100 : 0)) + "%";
+  const sp = sent / Math.max(.5, (Date.now() - UQ.t0) / 1000);
+  $("#uplInfo").textContent = `${fmt(sent)} از ${fmt(total)}` + (busy && sent ? ` · ${fmt(sp)}/ث` : "");
+  $("#uplSum").classList.toggle("done", !busy && !err && tot > 0);
+  $("#uplStop").hidden = !busy;
+  $("#uplRetry").hidden = busy || !(err || (UQ.stopped && ok + err < tot));
+}
+function uplRow(u) {
+  if (u.row) return u.row;
+  const row = document.createElement("div");
+  row.className = "ui";
+  row.innerHTML = `<div class="fi">${fileSvg({name: u.f.name})}</div><div class="t"><b title="${esc(u.rel)}">${esc(u.rel)}</b><small class="num">${fmt(u.f.size)}</small><div class="pb"><i></i></div></div><svg class="i st"><use href="#i-upload"/></svg>`;
+  $("#uplList").prepend(row);
+  const rows = $("#uplList").children;
+  while (rows.length > MAXROWS) { const last = rows[rows.length - 1]; const o = UQ.items.find(i => i.row === last); if (o) o.row = null; last.remove(); }
+  return (u.row = row);
+}
+// make the sub-folders of a dropped/selected folder on the server (once each)
+function ensureDir(p, base) {
+  if (p === base || UQ.made.has(p)) return UQ.made.get(p) || Promise.resolve();
+  const parent = p.slice(0, p.lastIndexOf("/")) || "/", name = p.slice(p.lastIndexOf("/") + 1);
+  const pr = ensureDir(parent, base).then(() => api("/api/mkdir", {path: parent, name}).catch(e => { if (e.message === "login") throw e; }));
+  UQ.made.set(p, pr);
+  return pr;
+}
+function pump() {
+  while (!UQ.stopped && UQ.active < PAR) {
+    const u = UQ.items.find(i => i.st === "wait");
+    if (!u) break;
+    UQ.active++; u.st = "up";
+    upOne(u).finally(() => {
+      UQ.active--; uplHead();
+      if (!UQ.items.some(i => i.st === "wait" || i.st === "up")) uploadsDone();
+      pump();
+    });
+  }
+  uplHead();
+}
+let refreshT;
+function uploadsDone() {
+  const it = UQ.items, ok = it.filter(i => i.st === "ok"), err = it.filter(i => i.st === "err").length;
+  const bases = [...new Set(ok.map(i => i.base))];
+  for (const b of bases) {
+    const sp = spaceOf(b);
+    if (sp && !canOpen(sp.id)) toast(`${faNum(ok.filter(i => i.base === b).length)} فایل برای «${sp.name}» ارسال شد`);
+  }
+  if (!err && ok.length && !bases.some(b => spaceOf(b) && !canOpen(spaceOf(b).id))) toast(`${faNum(ok.length)} فایل آپلود شد`);
+  load(S.cur, true);
+}
+async function upOne(u) {
+  const row = UQ.items.length <= MAXROWS || u.f.size > 8e6 ? uplRow(u) : null;
+  try { await ensureDir(u.dest, u.base); } catch (e) { if (e.message === "login") { location.href = "/login"; return; } }
+  return new Promise(res => {
+    const r = row || u.row, bar = r && r.querySelector(".pb i"), sm = r && r.querySelector("small");
+    const fd = new FormData(); fd.append("file", u.f, u.f.name);
+    const x = new XMLHttpRequest(); UQ.xhrs.add(x);
+    x.open("POST", "/api/upload?path=" + encodeURIComponent(u.dest));
+    const t0 = Date.now();
+    x.upload.onprogress = e => {
+      if (!e.lengthComputable) return;
+      u.p = e.loaded * u.f.size / e.total;
+      if (bar) { bar.style.width = e.loaded / e.total * 100 + "%"; sm.textContent = `${fmt(e.loaded)} از ${fmt(e.total)} · ${fmt(e.loaded / Math.max(.2, (Date.now() - t0) / 1000))}/ث`; }
+      uplHead();
+    };
+    x.onloadend = () => {
+      UQ.xhrs.delete(x); u.p = 0;
+      if (x.status === 401) { location.href = "/login"; return res(); }
+      const ok = x.status === 200;
+      if (!ok && UQ.stopped && x.status === 0) { u.st = "wait"; if (r) r.remove(), u.row = null; return res(); }
+      u.st = ok ? "ok" : "err";
+      if (ok) UQ.done += u.f.size;
+      const rr = ok ? u.row : uplRow(u);
+      if (rr) {
+        rr.classList.add(ok ? "ok" : "err"); rr.querySelector(".pb i").style.width = "100%";
+        let msg = "ناموفق";
+        try { msg = errFa(JSON.parse(x.responseText).error) || msg; } catch {}
+        rr.querySelector("small").textContent = ok ? fmt(u.f.size) + " · کامل شد" : (x.status ? msg : "اتصال قطع شد");
+        rr.querySelector(".st use").setAttribute("href", ok ? "#i-check" : "#i-alert");
+      }
+      res();
+    };
+    x.send(fd);
+  });
+}
+$("#uplStop").onclick = () => { UQ.stopped = true; UQ.xhrs.forEach(x => x.abort()); uplHead(); };
+$("#uplRetry").onclick = () => { UQ.items.forEach(i => { if (i.st === "err") { i.st = "wait"; if (i.row) { i.row.remove(); i.row = null; } } }); UQ.stopped = false; UQ.t0 = Date.now() - 1; pump(); };
+$("#uplMin").onclick = () => $("#upl").classList.toggle("min");
+$("#uplClose").onclick = () => {
+  if (UQ.items.some(i => i.st === "wait" || i.st === "up") && !UQ.stopped) return toast("آپلود در حال انجام است؛ اول «توقف» را بزنید", "err");
+  $("#upl").classList.remove("show"); $("#uplList").innerHTML = ""; UQ.items = [];
+};
+addEventListener("beforeunload", e => { if (UQ.items.some(i => i.st === "up" || i.st === "wait") && !UQ.stopped) { e.preventDefault(); e.returnValue = ""; } });
+
+// read a dropped folder tree (Chrome / Edge / Firefox)
+async function dropEntries(dt) {
+  const roots = [...dt.items || []].map(i => i.webkitGetAsEntry && i.webkitGetAsEntry()).filter(Boolean);
+  if (!roots.length) return [...dt.files].map(f => ({f, rel: f.name}));
+  const out = [];
+  const readAll = r => new Promise(res => { const acc = []; const step = () => r.readEntries(es => { if (!es.length) return res(acc); acc.push(...es); step(); }, () => res(acc)); step(); });
+  const walk = async (e, pre) => {
+    if (e.isFile) { const f = await new Promise(res => e.file(res, () => res(null))); if (f && !/^(thumbs\.db|desktop\.ini)$/i.test(f.name)) out.push({f, rel: pre + f.name}); }
+    else if (e.isDirectory) {
+      const kids = await readAll(e.createReader());
+      if (!kids.length) out.push({dir: pre + e.name});
+      for (const k of kids) await walk(k, pre + e.name + "/");
+    }
+  };
+  for (const e of roots) await walk(e, "");
+  return out;
+}
+async function enqueueTree(entries, dest) {
+  // empty folders have no files: create them directly
+  const dirs = entries.filter(e => e.dir), files = entries.filter(e => e.f);
+  for (const d of dirs) { UQ.made = UQ.made.size ? UQ.made : new Map(); await ensureDir(join(dest, d.dir), dest).catch(() => {}); }
+  if (files.length) enqueue(files, dest); else if (dirs.length) { toast("پوشه ساخته شد"); load(S.cur, true); }
+}
+
+/* ---------- spaces: shared + private folders ---------- */
+const inboxName = () => "فایل‌های دریافتی از شعب";
+const spaceOf = p => { if (!p.startsWith("/:")) return null; const id = p.split("/")[1].slice(1); if (id === "inbox") return {id, name: inboxName(), kind: "inbox"}; return S.people.find(x => x.id === id) || {id, name: "پوشه‌ی اختصاصی"}; };
+const canOpen = id => (id === "inbox" && !!S.inbox) || S.admin || (S.me && S.me.id === id) || S.people.some(p => p.id === id && p.member);
+const isUnit = p => p && p.kind === "unit";
+const initial = n => (n || "?").trim().charAt(0).toUpperCase();
+const hue = s => { let h = 0; for (const c of s) h = (h * 31 + c.charCodeAt(0)) % 360; return `hsl(${h} 62% 52%)`; };
+const avatar = (p, cls = "av") => `<span class="${cls}" style="background:${p.kind === "inbox" ? "var(--primary)" : hue(p.id)}">${p.kind === "inbox" ? icon("send").replace('class="i"', 'class="i" style="width:55%;height:55%"') : isUnit(p) ? icon("users").replace('class="i"', 'class="i" style="width:58%;height:58%"') : esc(initial(p.name))}</span>`;
+function renderSpaces() {
+  const root = spaceRoot(S.cur);
+  const item = (p, ic, label, tag) => `<button class="${root === p ? "on" : ""}" data-s="${esc(p)}">${ic}<span class="l">${esc(label)}</span>${tag ? `<span class="tg">${tag}</span>` : ""}</button>`;
+  const units = S.people.filter(p => isUnit(p) && p.member), others = S.people.filter(p => !isUnit(p) && (!S.me || p.id !== S.me.id));
+  let h = item("/", icon("globe"), "فضای مشترک");
+  if (S.me) h += item("/:" + S.me.id, icon("lock"), "پوشه‌ی من");
+  if (S.inbox) h += item("/:inbox", icon("send"), inboxName());
+  if (units.length) h += `<h6>واحدها</h6>` + units.map(p => item("/:" + p.id, icon("users"), p.name)).join("");
+  if (S.admin && others.length) h += `<h6>پوشه‌ی سیستم‌ها</h6>` + others.map(p => item("/:" + p.id, avatar(p), p.name)).join("");
+  const n = $("#spaces"); n.innerHTML = h;
+  n.querySelectorAll("[data-s]").forEach(b => b.onclick = () => goSpace(b.dataset.s));
+  $("#admBtn").hidden = $("#binBtn").hidden = $("#admBtn2").hidden = !S.admin;
+  $("#shareBtn").hidden = !S.people.some(p => !S.me || p.id !== S.me.id);
+  $("#dash").hidden = true;
+}
+function renderDisk(i) { S.disk = i.diskTotal ? {free: i.diskFree, total: i.diskTotal} : null; }
+function renderStore() {
+  const r = $("#store");
+  if (!S.disk) { r.hidden = true; return; }
+  const used = S.disk.total - S.disk.free, pc = Math.max(0, Math.min(1, used / S.disk.total)), low = S.disk.free < 5 * 2 ** 30;
+  r.hidden = false;
+  r.innerHTML = `<div class="st-h">${icon("server")}<b>فضای سرور</b></div><div class="st-bar ${low ? "low" : ""}"><i style="width:${(pc * 100).toFixed(1)}%"></i></div><small class="num">${fmt(used)} از ${fmt(S.disk.total)} استفاده شده</small>${low ? `<small class="st-low">فقط ${fmt(S.disk.free)} جا مانده است</small>` : ""}`;
+}
+const renderRail = renderStore;
+function goSpace(p) { S.filter = "all"; S.q = ""; $("#q").value = ""; closeSide(); load(p); }
+function renderBanner() {
+  const sp = spaceOf(S.cur), b = $("#banner");
+  if (!sp) { b.innerHTML = ""; return; }
+  const mine = S.me && S.me.id === sp.id;
+  const sendUrl = location.origin + location.pathname.replace(/\/[^/]*$/, "/") + "s";
+  const u = sp.kind === "inbox" ? `<b>${esc(inboxName())}</b><small>فایل‌هایی که از صفحه‌ی ارسال می‌رسند، به ترتیب «شعبه › تاریخ › کد پرسنلی» پوشه‌بندی می‌شوند. آدرس ارسال: ${copyUrl(sendUrl)}</small>` : isUnit(sp) ? `<b>پوشه‌ی مشترک «${esc(sp.name)}»</b><small>فقط سیستم‌های عضو این واحد (و مدیر سرور) این پوشه را می‌بینند. دیگران فقط می‌توانند به آن فایل بفرستند.${sp.send ? ` آدرس ارسال شعب برای این واحد: ${copyUrl(sendBase() + sp.send)}` : ""}</small>` : "";
+  b.innerHTML = `<div class="banner lock"><div class="bi">${icon(sp.kind === "inbox" ? "send" : u ? "users" : "lock")}</div><div>${u || `<b>${mine ? "پوشه‌ی اختصاصی شما" : "پوشه‌ی اختصاصی «" + esc(sp.name) + "»"}</b><small>${mine ? "فقط این سیستم (و مدیر سرور) این پوشه را می‌بیند. دیگران فقط می‌توانند برایتان فایل بفرستند." : "فقط سیستم «" + esc(sp.name) + "» و مدیر سرور این پوشه را می‌بینند."}</small>`}</div><button class="btn back" id="backShared">${icon("chev-r")}بازگشت به فضای مشترک</button></div>`;
+  $("#backShared").onclick = () => goSpace("/");
+}
+function renderMe() {
+  const m = $("#me");
+  if (!S.ip) { m.hidden = true; return; }
+  m.hidden = false;
+  const local = /^(127\.|::1$)/.test(S.ip);
+  const who = S.myName || (S.me ? S.me.name : S.admin ? "مدیر سرور" : "مهمان");
+  const sub = S.admin ? "مدیر سرور" : S.me ? S.me.name : local ? "" : S.ip;
+  const av = `<span class="av" style="background:${S.admin && !S.myName ? "var(--primary)" : hue(who)}">${esc(initial(who))}</span>`;
+  m.innerHTML = `${av}<div class="mt"><b>${esc(who)}</b>${sub && sub !== who ? `<small>${esc(sub)}</small>` : ""}</div>`;
+  m.title = (S.me ? "سیستم: " + S.me.name + " · " : "") + (local ? "روی خود سرور" : "IP: " + S.ip);
+}
+
+/* ---------- upload menu / send to ---------- */
+function upMenu(r, below) {
+  const m = $("#menu"), b = (a, ic, t) => `<button data-a="${a}">${icon(ic)}<span>${t}</span></button>`;
+  m.innerHTML = b("up", "upload", "آپلود فایل") + b("dir", "folder-up", "آپلود پوشه (با زیرپوشه‌ها)") + b("mk", "folder-plus", "پوشه‌ی جدید") +
+    (S.people.some(p => !S.me || p.id !== S.me.id) ? "<hr>" + b("send", "send", "ارسال برای شخص یا واحد…") : "");
+  m.classList.add("show");
+  const W = m.offsetWidth, H = m.offsetHeight;
+  let x = r.right - W, y = below ? r.top : r.bottom + 6;
+  if (x < 8) x = Math.min(r.left, innerWidth - W - 8);
+  if (y + H > innerHeight - 8) y = Math.max(8, r.top - H - 6);
+  m.style.left = Math.max(8, x) + "px"; m.style.top = y + "px";
+  m.querySelectorAll("button").forEach(btn => btn.onclick = () => {
+    hideMenu(); closeSide();
+    ({up: () => pickFiles(), dir: () => pickDir(), mk: mkdir, send: sendTo})[btn.dataset.a]();
+  });
+}
+function sheet(html, wide) {
+  return new Promise(res => {
+    const d = $("#dlg"); d.className = "dlg" + (wide ? " wide" : ""); d.innerHTML = `<button class="dlg-x" data-r="" title="بستن">${icon("x")}</button>` + html;
+    $("#scrim").classList.add("show");
+    const done = v => { $("#scrim").classList.remove("show"); d.className = "dlg"; document.removeEventListener("keydown", kd, true); res(v); };
+    const kd = e => { if (e.key === "Escape") { e.stopPropagation(); done(null); } };
+    document.addEventListener("keydown", kd, true);
+    $("#scrim").onclick = e => { if (e.target.id === "scrim") done(null); };
+    d.querySelectorAll("[data-r]").forEach(b => b.onclick = () => done(b.dataset.r));
+    d.done = done;
+  });
+}
+async function sendTo() {
+  const ps = S.people.filter(p => !S.me || p.id !== S.me.id).sort((a, b) => isUnit(b) - isUnit(a));
+  const who = await sheet(`<div class="ic">${icon("send")}</div><h3>ارسال برای شخص یا واحد</h3><p>فایل‌ها مستقیم به پوشه‌ی آن شخص یا واحد می‌روند و فقط خودشان آن را می‌بینند. اگر عضو آن نباشید، بعد از ارسال به فایل‌ها دسترسی ندارید.</p>
+    <div class="plist">${ps.map(p => `<button class="pi" data-r="${p.id}">${avatar(p)}<div class="t"><b>${esc(p.name)}</b>${isUnit(p) ? "<small>پوشه‌ی مشترک واحد</small>" : ""}</div>${icon("chev")}</button>`).join("")}</div>
+    <div class="acts"><button class="btn" data-r="">انصراف</button></div>`);
+  if (!who) return;
+  const p = ps.find(x => x.id === who);
+  const what = await sheet(`<div class="ic">${avatar(p).replace('class="av"', 'class="av" style="width:44px;height:44px;border-radius:12px;font-size:18px;background:' + hue(p.id) + '"')}</div><h3>ارسال برای «${esc(p.name)}»</h3><p>چه چیزی می‌خواهید بفرستید؟ (می‌توانید فایل یا پوشه را روی این صفحه هم بکشید.)</p>
+    <div class="two"><button class="pi" data-r="f">${icon("upload")}<b>فایل‌ها</b><small>یک یا چند فایل</small></button><button class="pi" data-r="d">${icon("folder-up")}<b>یک پوشه</b><small>با همه‌ی زیرپوشه‌ها</small></button></div>
+    <div class="acts"><button class="btn" data-r="">انصراف</button></div>`);
+  if (what === "f") pickFiles("/:" + p.id); else if (what === "d") pickDir("/:" + p.id);
+}
+
+/* ---------- admin settings (tabs) ---------- */
+const sendBase = () => location.origin + location.pathname.replace(/\/[^/]*$/, "/");
+const TABS = [["units", "users", "سیستم‌ها و واحدها"], ["send", "send", "ارسال به واحد"], ["net", "globe", "شبکه"], ["admins", "shield", "مدیران"], ["bin", "trash", "سطل زباله"]];
+const fixDigits = v => String(v).replace(/[۰-۹]/g, d => "۰۱۲۳۴۵۶۷۸۹".indexOf(d)).replace(/[٠-٩]/g, d => "٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/٫/g, ".");
+const octOK = x => /^\d{1,3}$/.test(x) && +x <= 255;
+function toIp(t, prefix) { t = fixDigits(t).trim(); if (octOK(t) && prefix) return prefix + (+t); const p = t.split("."); return p.length === 4 && p.every(octOK) ? p.map(Number).join(".") : ""; }
+const agoFa = s => s < 60 ? "همین حالا" : s < 3600 ? faNum(Math.floor(s / 60)) + " دقیقه پیش" : s < 86400 ? faNum(Math.floor(s / 3600)) + " ساعت پیش" : faNum(Math.floor(s / 86400)) + " روز پیش";
+async function adminDlg(tab) {
+  tab = tab || S.admTab || "units"; S.admTab = tab;
+  let data;
+  try { data = await api("/api/users"); data.users = data.users || []; data.recent = data.recent || []; data.admins = data.admins || []; } catch (e) { if (e.message !== "login") toast(e.message, "err"); return; }
+  const ago = agoFa;
+  const others = data.recent.filter(r => !r.name);
+  const persons = data.users.filter(u => !isUnit(u)), units = data.users.filter(isUnit);
+  const ipName = ip => { const u = persons.find(x => x.ips.includes(ip)); return u ? u.name : ((data.names && data.names[ip]) || ip); };
+  const row = u => `<div class="pi" style="cursor:default">${avatar(u)}<div class="t"><b>${esc(u.name)}</b><small>${isUnit(u) ? faNum(u.ips.length) + " عضو: " + u.ips.map(ip => esc(ipName(ip))).join("، ") : u.ips.map(ip => esc(ip) + (data.names && data.names[ip] ? " (" + esc(data.names[ip]) + ")" : "")).join("، ")}</small></div><div class="x"><button class="btn ghost sm icon" data-ed="${u.id}" title="ویرایش">${icon("edit")}</button><button class="btn ghost sm icon" data-del="${u.id}" title="حذف">${icon("trash")}</button></div></div>`;
+  const sendUrl = location.origin + location.pathname.replace(/\/[^/]*$/, "/") + "s";
+  const dayOpts = [0, 7, 14, 30, 60, 90, 180, 365]; if (!dayOpts.includes(data.trashDays)) dayOpts.push(data.trashDays);
+  const html = `<div class="ic">${icon("settings")}</div><h3>تنظیمات</h3><p>تنظیمات سرور؛ هر بخش در یک تب.</p>
+    <div class="stabs" id="sTabs" role="tablist">${TABS.map(([k, ic, t]) => `<button role="tab" data-tab="${k}">${icon(ic)}<span>${t}</span></button>`).join("")}</div>
+    <section data-pane="units">
+      <p class="hint"><b>سیستم:</b> یک IP یک نام و یک پوشه‌ی اختصاصی می‌گیرد. <b>واحد:</b> یک پوشه‌ی مشترک برای چند IP (پرسنل یک واحد). هر کدام را فقط اعضا و مدیر می‌بینند؛ بقیه فقط می‌توانند به آن فایل بفرستند.</p>
+      <div class="kseg" id="uKind"><button data-k="" class="on">${icon("lock")}سیستم (پوشه‌ی شخصی)</button><button data-k="unit">${icon("users")}واحد (پوشه‌ی مشترک)</button></div>
+      <div class="frm two"><input class="input" id="uName" placeholder="نام (مثلا: حسابداری)" autocomplete="off"><button class="btn primary" id="uAdd">${icon("plus")}افزودن</button></div>
+      <div class="ipbox" id="ipBox"><span id="chips" style="display:contents"></span><span class="pre" id="ipPre"></span><input id="uIp" list="ipList" autocomplete="off" inputmode="decimal"></div>
+      <datalist id="ipList">${data.recent.map(r => `<option value="${esc(r.ip)}">${esc(r.claimed || r.name || "")}</option>`).join("")}</datalist>
+      <p class="hint" id="uHint"></p>
+      <div class="sec-t">واحدها</div>
+      <div class="plist" style="max-height:200px">${units.length ? units.map(row).join("") : `<div class="empty-s">هنوز واحدی ساخته نشده است.</div>`}</div>
+      <div class="sec-t">سیستم‌های نام‌گذاری‌شده</div>
+      <div class="plist" style="max-height:200px">${persons.length ? persons.map(row).join("") : `<div class="empty-s">هنوز سیستمی نام‌گذاری نشده است.</div>`}</div>
+      <div class="sec-t">اتصال‌های اخیر (بدون پوشه)</div>
+      <div class="plist" style="max-height:160px">${others.length ? others.map(r => `<div class="pi" style="cursor:default"><span class="av" style="background:var(--text-3)">?</span><div class="t"><b>${esc(r.claimed || "بدون نام")}</b><small><span dir="ltr" class="num">${esc(r.ip)}</span> · ${ago(r.ago)}</small></div><button class="btn sm" data-use="${esc(r.ip)}" data-nm="${esc(r.claimed || "")}">استفاده</button></div>`).join("") : `<div class="empty-s">سیستم دیگری از زمان اجرای برنامه وارد نشده است.</div>`}</div>
+    </section>
+    <section data-pane="send">
+      <div class="field"><label for="tUnit">ارسال فایل برای واحد</label><input class="input" id="tUnit" placeholder="مثلا: بازرسی (خالی = ارسال خاموش)" autocomplete="off" value="${esc(data.unit || "")}"></div>
+      <div class="field"><label for="tWho">چه کسی فایل‌های رسیده را ببیند</label><select class="input" id="tWho"><option value="">فقط مدیران</option>${units.map(u => `<option value="${u.id}" ${u.id === data.inbox ? "selected" : ""}>مدیران + اعضای «${esc(u.name)}»</option>`).join("")}</select></div>
+      <p class="hint">هر کس در شبکه، بدون کد ورود، از آدرس ${copyUrl(sendUrl)} با کد پرسنلی و کد شعبه فایل می‌فرستد؛ فقط می‌فرستد و چیزی نمی‌بیند.</p>
+      <div class="pacts"><button class="btn primary" id="tSave">${icon("check")}ذخیره</button></div>
+      <div class="sec-t">صفحه‌ی ارسال اختصاصی هر واحد</div>
+      <p class="hint">هر واحد می‌تواند آدرس ارسال خودش را داشته باشد (بدون نیاز به ادمین ویندوز). فایل‌ها در پوشه‌ی همان واحد، زیر «فایل‌های دریافتی از شعب» به ترتیب شعبه › تاریخ › کد پرسنلی می‌روند و اعضای واحد آن‌ها را می‌بینند. کد: حروف کوچک انگلیسی، عدد یا خط تیره؛ خالی = خاموش.</p>
+      <div class="plist">${units.length ? units.map(u => `<div class="pi sp-row" style="cursor:default">${avatar(u)}<div class="t"><b>${esc(u.name)}</b><small>${u.send ? copyUrl(sendBase() + u.send) : "صفحه‌ی ارسال ندارد"}</small></div><input class="input num sp-code" data-sp="${u.id}" dir="ltr" value="${esc(u.send || "")}" placeholder="مثلا b" autocomplete="off" maxlength="24"><button class="btn sm primary" data-spsave="${u.id}">ذخیره</button></div>`).join("") : `<div class="empty-s">اول در تب «سیستم‌ها و واحدها» یک واحد بسازید.</div>`}</div>
+    </section>
+    <section data-pane="net">
+      <div class="field"><label for="pfx">رنج IP شبکه (سه بخش اول)</label><input class="input num" id="pfx" dir="ltr" placeholder="192.168.1." value="${esc(data.prefix || "")}" autocomplete="off"></div>
+      <p class="hint">با این رنج، هنگام افزودن IP کافی است فقط عدد آخر را بزنید (مثلا 45 یعنی ${esc((data.prefix || "192.168.1.") + "45")}). خالی = رنج خود سرور.</p>
+      <div class="pacts"><button class="btn primary" id="pfxSave">${icon("check")}ذخیره</button></div>
+    </section>
+    <section data-pane="admins">
+      <p class="hint">سیستم‌های این فهرست همه‌ی کارهای مدیر را دارند: دیدن همه‌ی پوشه‌ها، تنظیمات و سطل زباله. ${data.server ? "" : "<b>فقط روی خود سرور می‌شود این فهرست را تغییر داد.</b>"}</p>
+      <div class="plist"><div class="pi" style="cursor:default"><span class="av" style="background:var(--primary)">${icon("server").replace('class="i"', 'class="i" style="width:55%;height:55%"')}</span><div class="t"><b>خود سرور</b><small>همیشه مدیر است</small></div></div>
+        ${data.admins.map(ip => `<div class="pi" style="cursor:default"><span class="av" style="background:${hue(ip)}">${esc(initial(ipName(ip) === ip ? "?" : ipName(ip)))}</span><div class="t"><b>${esc(ipName(ip) === ip ? "بدون نام" : ipName(ip))}</b><small dir="ltr" class="num" style="text-align:right">${esc(ip)}</small></div>${data.server ? `<button class="btn ghost sm icon" data-rmadm="${esc(ip)}" title="برداشتن دسترسی">${icon("trash")}</button>` : ""}</div>`).join("")}</div>
+      ${data.server ? `<div class="frm two"><input class="input num" id="aIp" dir="ltr" list="ipList" placeholder="${esc(data.prefix ? "عدد آخر، مثلا 72" : "IP کامل، مثلا 192.168.1.72")}" autocomplete="off"><button class="btn primary" id="aAdd">${icon("plus")}افزودن مدیر</button></div>` : ""}
+    </section>
+    <section data-pane="bin">
+      <div class="field"><label for="binDays">پاک شدن خودکار موارد سطل زباله</label><select class="input" id="binDays">${dayOpts.map(n => `<option value="${n}" ${n === data.trashDays ? "selected" : ""}>${n ? "بعد از " + faNum(n) + " روز" : "هرگز (فقط دستی)"}</option>`).join("")}</select></div>
+      <p class="hint">فایل‌ها و پوشه‌هایی که کاربران حذف می‌کنند پاک نمی‌شوند؛ به سطل زباله می‌روند و مدیر می‌تواند بازیابی‌شان کند یا برای همیشه حذفشان کند.</p>
+      <div class="pacts"><button class="btn" id="openBin">${icon("trash")}باز کردن سطل زباله</button><button class="btn primary" id="daysSave">${icon("check")}ذخیره</button></div>
+    </section>
+    <div class="acts"><button class="btn" data-r="">بستن</button></div>`;
+  const pr = sheet(html, true), d = $("#dlg");
+  const showTab = k => { S.admTab = k; d.querySelectorAll("[data-tab]").forEach(b => { b.classList.toggle("on", b.dataset.tab === k); b.setAttribute("aria-selected", b.dataset.tab === k); }); d.querySelectorAll("[data-pane]").forEach(s => s.hidden = s.dataset.pane !== k); };
+  d.querySelectorAll("[data-tab]").forEach(b => b.onclick = () => showTab(b.dataset.tab));
+  showTab(tab);
+  const reopen = async () => { d.done(null); await refreshInfo(); adminDlg(S.admTab); };
+  // units
+  let editing = "", kind = "";
+  const setKind = (k, lock) => {
+    kind = k;
+    d.querySelectorAll("#uKind button").forEach(b => { b.classList.toggle("on", b.dataset.k === k); b.disabled = !!lock && b.dataset.k !== k; });
+    $("#uName").placeholder = k ? "نام واحد (مثلا: مالی)" : "نام (مثلا: حسابداری)";
+    $("#uHint").textContent = (k ? "IP پرسنل این واحد: " : "IP این سیستم: ") + "فقط عدد آخر را بزنید (مثلا 72) یا IP کامل را، بعد Enter. برای IP بعدی دوباره Enter." + (k ? " یک سیستم می‌تواند عضو چند واحد باشد." : "");
+  };
+  d.querySelectorAll("#uKind button").forEach(b => b.onclick = () => setKind(b.dataset.k));
+  setKind("");
+  let prefix = data.prefix || "", chips = [];
+  const drawChips = () => {
+    $("#chips").innerHTML = chips.map((ip, i) => `<span class="chip">${esc(ip)}<button type="button" data-rm="${i}" title="حذف">×</button></span>`).join("");
+    $("#chips").querySelectorAll("[data-rm]").forEach(b => b.onclick = e => { e.stopPropagation(); chips.splice(+b.dataset.rm, 1); drawChips(); $("#uIp").focus(); });
+    $("#ipPre").textContent = prefix;
+    $("#uIp").placeholder = chips.length ? "IP بعدی…" : (prefix ? "عدد آخر، مثلا 72" : "IP کامل، مثلا 192.168.1.72");
+  };
+  const addIps = v => {
+    let bad = "";
+    for (const t of fixDigits(v).split(/[,،;\s]+/).filter(Boolean)) {
+      const ip = toIp(t, prefix);
+      if (!ip) { bad = t; continue; }
+      if (!prefix) prefix = ip.replace(/\d+$/, "");
+      if (!chips.includes(ip)) chips.push(ip);
+    }
+    drawChips();
+    if (bad) toast("IP نادرست: " + bad, "err");
+    return !bad;
+  };
+  $("#ipBox").onclick = () => $("#uIp").focus();
+  $("#uIp").onkeydown = e => {
+    if (e.key === "Enter" || e.key === "," || e.key === "،" || (e.key === " " && $("#uIp").value.trim())) {
+      e.preventDefault();
+      const v = $("#uIp").value.trim();
+      if (v) { if (addIps(v)) $("#uIp").value = ""; }
+      else if (e.key === "Enter") save();
+    } else if (e.key === "Backspace" && !$("#uIp").value && chips.length) { chips.pop(); drawChips(); }
+  };
+  $("#uIp").onchange = () => { const v = $("#uIp").value.trim(); if (v.includes(".") && addIps(v)) $("#uIp").value = ""; };
+  drawChips();
+  const save = async () => {
+    const name = $("#uName").value.trim();
+    if ($("#uIp").value.trim() && addIps($("#uIp").value)) $("#uIp").value = "";
+    const ips = chips.slice();
+    if (!name) return $("#uName").focus();
+    if (!ips.length) return $("#uIp").focus();
+    try { await api("/api/users", {op: "save", id: editing, kind, name, ips}); toast(editing ? "ذخیره شد" : "«" + name + "» اضافه شد"); reopen(); }
+    catch (e) { if (e.message !== "login") toast(e.message, "err"); }
+  };
+  $("#uAdd").onclick = save;
+  $("#uName").onkeydown = e => { if (e.key === "Enter") { e.preventDefault(); $("#uIp").focus(); } };
+  d.querySelectorAll("[data-use]").forEach(b => b.onclick = () => { addIps(b.dataset.use); if (!kind && !$("#uName").value && b.dataset.nm) $("#uName").value = b.dataset.nm; (kind || $("#uName").value ? $("#uIp") : $("#uName")).focus(); });
+  d.querySelectorAll("[data-ed]").forEach(b => b.onclick = () => { const u = data.users.find(x => x.id === b.dataset.ed); editing = u.id; setKind(u.kind || "", true); $("#uName").value = u.name; chips = u.ips.slice(); $("#uIp").value = ""; drawChips(); $("#uAdd").innerHTML = icon("check") + "ذخیره"; $("#uName").focus(); });
+  d.querySelectorAll("[data-del]").forEach(b => b.onclick = async () => {
+    const u = data.users.find(x => x.id === b.dataset.del);
+    d.done(null);
+    const ok = await dialog({title: `حذف «${u.name}»؟`, text: isUnit(u) ? "این واحد و پوشه‌ی مشترکش حذف می‌شود. پوشه باید خالی باشد." : "نام و پوشه‌ی اختصاصی این سیستم حذف می‌شود. پوشه باید خالی باشد.", ok: "حذف", danger: true, ic: "trash"});
+    if (ok) { try { await api("/api/users", {op: "del", id: u.id}); toast("حذف شد"); await refreshInfo(); if (spaceOf(S.cur)?.id === u.id) load("/"); } catch (e) { if (e.message !== "login") toast(e.message, "err"); } }
+    adminDlg("units");
+  });
+  // send to unit
+  const saveT = async () => { try { await api("/api/users", {op: "title", name: $("#tUnit").value.trim(), id: $("#tWho").value}); await refreshInfo(); toast($("#tUnit").value.trim() ? "ارسال برای واحد ذخیره شد" : "ارسال برای واحد خاموش شد"); } catch (e) { if (e.message !== "login") toast(e.message, "err"); } };
+  $("#tSave").onclick = saveT;
+  const saveSp = async id => {
+    const v = fixDigits(d.querySelector(`[data-sp="${id}"]`).value).trim().toLowerCase();
+    try { await api("/api/users", {op: "sendpage", id, name: v}); toast(v ? "صفحه‌ی ارسال ساخته شد: " + sendBase() + v : "صفحه‌ی ارسال این واحد خاموش شد"); reopen(); }
+    catch (e) { if (e.message !== "login") toast(e.message === "invalid code" ? "کد نادرست است؛ فقط حروف کوچک انگلیسی، عدد و خط تیره (مثلا b)؛ s و login مجاز نیست" : /^code already used by /.test(e.message) ? "این کد برای واحد «" + e.message.slice(21) + "» است" : e.message, "err"); }
+  };
+  d.querySelectorAll("[data-spsave]").forEach(b => b.onclick = () => saveSp(b.dataset.spsave));
+  d.querySelectorAll("[data-sp]").forEach(i => i.onkeydown = e => { if (e.key === "Enter") { e.preventDefault(); saveSp(i.dataset.sp); } });
+  $("#tUnit").onkeydown = e => { if (e.key === "Enter") { e.preventDefault(); saveT(); } };
+  // network
+  const savePfx = async () => {
+    try { const j = await api("/api/users", {op: "prefix", name: fixDigits($("#pfx").value)}); prefix = j.prefix || ""; $("#pfx").value = prefix; drawChips(); toast("رنج IP ذخیره شد: " + (prefix || "خودکار")); }
+    catch (e) { if (e.message !== "login") toast(e.message === "invalid range" ? "رنج نادرست است؛ مثلا 192.168.1." : e.message, "err"); }
+  };
+  $("#pfxSave").onclick = savePfx;
+  $("#pfx").onkeydown = e => { if (e.key === "Enter") { e.preventDefault(); savePfx(); } };
+  // admins
+  const setAdmins = async ips => { try { await api("/api/users", {op: "admins", ips}); toast("دسترسی مدیر ذخیره شد"); reopen(); } catch (e) { if (e.message !== "login") toast(e.message === "server only" ? "فقط روی خود سرور قابل تغییر است" : e.message, "err"); } };
+  d.querySelectorAll("[data-rmadm]").forEach(b => b.onclick = () => setAdmins(data.admins.filter(x => x !== b.dataset.rmadm)));
+  if ($("#aAdd")) {
+    const addA = () => { const ip = toIp($("#aIp").value, prefix); if (!ip) { toast("IP نادرست است", "err"); return $("#aIp").focus(); } if (data.admins.includes(ip)) return toast("این IP از قبل مدیر است"); setAdmins([...data.admins, ip]); };
+    $("#aAdd").onclick = addA;
+    $("#aIp").onkeydown = e => { if (e.key === "Enter") { e.preventDefault(); addA(); } };
+  }
+  // recycle bin
+  $("#daysSave").onclick = async () => { try { await api("/api/trash", {op: "days", days: +$("#binDays").value}); toast("ذخیره شد"); } catch (e) { if (e.message !== "login") toast(e.message, "err"); } };
+  $("#openBin").onclick = () => { d.done(null); binDlg(); };
+  setTimeout(() => { const f = d.querySelector(`[data-pane="${tab}"]:not([hidden]) input`); if (f) f.focus(); }, 50);
+  await pr;
+}
+
+/* ---------- recycle bin (admins) ---------- */
+function origFa(p) {
+  if (!p || p === "/") return "فضای مشترک";
+  const parts = p.split("/").filter(Boolean);
+  let head = "فضای مشترک";
+  if (parts[0] && parts[0].startsWith(":")) { const sp = spaceOf("/" + parts[0]); head = sp ? sp.name : "پوشه‌ی حذف‌شده"; parts.shift(); }
+  return [head, ...parts].join(" › ");
+}
+async function binDlg() {
+  let j;
+  try { j = await api("/api/trash"); } catch (e) { if (e.message !== "login") toast(e.message, "err"); return; }
+  const items = j.items || [], now = Date.now() / 1000;
+  const left = it => j.days ? Math.max(0, Math.ceil((it.at + j.days * 86400 - now) / 86400)) : 0;
+  const html = `<div class="ic">${icon("trash")}</div><h3>سطل زباله</h3>
+    <p>${items.length ? faNum(items.length) + " مورد · " + fmt(j.total || 0) : "خالی"}${j.days ? " · موارد بعد از " + faNum(j.days) + " روز خودکار پاک می‌شوند." : " · پاک شدن خودکار خاموش است."}</p>
+    ${items.length ? `<div class="binbar"><label class="cb"><input type="checkbox" id="bAll"></label><span id="bCnt">هیچ موردی انتخاب نشده</span><span class="sp"></span>
+      <button class="btn sm" id="bRes" disabled>${icon("refresh")}بازیابی</button><button class="btn sm danger-o" id="bDel" disabled>${icon("trash")}حذف برای همیشه</button></div>
+    <div class="plist binl">${items.map(it => `<label class="pi bi"><span class="cb"><input type="checkbox" data-id="${esc(it.id)}"></span><span class="fi">${it.dir ? icon("folder") : icon("doc")}</span><div class="t"><b>${esc(it.name)}</b><small>از «${esc(origFa(it.orig))}» · ${agoFa(now - it.at)}${it.byName || it.byIp ? " · " + esc(it.byName || it.byIp) : ""}${j.days ? " · " + faNum(left(it)) + " روز مانده" : ""}</small></div><span class="sz num">${fmt(it.size)}</span></label>`).join("")}</div>`
+    : `<div class="empty-s">سطل زباله خالی است. فایل‌هایی که کاربران حذف می‌کنند اینجا می‌آیند.</div>`}
+    <div class="acts">${items.length ? `<button class="btn danger" id="bEmpty">${icon("trash")}خالی کردن سطل</button><span class="sp"></span>` : ""}<button class="btn" id="bSet">${icon("settings")}تنظیم پاک شدن خودکار</button><button class="btn" data-r="">بستن</button></div>`;
+  const pr = sheet(html, true), d = $("#dlg");
+  const sel = () => [...d.querySelectorAll("[data-id]:checked")].map(x => x.dataset.id);
+  const upd = () => { const n = sel().length; $("#bCnt").textContent = n ? faNum(n) + " مورد انتخاب شده" : "هیچ موردی انتخاب نشده"; $("#bRes").disabled = $("#bDel").disabled = !n; $("#bAll").checked = n && n === items.length; $("#bAll").indeterminate = n && n < items.length; d.querySelectorAll(".bi").forEach(r => r.classList.toggle("on", r.querySelector("input").checked)); };
+  const run = async (op, ids) => {
+    try { const r = await api("/api/trash", {op, ids}); toast((op === "restore" ? faNum(r.done) + " مورد بازیابی شد" : faNum(r.done) + " مورد برای همیشه حذف شد") + (r.failed ? " · " + faNum(r.failed) + " مورد انجام نشد" : ""), r.failed ? "err" : "ok"); }
+    catch (e) { if (e.message !== "login") toast(e.message, "err"); }
+    d.done(null); load(S.cur, true); binDlg();
+  };
+  if (items.length) {
+    d.querySelectorAll("[data-id]").forEach(x => x.onchange = upd);
+    $("#bAll").onchange = () => { d.querySelectorAll("[data-id]").forEach(x => x.checked = $("#bAll").checked); upd(); };
+    $("#bRes").onclick = () => run("restore", sel());
+    $("#bDel").onclick = async () => { const ids = sel(); d.done(null); if (await dialog({title: `حذف ${faNum(ids.length)} مورد برای همیشه؟`, text: "این موارد از سطل زباله هم پاک می‌شوند و دیگر قابل بازیابی نیستند.", ok: "حذف برای همیشه", danger: true, ic: "trash"})) run("purge", ids); else binDlg(); };
+    $("#bEmpty").onclick = async () => { d.done(null); if (await dialog({title: "سطل زباله خالی شود؟", text: `همه‌ی ${faNum(items.length)} مورد (${fmt(j.total || 0)}) برای همیشه پاک می‌شوند و قابل بازیابی نیستند.`, ok: "خالی کردن", danger: true, ic: "trash"})) run("empty", []); else binDlg(); };
+  }
+  $("#bSet").onclick = () => { d.done(null); adminDlg("bin"); };
+  await pr;
+}
+async function refreshInfo() {
+  const i = await api("/api/info");
+  S.ro = i.readOnly; S.admin = !!i.admin; S.me = i.me || null; S.people = i.people || []; S.inbox = i.inbox || null; S.ip = i.ip || ""; S.myName = i.myName || "";
+  $("#hostName").textContent = i.host || "سرور";
+  $("#ver").textContent = "نسخه " + faNum(i.version || "") + (S.ro ? " · فقط‌خواندنی" : "");
+  if (S.ro) document.querySelectorAll(".w").forEach(b => b.style.display = "none");
+  renderMe(); renderDisk(i); render();
+  return i;
+}
+
+/* ---------- theme / layout ---------- */
+function themeIcon() { const dark = document.documentElement.dataset.theme ? document.documentElement.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches; $("#themeBtn use").setAttribute("href", dark ? "#i-moon" : "#i-sun"); $("#themeBtn").classList.toggle("on", dark); return dark; }
+$("#themeBtn").onclick = () => { const t = themeIcon() ? "light" : "dark"; document.documentElement.dataset.theme = t; try { localStorage.setItem("lfs-theme", t); } catch {} themeIcon(); };
+function closeSide() { $("#side").classList.remove("open"); $("#sideScrim").classList.remove("show"); }
+function openSide() { $("#side").classList.add("open"); $("#sideScrim").classList.add("show"); }
+$("#menuBtn").onclick = openSide;
+$("#sideScrim").onclick = closeSide;
+$("#newBtn").onclick = e => { e.stopPropagation(); const b = e.currentTarget; ripple(b, e); if (b.classList.contains("open")) return hideMenu(); upMenu(b.getBoundingClientRect()); b.classList.add("open"); };
+$("#shareBtn").onclick = () => sendTo();
+$("#ptitleBtn").onclick = e => { e.stopPropagation(); if (!S.ro) upMenu(e.currentTarget.getBoundingClientRect()); };
+$("#vToggle").onclick = () => setView(S.view === "list" ? "grid" : "list");
+$("#admBtn").onclick = () => { closeSide(); adminDlg(); };
+$("#binBtn").onclick = () => { closeSide(); binDlg(); };
+$("#admBtn2").onclick = () => { closeSide(); adminDlg(); };
+$("#outBtn2").onclick = () => { location.href = "/logout"; };
+
+/* ---------- wiring ---------- */
+$("#upBtn").onclick = e => { e.stopPropagation(); const b = e.currentTarget; ripple(b, e); if (b.classList.contains("open")) return hideMenu(); upMenu(b.getBoundingClientRect()); b.classList.add("open"); };
+$("#content").addEventListener("contextmenu", e => {
+  if (e.target.closest("[data-n]") || /INPUT|TEXTAREA/.test(e.target.tagName) || S.ro) return;
+  e.preventDefault(); e.stopPropagation();
+  if (S.sel.size) { S.sel.clear(); render(); }
+  const m = $("#menu");
+  m.innerHTML = `<button data-a="mk">${icon("folder-plus")}<span>افزودن پوشه</span></button><button data-a="up">${icon("upload")}<span>آپلود فایل</span></button><button data-a="dir">${icon("folder-up")}<span>آپلود پوشه</span></button><button data-a="rf">${icon("refresh")}<span>بازخوانی</span></button>`;
+  m.classList.add("show");
+  m.style.left = Math.max(8, Math.min(e.clientX - m.offsetWidth, innerWidth - m.offsetWidth - 8)) + "px";
+  m.style.top = Math.max(8, Math.min(e.clientY, innerHeight - m.offsetHeight - 8)) + "px";
+  m.querySelector("[data-a=mk]").onclick = () => { hideMenu(); mkdir(); };
+  m.querySelector("[data-a=up]").onclick = () => { hideMenu(); pickFiles(); };
+  m.querySelector("[data-a=dir]").onclick = () => { hideMenu(); pickDir(); };
+  m.querySelector("[data-a=rf]").onclick = () => { hideMenu(); load(S.cur, true); };
+});
+$("#fileIn").onchange = e => { enqueue([...e.target.files].map(f => ({f, rel: f.name})), UQ.pickDest || S.cur); e.target.value = ""; };
+$("#dirIn").onchange = e => { enqueue([...e.target.files].filter(f => !/^(thumbs\.db|desktop\.ini)$/i.test(f.name)).map(f => ({f, rel: f.webkitRelativePath || f.name})), UQ.pickDest || S.cur); e.target.value = ""; };
+$("#refBtn").onclick = () => load(S.cur, true);
+/* ---------- search with suggestions ---------- */
+function sugg() {
+  const box = $("#sugg"), raw = S.q.trim(), q = nz(raw);
+  $("#qClear").hidden = !S.q;
+  $("#searchBox").classList.toggle("open", !!q && document.activeElement === $("#q"));
+  if (!q || document.activeElement !== $("#q")) { box.hidden = true; return; }
+  const m = S.items.filter(i => nz(i.name).includes(q));
+  const ds = m.filter(i => i.isDir), fs = m.filter(i => !i.isDir);
+  const where = esc($("#ptitle").textContent);
+  const hl = n => { const k = nz(n).indexOf(q); return k < 0 ? esc(n) : esc(n.slice(0, k)) + "<b>" + esc(n.slice(k, k + raw.length)) + "</b>" + esc(n.slice(k + raw.length)); };
+  const row = it => `<button class="sg" data-sg="${esc(it.name)}"><span class="sg-i">${it.isDir ? FOLDER : fileSvg(it)}</span><span class="sg-n">${hl(it.name)}</span><span class="sg-w">${where}${FOLDER}</span></button>`;
+  const sec = (t, list, f, n) => list.length ? `<div class="sg-h"><span>${t}</span>${list.length > n ? `<button data-all="${f}">نمایش همه (${faNum(list.length)})</button>` : ""}</div>` + list.slice(0, n).map(row).join("") : "";
+  box.innerHTML = `<button class="sg sg-q" data-all="all">${icon("search")}<span class="sg-n">جستجوی «<b>${esc(raw)}</b>» در این پوشه</span></button>` +
+    (m.length ? sec("پوشه‌ها", ds, "folder", 3) + sec("فایل‌ها", fs, "files", 5) : `<div class="sg-none">در این پوشه موردی با این نام نیست.</div>`);
+  box.hidden = false;
+  box.querySelectorAll("[data-sg]").forEach(b => b.onmousedown = e => { e.preventDefault(); const it = S.items.find(x => x.name === b.dataset.sg); $("#q").blur(); if (it.isDir) { S.q = ""; $("#q").value = ""; load(join(S.cur, it.name)); } else open(it); });
+  box.querySelectorAll("[data-all]").forEach(b => b.onmousedown = e => { e.preventDefault(); const f = b.dataset.all; S.filter = f === "folder" ? "folder" : "all"; $("#q").blur(); render(); });
+}
+$("#q").oninput = e => { S.q = e.target.value; render(); sugg(); };
+$("#q").onfocus = sugg;
+$("#q").onblur = () => setTimeout(sugg, 0);
+$("#q").addEventListener("keydown", e => {
+  const bs = [...$("#sugg").querySelectorAll(".sg")], k = bs.indexOf(document.querySelector(".sg.kb"));
+  if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); bs.forEach(b => b.classList.remove("kb")); const n = bs[(k + (e.key === "ArrowDown" ? 1 : -1) + bs.length) % bs.length]; if (n) n.classList.add("kb"); }
+  else if (e.key === "Enter") { e.preventDefault(); const b = k >= 0 ? bs[k] : null; if (b) b.dispatchEvent(new MouseEvent("mousedown")); else $("#q").blur(); }
+});
+$("#qClear").onclick = () => { S.q = ""; $("#q").value = ""; render(); $("#q").focus(); sugg(); };
+$("#vList").onclick = () => setView("list"); $("#vGrid").onclick = () => setView("grid");
+function setView(v) { S.view = v; try { localStorage.setItem("lfs-view", v); } catch {} render(); }
+document.querySelectorAll("#nav button").forEach(b => b.onclick = () => { S.filter = b.dataset.f; S.sel.clear(); closeSide(); render(); });
+document.querySelector(".brand").style.cursor = "pointer";
+document.querySelector(".brand").onclick = () => goSpace("/");
+$("#selClear").onclick = () => { S.sel.clear(); render(); };
+$("#selZip").onclick = () => zipDl(selected().map(i => i.name));
+$("#selDel").onclick = () => del(selected());
+$("#content").addEventListener("click", e => { if (!e.target.closest("[data-n],.selbar,.hero,button") && S.sel.size) { S.sel.clear(); render(); } });
+
+let dc = 0;
+addEventListener("dragenter", e => { if (S.ro || ![...(e.dataTransfer?.types || [])].includes("Files")) return; e.preventDefault(); dc++; $("#drop").classList.add("show"); });
+addEventListener("dragleave", () => { if (--dc <= 0) { dc = 0; $("#drop").classList.remove("show"); } });
+addEventListener("dragover", e => e.preventDefault());
+addEventListener("drop", async e => {
+  e.preventDefault(); dc = 0; $("#drop").classList.remove("show");
+  if (S.ro || !e.dataTransfer?.items?.length && !e.dataTransfer?.files?.length) return;
+  const dest = S.cur, entries = await dropEntries(e.dataTransfer);
+  if (entries.length) enqueueTree(entries, dest);
+});
+
+addEventListener("keydown", e => {
+  if ($("#scrim").classList.contains("show")) return;
+  if ($("#pvw").classList.contains("show")) {
+    if (e.key === "Escape") pvClose(); else if (e.key === "ArrowLeft") pvGo(1); else if (e.key === "ArrowRight") pvGo(-1);
+    return;
+  }
+  const typing = /INPUT|TEXTAREA/.test(document.activeElement.tagName);
+  if (e.key === "Escape") { hideMenu(); if (typing) { $("#q").blur(); } else if (S.sel.size) { S.sel.clear(); render(); } return; }
+  if (typing) return;
+  if (e.key === "/" || ((e.ctrlKey || e.metaKey) && (e.key === "k" || e.key === "K" || e.code === "KeyK"))) { e.preventDefault(); $("#q").focus(); $("#q").select(); }
+  else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "a") { e.preventDefault(); visible().forEach(i => S.sel.add(i.name)); render(); }
+  else if (e.key === "Delete" && S.sel.size && !S.ro) del(selected());
+  else if (e.key === "F2" && S.sel.size === 1 && !S.ro) { e.preventDefault(); rename(selected()[0]); }
+  else if (e.key === "Enter" && S.sel.size === 1) open(selected()[0]);
+  else if (e.key === "Backspace" && S.cur !== "/") load(S.cur.replace(/\/[^/]+\/?$/, "") || "/");
+});
+
+themeIcon();
+refreshInfo().then(() => load(decodeURIComponent(location.hash.slice(1)) || "/")).catch(() => {});
+</script>
+</body>
+</html>

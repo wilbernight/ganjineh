@@ -1,0 +1,33 @@
+{
+  "FixedFileInfo": {
+    "FileVersion": {
+      "Major": 5,
+      "Minor": 0
+    },
+    "ProductVersion": {
+      "Major": 5,
+      "Minor": 0
+    },
+    "FileFlagsMask": "3f",
+    "FileOS": "040004",
+    "FileType": "01"
+  },
+  "StringFileInfo": {
+    "CompanyName": "Ganjineh",
+    "FileDescription": "Ganjineh - secure LAN file server",
+    "FileVersion": "5.0.0.0",
+    "InternalName": "LanFileServer",
+    "LegalCopyright": "",
+    "OriginalFilename": "LanFileServer.exe",
+    "ProductName": "Ganjineh",
+    "ProductVersion": "5.0.0.0"
+  },
+  "VarFileInfo": {
+    "Translation": {
+      "LangID": "0409",
+      "CharsetID": "04B0"
+    }
+  },
+  "IconPath": "app.ico",
+  "ManifestPath": "app.manifest"
+}

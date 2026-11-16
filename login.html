@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ورود · گنجینه</title>
+<link rel="icon" href="/favicon.svg">
+<link rel="stylesheet" href="/assets/app.css?v=10">
+<script>try{var t=localStorage.getItem("lfs-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<style>
+body{background:var(--bg);min-height:100vh;display:flex;flex-direction:column;margin:0}
+.page{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 16px 20px}
+.card{width:100%;max-width:1040px;background:var(--surface);border-radius:28px;padding:44px 44px 36px;display:grid;grid-template-columns:1fr 1fr;gap:24px 48px;box-shadow:0 1px 3px rgba(60,64,67,.08);animation:card-in .5s cubic-bezier(.2,.9,.3,1) both}
+@keyframes card-in{from{opacity:0;transform:translateY(12px)}}
+.intro{display:flex;flex-direction:column;align-items:flex-start;min-width:0}
+.intro img{width:52px;height:52px;margin-bottom:22px}
+.intro h1{margin:0 0 12px;font-size:34px;font-weight:500;line-height:1.35}
+.intro p{margin:0;font-size:16.5px;color:var(--text-2);line-height:1.9;max-width:40ch}
+.who{display:inline-flex;align-items:center;gap:10px;margin-top:18px;padding:6px 6px 6px 14px;border:1px solid var(--border-strong);border-radius:999px;font-size:14.5px;font-weight:600;color:var(--text)}
+.who[hidden]{display:none}
+.who i{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--primary-soft);color:var(--primary);font-style:normal}
+.who svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.side{min-width:0;padding-top:70px}
+.pane[hidden],[hidden]{display:none!important}
+.pane{animation:pane-in .35s ease both}
+@keyframes pane-in{from{opacity:0;transform:translateX(-10px)}}
+/* outlined fields, floating labels */
+.fld{position:relative;margin:0 0 18px}
+.fld input{box-sizing:border-box;width:100%;height:56px;padding:0 16px;border:1px solid var(--border-strong);border-radius:6px;background:transparent;font:inherit;font-size:17px;color:var(--text);outline:0;transition:border-color .15s,box-shadow .15s}
+.fld input[dir="ltr"]{text-align:right}
+.fld label{position:absolute;top:17px;inset-inline-start:12px;padding:0 4px;font-size:16.5px;color:var(--text-2);pointer-events:none;transition:all .15s ease;background:var(--surface);line-height:1.3}
+.fld input:focus{border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary)}
+.fld input:focus+label,.fld input:not(:placeholder-shown)+label{top:-9px;font-size:13px}
+.fld input:focus+label{color:var(--primary)}
+.fld input::placeholder{color:transparent}
+.fld input:focus::placeholder{color:var(--text-3)}
+.fld.bad input{border-color:var(--danger);box-shadow:inset 0 0 0 1px var(--danger)}
+.fld.bad label{color:var(--danger)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.req{color:var(--danger);font-style:normal}
+/* code boxes */
+.lbl{display:block;margin:0 0 10px;font-size:14px;font-weight:600;color:var(--text-2)}
+.otp{position:relative;display:grid;grid-template-columns:repeat(6,1fr);gap:8px;direction:ltr}
+.otp span{height:56px;border-radius:6px;border:1px solid var(--border-strong);display:grid;place-items:center;font-size:24px;font-weight:600;transition:.15s;font-variant-numeric:tabular-nums}
+.otp span.f{border-color:var(--text-2);animation:pop .18s ease}
+@keyframes pop{50%{transform:scale(1.08)}}
+.otp span.on{border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary)}
+.otp span.on:empty::after{content:"";width:2px;height:24px;background:var(--primary);animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.otp input{position:absolute;inset:0;opacity:0;border:0;width:100%;font-size:17px}
+.otp.err span{border-color:var(--danger);animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.timer{display:flex;align-items:center;gap:10px;margin:12px 0 0;font-size:13.5px;color:var(--text-3)}
+.timer .bar{flex:1;height:3px;border-radius:3px;background:var(--surface-3);overflow:hidden}
+.timer .bar i{display:block;height:100%;background:var(--primary);transition:width 1s linear}
+/* drop zone + file list */
+.drop{display:flex;flex-direction:column;align-items:center;gap:6px;padding:22px 16px;border:1.5px dashed var(--border-strong);border-radius:12px;text-align:center;transition:.15s;cursor:pointer;outline:0}
+.drop:hover,.drop:focus-visible{border-color:var(--primary)}
+.drop.over{border-color:var(--primary);background:var(--primary-soft);transform:scale(1.01)}
+.drop .di{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:var(--primary-soft);color:var(--primary);margin-bottom:4px;transition:transform .3s}
+.drop.over .di{transform:translateY(-4px)}
+.drop .di svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.drop b{font-size:15.5px;font-weight:600}
+.drop small{font-size:13.5px;color:var(--text-3)}
+.drop .pick{display:flex;gap:6px;margin-top:6px}
+.tbtn{height:36px;padding:0 14px;border:0;border-radius:999px;background:none;color:var(--primary);font:inherit;font-size:15px;font-weight:600;cursor:pointer}
+.tbtn:hover{background:var(--primary-soft)}
+.files{margin-top:12px;border:1px solid var(--border);border-radius:12px;overflow:hidden;animation:pane-in .25s ease}
+.files .fh{display:flex;align-items:center;gap:8px;padding:6px 6px 6px 14px;padding-inline:14px 6px;background:var(--surface-2);font-size:14px;font-weight:600}
+.files .fh span{flex:1}
+.files ul{list-style:none;margin:0;padding:4px 0;max-height:176px;overflow:auto}
+.files li{display:flex;align-items:center;gap:10px;padding:6px 14px;font-size:14px}
+.files li i{width:30px;height:30px;flex:none;border-radius:6px;display:grid;place-items:center;background:var(--primary-soft);color:var(--primary);font-style:normal;font-size:11px;font-weight:700;direction:ltr}
+.files li span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;direction:ltr;text-align:right}
+.files li small{color:var(--text-3);white-space:nowrap}
+.files li.more{color:var(--text-3);padding-inline-start:54px}
+.prog{display:flex;align-items:center;gap:10px;margin-top:14px;font-size:13.5px;color:var(--text-2)}
+.prog .bar{flex:1;height:6px;border-radius:6px;background:var(--surface-3);overflow:hidden}
+.prog .bar i{display:block;height:100%;width:0;background:var(--primary);transition:width .2s}
+/* messages */
+.msg{display:none;align-items:flex-start;gap:8px;margin-top:14px;font-size:14px;color:var(--danger);line-height:1.7}
+.msg.show{display:flex;animation:pane-in .2s ease}
+.msg svg{width:18px;height:18px;flex:none;margin-top:1px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+/* actions */
+.acts{grid-column:2;display:flex;align-items:center;gap:12px;margin-top:8px}
+.acts .sp{flex:1}
+.go{position:relative;min-width:112px;height:44px;padding:0 26px;border:0;border-radius:999px;background:var(--primary);color:var(--primary-text);font:inherit;font-size:15.5px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:background .15s,box-shadow .15s}
+.go:hover{background:var(--primary-hover);box-shadow:0 1px 3px rgba(26,115,232,.35)}
+.go:focus-visible,.tbtn:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.go:disabled{opacity:.7;cursor:default}
+.go .sp2{width:18px;height:18px;border:2px solid color-mix(in srgb,var(--primary-text) 40%,transparent);border-top-color:var(--primary-text);border-radius:50%;animation:spin .7s linear infinite;display:none}
+.go.busy .sp2{display:block}.go.busy .tx{display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* sent */
+.done{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;animation:pane-in .3s ease}
+.done svg{width:64px;height:64px;margin-bottom:10px}
+.done circle{fill:none;stroke:var(--success);stroke-width:3;stroke-dasharray:166;stroke-dashoffset:166;animation:draw .6s ease-out forwards}
+.done path{fill:none;stroke:var(--success);stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:40;stroke-dashoffset:40;animation:draw .35s .5s ease-out forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.done b{font-size:20px;font-weight:600}
+.done p{margin:0 0 14px;color:var(--text-2);font-size:15px;line-height:1.8}
+/* footer */
+.foot{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;max-width:1040px;box-sizing:border-box;padding:14px 22px 0;font-size:13.5px;color:var(--text-3)}
+.foot button{border:0;background:none;color:var(--text-3);font:inherit;cursor:pointer;padding:6px 10px;border-radius:6px}
+.foot button:hover{background:var(--surface-3);color:var(--text)}
+@media (max-width:860px){
+  .card{grid-template-columns:1fr;padding:32px 24px 26px;max-width:480px}
+  .side{padding-top:0}
+  .acts{grid-column:1}
+  .intro h1{font-size:26px;margin-bottom:8px}
+  .intro img{margin-bottom:16px}
+  .foot{max-width:480px}
+}
+@media (max-width:520px){
+  body{background:var(--surface)}
+  .page{justify-content:flex-start;padding:16px 0 12px}
+  .card{box-shadow:none;border-radius:0;padding:12px 16px 20px}
+  .otp{gap:5px}.otp span{height:50px;font-size:20px}
+  .row2{grid-template-columns:1fr;gap:0}
+  .foot{flex-direction:column;gap:2px;text-align:center}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="page">
+  <main class="card">
+    <section class="intro">
+      <img src="/favicon.svg" alt="گنجینه">
+      <h1 id="hTitle">ورود</h1>
+      <p id="hSub">برای ادامه به گنجینه، نام خود و کد ۶ رقمی Authenticator را وارد کنید.</p>
+      <span class="who" id="who" hidden><i><svg viewBox="0 0 24 24"><path d="M21 3 10 14M21 3l-7 18-4-7-7-4z"/></svg></i><span id="unitN"></span></span>
+    </section>
+
+    <section class="side">
+      <form id="f" class="pane" autocomplete="off">
+        <div class="fld" id="nmF"><input id="nm" required autocomplete="name" maxlength="60" placeholder="مثلا علی رضایی"><label for="nm">نام و نام خانوادگی <i class="req">*</i></label></div>
+        <span class="lbl">کد تأیید</span>
+        <div class="otp" id="otp"><span></span><span></span><span></span><span></span><span></span><span></span>
+          <input id="code" inputmode="numeric" autocomplete="one-time-code" maxlength="12" aria-label="کد ۶ رقمی"></div>
+        <div class="timer"><span id="tl"></span><div class="bar"><i id="tb"></i></div></div>
+        <div class="msg" id="msg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5m0 3h.01"/></svg><span id="mt"></span></div>
+        <button type="submit" hidden></button>
+      </form>
+
+      <div id="sendP" class="pane" hidden>
+        <div id="sendForm">
+          <div class="row2">
+            <div class="fld" id="pcF"><input id="pc" dir="ltr" required autocomplete="off" maxlength="8" placeholder="12345 / a12345"><label for="pc">کد پرسنلی <i class="req">*</i></label></div>
+            <div class="fld" id="brF"><input id="br" dir="ltr" required autocomplete="off" maxlength="10" placeholder="101"><label for="br">کد شعبه <i class="req">*</i></label></div>
+          </div>
+          <div class="drop" id="drop" tabindex="0" role="button" aria-label="انتخاب فایل">
+            <span class="di"><svg viewBox="0 0 24 24"><path d="M12 15V4m0 0 4 4m-4-4L8 8"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg></span>
+            <b>فایل‌ها یا پوشه را اینجا رها کنید</b>
+            <small>یا از دکمه‌های زیر انتخاب کنید</small>
+            <div class="pick"><button type="button" class="tbtn" id="pf">انتخاب فایل</button><button type="button" class="tbtn" id="pd">انتخاب پوشه</button></div>
+            <input type="file" id="fi" multiple hidden><input type="file" id="di" webkitdirectory hidden>
+          </div>
+          <div class="files" id="sel" hidden><div class="fh"><span id="selT"></span><button type="button" class="tbtn" id="clr">پاک کردن</button></div><ul id="flist"></ul></div>
+          <div class="prog" id="prog" hidden><div class="bar"><i id="pb"></i></div><span id="pt"></span></div>
+          <div class="msg" id="smsg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5m0 3h.01"/></svg><span id="smt"></span></div>
+        </div>
+        <div class="done" id="sok" hidden>
+          <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="26"/><path d="m17 29 7 7 15-16"/></svg>
+          <b>ارسال شد</b>
+          <p id="sokT"></p>
+          <button type="button" class="go" id="again">ارسال فایل‌های دیگر</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="acts" id="acts">
+      <button type="button" class="tbtn" id="swap" hidden></button>
+      <span class="sp"></span>
+      <button type="button" class="go" id="go"><span class="tx" id="goT">ورود</span><span class="sp2"></span></button>
+    </div>
+  </main>
+  <footer class="foot"><span>گنجینه · سرور امن فایل · فقط در شبکه‌ی داخلی</span><button type="button" id="theme">حالت روشن / تیره</button></footer>
+</div>
+<script>
+const $ = id => document.getElementById(id);
+const box = $("otp"), inp = $("code"), cells = [...box.querySelectorAll("span")];
+const btn = $("go"), msg = $("msg"), mt = $("mt");
+const fa = s => s.replace(/[۰-۹]/g, d => "۰۱۲۳۴۵۶۷۸۹".indexOf(d)).replace(/[٠-٩]/g, d => "٠١٢٣٤٥٦٧٨٩".indexOf(d));
+const faNum = s => String(s).replace(/\d/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]);
+let mode = "login", unitName = "";
+/* ---------- login ---------- */
+function paint() {
+  const v = inp.value, f = document.activeElement === inp;
+  cells.forEach((c, k) => { const ch = v[k] || ""; if (c.textContent !== ch) c.textContent = ch; c.classList.toggle("f", !!ch); c.classList.toggle("on", f && k === Math.min(v.length, 5) && !(v.length === 6 && k === 5)); });
+}
+const nm = $("nm");
+const nameOK = () => nm.value.trim().split(/\s+/).filter(w => w.length > 1).length >= 2;
+try { nm.value = localStorage.getItem("lfs-name") || ""; } catch (e) {}
+nm.oninput = () => { $("nmF").classList.remove("bad"); msg.classList.remove("show"); };
+nm.onkeydown = e => { if (e.key === "Enter") { e.preventDefault(); inp.focus(); } };
+inp.oninput = () => { inp.value = fa(inp.value).replace(/\D/g, "").slice(0, 6); msg.classList.remove("show"); paint(); if (inp.value.length === 6) submit(); };
+inp.onfocus = inp.onblur = paint;
+function tick() { const s = 30 - Math.floor(Date.now() / 1000) % 30; $("tb").style.width = (s / 30 * 100) + "%"; $("tl").textContent = "کد تا " + faNum(s) + " ثانیه‌ی دیگر عوض می‌شود"; }
+tick(); setInterval(tick, 1000);
+function err(t) { mt.textContent = t; msg.classList.add("show"); box.classList.remove("err"); void box.offsetWidth; box.classList.add("err"); inp.value = ""; inp.focus(); paint(); }
+let busy = false;
+async function submit() {
+  if (busy) return;
+  if (!nameOK()) { mt.textContent = "نام و نام خانوادگی را کامل بنویسید (مثلا علی رضایی)."; msg.classList.add("show"); $("nmF").classList.add("bad"); nm.focus(); return; }
+  if (inp.value.length !== 6) return err("کد ۶ رقمی را از برنامه‌ی Authenticator وارد کنید.");
+  busy = true; btn.classList.add("busy"); btn.disabled = true;
+  try {
+    const r = await fetch("/api/login", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({code: inp.value, name: nm.value.trim().replace(/\s+/g, " ")})});
+    if (r.ok) { try { localStorage.setItem("lfs-name", nm.value.trim()); } catch (e) {} location.href = "/" + location.hash; return; }
+    const j = await r.json().catch(() => ({}));
+    if (r.status === 429) err("تلاش‌های ناموفق زیاد بود. " + faNum((j.error || "").split(":")[1] || "60") + " ثانیه صبر کنید.");
+    else err("کد نادرست است یا منقضی شده. کد جدید را وارد کنید.");
+  } catch { err("ارتباط با سرور برقرار نشد."); }
+  busy = false; btn.classList.remove("busy"); btn.disabled = false;
+}
+$("f").onsubmit = e => { e.preventDefault(); submit(); };
+
+/* ---------- mode: login / send ---------- */
+let ownCode = (location.pathname.match(/\/([a-z0-9][a-z0-9-]{0,23})\/?$/i) || [])[1] || "";
+const RESERVED = ["s", "login", "logout", "setup", "temporary_listen_addresses"];
+if (RESERVED.includes(ownCode.toLowerCase())) ownCode = "";
+const isSend = !!ownCode || /\/s\/?$/.test(location.pathname);
+const SUB = {
+  login: "برای ادامه به گنجینه، نام خود و کد ۶ رقمی Authenticator را وارد کنید.",
+  send: "کد پرسنلی و کد شعبه را بزنید و فایل‌ها یا پوشه را بفرستید. فایل‌ها فقط برای همین واحد دیده می‌شوند."
+};
+function show(m) {
+  mode = m;
+  $("sendP").hidden = m !== "send"; $("f").hidden = m === "send";
+  $("hTitle").textContent = m === "send" ? "ارسال فایل" : "ورود";
+  $("hSub").textContent = SUB[m];
+  $("who").hidden = m !== "send";
+  $("goT").textContent = m === "send" ? "ارسال" : "ورود";
+  $("swap").textContent = m === "send" ? "ورود کارکنان" : "ارسال فایل بدون ورود";
+  $("acts").hidden = m === "send" && !$("sok").hidden;
+  document.title = m === "send" ? "ارسال فایل برای " + unitName + " · گنجینه" : "ورود · گنجینه";
+  const t = m === "send" ? (!$("pc").value ? $("pc") : !$("br").value ? $("br") : $("drop")) : (nameOK() ? inp : nm);
+  t.focus(); paint();
+}
+$("swap").onclick = () => show(mode === "send" ? "login" : "send");
+btn.onclick = () => mode === "send" ? sendAll() : submit();
+show("login");
+fetch("/api/brand" + (ownCode ? "?u=" + encodeURIComponent(ownCode.toLowerCase()) : "")).then(r => r.json()).then(j => {
+  const n = (j.unit || "").trim().replace(/^واحد\s+/, "");
+  if (!n) { if (ownCode) { mt.textContent = "صفحه‌ی ارسال «" + ownCode + "» پیدا نشد یا خاموش است. آدرس را از واحد مربوط بپرسید."; msg.classList.add("show"); } return; }
+  unitName = "واحد " + n;
+  $("unitN").textContent = "ارسال برای " + unitName;
+  $("swap").hidden = false;
+  try { $("pc").value = localStorage.getItem("lfs-pc") || ""; $("br").value = localStorage.getItem("lfs-br") || ""; } catch (e) {}
+  if (isSend) show("send");
+}).catch(() => {});
+
+/* ---------- send files to the unit (no login) ---------- */
+let Q = [], sending = false;
+const digits = v => fa(v).trim().toLowerCase();
+const size = b => b < 1024 ? faNum(b) + " بایت" : b < 1048576 ? faNum((b / 1024).toFixed(0)) + " کیلوبایت" : b < 1073741824 ? faNum((b / 1048576).toFixed(1)) + " مگابایت" : faNum((b / 1073741824).toFixed(2)) + " گیگابایت";
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
+const ext = n => (n.includes(".") ? n.split(".").pop() : "").slice(0, 4).toUpperCase() || "FILE";
+function showSel() {
+  $("sel").hidden = !Q.length;
+  $("selT").textContent = faNum(Q.length) + " فایل · " + size(Q.reduce((s, q) => s + q.f.size, 0));
+  const N = 6, nmOf = q => (q.rel ? q.rel + "/" : "") + q.f.name;
+  $("flist").innerHTML = Q.slice(0, N).map(q => `<li><i>${esc(ext(q.f.name))}</i><span title="${esc(nmOf(q))}">${esc(nmOf(q))}</span><small>${size(q.f.size)}</small></li>`).join("") + (Q.length > N ? `<li class="more">و ${faNum(Q.length - N)} فایل دیگر</li>` : "");
+}
+const addFiles = list => { for (const x of list) Q.push(x); $("smsg").classList.remove("show"); showSel(); };
+$("pf").onclick = e => { e.stopPropagation(); $("fi").click(); };
+$("pd").onclick = e => { e.stopPropagation(); $("di").click(); };
+$("fi").onchange = () => { addFiles([...$("fi").files].map(f => ({f, rel: ""}))); $("fi").value = ""; };
+$("di").onchange = () => { addFiles([...$("di").files].map(f => ({f, rel: (f.webkitRelativePath || "").split("/").slice(0, -1).join("/")}))); $("di").value = ""; };
+$("clr").onclick = () => { Q = []; showSel(); };
+async function walk(e, dir, out) {
+  if (e.isFile) { await new Promise(r => e.file(f => { out.push({f, rel: dir}); r(); }, r)); return; }
+  if (!e.isDirectory) return;
+  const rd = e.createReader(), d = dir ? dir + "/" + e.name : e.name;
+  for (;;) { const es = await new Promise(r => rd.readEntries(r, () => r([]))); if (!es.length) break; for (const c of es) await walk(c, d, out); }
+}
+const dz = $("drop");
+dz.onclick = () => $("fi").click();
+dz.onkeydown = e => { if (e.target === dz && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); $("fi").click(); } };
+["dragenter", "dragover"].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.add("over"); }));
+["dragleave", "drop"].forEach(ev => dz.addEventListener(ev, () => dz.classList.remove("over")));
+dz.addEventListener("drop", async e => {
+  e.preventDefault();
+  const items = [...(e.dataTransfer.items || [])].map(i => i.webkitGetAsEntry && i.webkitGetAsEntry()).filter(Boolean), out = [];
+  if (items.length) { for (const it of items) await walk(it, "", out); addFiles(out); }
+  else addFiles([...e.dataTransfer.files].map(f => ({f, rel: ""})));
+});
+function serr(t, id) { $("smt").textContent = t; $("smsg").classList.add("show"); if (id) { $(id + "F").classList.add("bad"); $(id).focus(); } }
+["pc", "br"].forEach(id => $(id).oninput = () => { $(id + "F").classList.remove("bad"); $("smsg").classList.remove("show"); });
+$("pc").onkeydown = e => { if (e.key === "Enter") { e.preventDefault(); $("br").focus(); } };
+$("br").onkeydown = e => { if (e.key === "Enter") { e.preventDefault(); Q.length ? sendAll() : $("fi").click(); } };
+function upOne(q, pc, br, onp) {
+  return new Promise(res => {
+    const x = new XMLHttpRequest(), fd = new FormData();
+    fd.append("file", q.f, q.f.name);
+    x.open("POST", "/api/send?pc=" + encodeURIComponent(pc) + "&br=" + encodeURIComponent(br) + "&rel=" + encodeURIComponent(q.rel) + (ownCode ? "&u=" + encodeURIComponent(ownCode.toLowerCase()) : ""));
+    x.upload.onprogress = e => onp(e.loaded);
+    x.onload = () => { let j = {}; try { j = JSON.parse(x.responseText); } catch (e) {} res(x.status === 200 && j.uploaded ? "" : (j.error || "خطا")); };
+    x.onerror = () => res("ارتباط با سرور قطع شد");
+    x.send(fd);
+  });
+}
+async function sendAll() {
+  if (sending) return;
+  const pc = digits($("pc").value), br = digits($("br").value);
+  if (!/^[a-z]?[0-9]{5}$/.test(pc)) return serr("کد پرسنلی باید ۵ رقم باشد (مثلا 12345) یا یک حرف انگلیسی و ۵ رقم (مثلا a12345).", "pc");
+  if (!/^[a-z0-9]{1,10}$/.test(br)) return serr("کد شعبه را وارد کنید (فقط عدد یا حروف انگلیسی).", "br");
+  if (!Q.length) return serr("اول فایل یا پوشه‌ای انتخاب کنید.");
+  try { localStorage.setItem("lfs-pc", pc); localStorage.setItem("lfs-br", br); } catch (e) {}
+  sending = true; btn.classList.add("busy"); btn.disabled = true; $("prog").hidden = false; $("smsg").classList.remove("show");
+  const jobs = Q.slice(), total = jobs.reduce((s, q) => s + q.f.size, 0) || 1, done = new Array(jobs.length).fill(0);
+  let i = 0, ok = 0, failed = [], lastErr = "";
+  const paintP = () => { const d = done.reduce((a, b) => a + b, 0); $("pb").style.width = Math.min(100, d / total * 100) + "%"; $("pt").textContent = faNum(ok) + " از " + faNum(jobs.length); };
+  const worker = async () => { while (i < jobs.length) { const k = i++; const e = await upOne(jobs[k], pc, br, b => { done[k] = b; paintP(); }); if (e) { failed.push(jobs[k]); lastErr = e; } else { ok++; done[k] = jobs[k].f.size; } paintP(); } };
+  await Promise.all([worker(), worker(), worker()]);
+  sending = false; btn.classList.remove("busy"); btn.disabled = false;
+  Q = failed; showSel();
+  if (failed.length) {
+    serr(faNum(failed.length) + " فایل ارسال نشد (" + ({"bad personnel code": "کد پرسنلی نادرست", "bad branch code": "کد شعبه نادرست", "too many files": "تعداد ارسال زیاد بود؛ کمی بعد", "not available": "ارسال برای این واحد خاموش است", "not found": "صفحه‌ی ارسال پیدا نشد", "disk full": "جای سرور پر است"}[lastErr] || lastErr) + ")." + (ok ? " " + faNum(ok) + " فایل ارسال شد." : "") + " دوباره «ارسال» را بزنید.");
+    return;
+  }
+  $("prog").hidden = true;
+  $("sokT").textContent = faNum(ok) + " فایل برای " + unitName + " فرستاده شد (کد پرسنلی " + pc + "، شعبه " + br + ").";
+  $("sendForm").hidden = true; $("sok").hidden = false; $("acts").hidden = true; $("again").focus();
+}
+$("again").onclick = () => { $("sok").hidden = true; $("sendForm").hidden = false; $("acts").hidden = false; $("pb").style.width = "0"; $("drop").focus(); };
+/* ---------- theme ---------- */
+$("theme").onclick = () => {
+  const cur = document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  const t = cur === "dark" ? "light" : "dark"; document.documentElement.dataset.theme = t; try { localStorage.setItem("lfs-theme", t); } catch (e) {}
+};
+</script>
+</body>
+</html>

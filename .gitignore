@@ -1,0 +1,18 @@
+# build output
+out/
+*.exe
+
+# runtime data (never commit)
+vault.json
+users.json
+config.json
+settings.json
+location.txt
+uploader.json
+shared/
+private/
+trash/
+inbox/
+
+# private notes
+REPORT*.md

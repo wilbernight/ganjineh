@@ -142,14 +142,32 @@ func main() {
 	if err := os.MkdirAll(root, 0o700); err != nil {
 		log.Fatal("cannot create shared folder (choose another with -dir): ", err)
 	}
-	fmt.Println(" Checking for unencrypted files...")
-	if n, bad := encryptPlain(root); n > 0 || bad > 0 {
-		fmt.Printf(" Encrypted %d existing item(s)", n)
-		if bad > 0 {
-			fmt.Printf(", %d could not be encrypted (still readable!)", bad)
+	// The check for plain (not yet encrypted) files runs in the background so
+	// the server comes up at once even when the shared folder is large.
+	go func() {
+		stop := make(chan struct{})
+		go func() {
+			t := time.NewTicker(10 * time.Second)
+			defer t.Stop()
+			for {
+				select {
+				case <-stop:
+					return
+				case <-t.C:
+					fmt.Printf(" (background) checking for unencrypted files: %d checked, %d encrypted so far...\n", plainScanned.Load(), plainDone.Load())
+				}
+			}
+		}()
+		n, bad := encryptPlain(root)
+		close(stop)
+		if n > 0 || bad > 0 {
+			fmt.Printf(" Encrypted %d existing item(s)", n)
+			if bad > 0 {
+				fmt.Printf(", %d could not be encrypted (still readable!)", bad)
+			}
+			fmt.Println()
 		}
-		fmt.Println()
-	}
+	}()
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {

@@ -29,6 +29,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
+	"sync/atomic"
 
 	"golang.org/x/crypto/argon2"
 	"golang.org/x/term"
@@ -645,12 +646,15 @@ func listDir(dir string) ([]vEntry, error) {
 // encryptPlain converts any normal (unencrypted) files and folders under dir
 // into the encrypted format. The original is removed only after the
 // encrypted copy has been read back and compared.
+var plainScanned, plainDone atomic.Int64 // progress of encryptPlain
+
 func encryptPlain(dir string) (done, failed int) {
 	des, err := os.ReadDir(dir)
 	if err != nil {
 		return
 	}
 	for _, d := range des {
+		plainScanned.Add(1)
 		nm := d.Name()
 		p := filepath.Join(dir, nm)
 		switch {
@@ -693,6 +697,7 @@ func encryptPlain(dir string) (done, failed int) {
 			continue
 		}
 		done++
+		plainDone.Add(1)
 	}
 	return
 }

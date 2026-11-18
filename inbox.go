@@ -192,7 +192,7 @@ func handleSend(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 		name := filepath.Base(strings.ReplaceAll(part.FileName(), "\\", "/"))
-		if part.FormName() != "file" || !validName(name) {
+		if part.FormName() != "file" || !validName(name) || junkName(name) {
 			part.Close()
 			continue
 		}

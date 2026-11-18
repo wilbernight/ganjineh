@@ -22,6 +22,9 @@ func withBase(base string, h http.Handler) http.Handler {
 		`location.href = "/`, `location.href = "`+base+`/`,
 		`"/dl" +`, `"`+base+`/dl" +`,
 		`x.open("POST", "/`, `x.open("POST", "`+base+`/`,
+		// any other API address written in the page code ("/api/..." or `/api/...`)
+		`"/api/`, `"`+base+`/api/`,
+		"`/api/", "`"+base+"/api/",
 	)
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		p := r.URL.Path

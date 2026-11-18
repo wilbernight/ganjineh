@@ -1180,7 +1180,9 @@ function pickFiles(dest = S.cur) { if (S.ro) return; UQ.pickDest = dest; $("#fil
 function pickDir(dest = S.cur) { if (S.ro) return; UQ.pickDest = dest; $("#dirIn").click(); }
 const spaceRoot = p => p.startsWith("/:") ? "/" + p.split("/")[1] : "/";
 // entries: [{f: File, rel: "folder/sub/name.ext" or "name.ext"}]
+const JUNK = /^(~\$|thumbs\.db$|desktop\.ini$|\.ds_store$)/i;
 function enqueue(entries, dest = S.cur) {
+  entries = entries.filter(e => !JUNK.test(e.f.name)); // Office lock files (~$name) etc.: not real files
   if (S.ro || !entries.length) return;
   if (!UQ.items.some(i => i.st === "wait" || i.st === "up")) { UQ.items = []; UQ.bytes = 0; UQ.done = 0; UQ.t0 = Date.now(); $("#uplList").innerHTML = ""; UQ.made = new Map(); }
   UQ.stopped = false;
@@ -1296,7 +1298,7 @@ async function dropEntries(dt) {
   const out = [];
   const readAll = r => new Promise(res => { const acc = []; const step = () => r.readEntries(es => { if (!es.length) return res(acc); acc.push(...es); step(); }, () => res(acc)); step(); });
   const walk = async (e, pre) => {
-    if (e.isFile) { const f = await new Promise(res => e.file(res, () => res(null))); if (f && !/^(thumbs\.db|desktop\.ini)$/i.test(f.name)) out.push({f, rel: pre + f.name}); }
+    if (e.isFile) { const f = await new Promise(res => e.file(res, () => res(null))); if (f) out.push({f, rel: pre + f.name}); }
     else if (e.isDirectory) {
       const kids = await readAll(e.createReader());
       if (!kids.length) out.push({dir: pre + e.name});

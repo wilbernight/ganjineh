@@ -13,11 +13,17 @@ import (
 	"strings"
 )
 
+var demoBase = flag.String("demo-base", "", "TEST ONLY: port - also serve under /Temporary_Listen_Addresses on this local port, like Windows port 80")
+
 var demoClients = flag.String("demo-clients", "", "TEST ONLY: port=ip,port=ip - serve on these local ports as if requests came from that IP")
 
 const demoBuild = true
 
 func startDemo(h http.Handler) {
+	if *demoBase != "" {
+		go http.ListenAndServe("127.0.0.1:"+*demoBase, withBase("/Temporary_Listen_Addresses", h))
+		fmt.Printf("   TEST port-80 style address:  http://localhost:%s/Temporary_Listen_Addresses/\n", *demoBase)
+	}
 	for _, pair := range strings.Split(*demoClients, ",") {
 		port, ip, ok := strings.Cut(strings.TrimSpace(pair), "=")
 		if !ok {

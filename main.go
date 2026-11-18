@@ -454,6 +454,14 @@ func logMW(next http.Handler) http.Handler {
 	})
 }
 
+// junkName: helper files Windows/Office/macOS make next to real files - Office
+// lock files ("~$report.docx", a tiny file that is not the document), Thumbs.db,
+// desktop.ini, .DS_Store. They are never uploaded, encrypted or listed as files.
+func junkName(n string) bool {
+	l := strings.ToLower(n)
+	return strings.HasPrefix(l, "~$") || l == "thumbs.db" || l == "desktop.ini" || l == ".ds_store"
+}
+
 func validName(n string) bool {
 	return n != "" && n != "." && n != ".." && !strings.ContainsAny(n, `/\:*?"<>|`)
 }
@@ -607,7 +615,7 @@ func handleUpload(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		name := filepath.Base(strings.ReplaceAll(part.FileName(), "\\", "/"))
-		if part.FormName() != "file" || !validName(name) {
+		if part.FormName() != "file" || !validName(name) || junkName(name) {
 			part.Close()
 			continue
 		}

@@ -30,6 +30,7 @@ import (
 	"regexp"
 	"strings"
 	"sync/atomic"
+	"time"
 
 	"golang.org/x/crypto/argon2"
 	"golang.org/x/term"
@@ -657,8 +658,13 @@ func encryptPlain(dir string) (done, failed int) {
 		case nm == dirNameF:
 			continue
 		case strings.HasSuffix(nm, ".part") || strings.HasSuffix(nm, ".uploading") || nm == dirNameF+".tmp":
-			os.Remove(p) // leftovers of an interrupted upload
+			// leftovers of an interrupted upload; a recent one may still be uploading
+			if i, err := d.Info(); err == nil && time.Since(i.ModTime()) > time.Hour {
+				os.Remove(p)
+			}
 			continue
+		case !d.IsDir() && junkName(nm):
+			continue // Office lock files, Thumbs.db...: not real files, leave them alone
 		}
 		if d.IsDir() {
 			if idRe.MatchString(nm) && exists(filepath.Join(p, dirNameF)) {
@@ -686,6 +692,9 @@ func encryptPlain(dir string) (done, failed int) {
 		}
 		if !d.Type().IsRegular() || (idRe.MatchString(nm) && hasMagic(p)) || !validName(nm) {
 			continue
+		}
+		if i, err := d.Info(); err == nil && time.Since(i.ModTime()) < time.Minute {
+			continue // probably still being copied in; encrypting half a file would lose the rest
 		}
 		if err := encryptOne(dir, p, nm); err != nil {
 			fmt.Println(" !! Could not encrypt", p, "-", err)

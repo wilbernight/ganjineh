@@ -263,7 +263,8 @@ function showSel() {
   const N = 6, nmOf = q => (q.rel ? q.rel + "/" : "") + q.f.name;
   $("flist").innerHTML = Q.slice(0, N).map(q => `<li><i>${esc(ext(q.f.name))}</i><span title="${esc(nmOf(q))}">${esc(nmOf(q))}</span><small>${size(q.f.size)}</small></li>`).join("") + (Q.length > N ? `<li class="more">و ${faNum(Q.length - N)} فایل دیگر</li>` : "");
 }
-const addFiles = list => { for (const x of list) Q.push(x); $("smsg").classList.remove("show"); showSel(); };
+const JUNK = /^(~\$|thumbs\.db$|desktop\.ini$|\.ds_store$)/i; // Office lock files (~$name) and system helper files: not real files
+const addFiles = list => { for (const x of list) if (!JUNK.test(x.f.name)) Q.push(x); $("smsg").classList.remove("show"); showSel(); };
 $("pf").onclick = e => { e.stopPropagation(); $("fi").click(); };
 $("pd").onclick = e => { e.stopPropagation(); $("di").click(); };
 $("fi").onchange = () => { addFiles([...$("fi").files].map(f => ({f, rel: ""}))); $("fi").value = ""; };

@@ -177,8 +177,7 @@ func upRun(args []string) error {
 			if !d.Type().IsRegular() {
 				return nil // links, devices
 			}
-			n := strings.ToLower(d.Name())
-			if n == "thumbs.db" || n == "desktop.ini" || strings.HasPrefix(n, "~$") {
+			if junkName(d.Name()) {
 				return nil
 			}
 			info, err := d.Info()

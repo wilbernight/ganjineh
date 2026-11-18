@@ -249,6 +249,7 @@ func unlockVault(base string, resetTOTP, changePW bool, setKey string) (bool, er
 	encKey, nameKey = subKey(mk, "content"), subKey(mk, "names")
 	totpKey := subKey(mk, "totp")
 	usersKey = subKey(mk, "users")
+	auditKey = subKey(mk, "audit")
 
 	firstRun := v.TOTP == ""
 	if setKey != "" {
@@ -379,6 +380,8 @@ type fileMeta struct {
 	Name string `json:"n"`
 	Key  []byte `json:"k"`
 	Size int64  `json:"s"`
+	// Decoy marks a honeypot file: touching it alerts the admins (decoy.go)
+	Decoy bool `json:"d,omitempty"`
 }
 
 func writeHeader(f *os.File, m fileMeta) error {
@@ -464,6 +467,11 @@ func (w *encWriter) flush() error {
 
 // writeEncrypted stores r as dst (written to dst.part first, then renamed).
 func writeEncrypted(dst, name string, r io.Reader) error {
+	return writeEncMeta(dst, fileMeta{Name: name}, r)
+}
+
+// writeEncMeta is writeEncrypted with extra header fields (m.Key/Size are set here).
+func writeEncMeta(dst string, m fileMeta, r io.Reader) error {
 	tmp := dst + ".part"
 	f, err := os.OpenFile(tmp, os.O_CREATE|os.O_TRUNC|os.O_RDWR, 0o600)
 	if err != nil {
@@ -476,7 +484,8 @@ func writeEncrypted(dst, name string, r io.Reader) error {
 		err = w.flush()
 	}
 	if err == nil {
-		err = writeHeader(f, fileMeta{Name: name, Key: key, Size: w.size})
+		m.Key, m.Size = key, w.size
+		err = writeHeader(f, m)
 	}
 	if err == nil {
 		err = f.Sync()
@@ -619,24 +628,11 @@ func listDir(dir string) ([]vEntry, error) {
 		if err != nil {
 			continue
 		}
-		if d.IsDir() {
-			n, err := readDirName(p)
-			if err != nil {
-				continue
-			}
-			out = append(out, vEntry{entry{n, true, 0, info.ModTime().Unix()}, p})
+		n, size, ok := itemInfo(p, info) // cached real name (see search.go)
+		if !ok {
 			continue
 		}
-		f, err := os.Open(p)
-		if err != nil {
-			continue
-		}
-		m, err := readHeader(f)
-		f.Close()
-		if err != nil {
-			continue
-		}
-		out = append(out, vEntry{entry{m.Name, false, m.Size, info.ModTime().Unix()}, p})
+		out = append(out, vEntry{entry{n, info.IsDir(), size, info.ModTime().Unix()}, p})
 	}
 	return out, nil
 }

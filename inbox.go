@@ -203,6 +203,7 @@ func handleSend(w http.ResponseWriter, r *http.Request) {
 			fail(w, 500, "upload failed")
 			return
 		}
+		auditNote(r, name)
 		count++
 	}
 	writeJSON(w, map[string]int{"uploaded": count})

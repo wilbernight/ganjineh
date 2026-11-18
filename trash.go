@@ -373,6 +373,7 @@ func handleTrash(w http.ResponseWriter, r *http.Request) {
 			fail(w, 400, "bad request")
 			return
 		}
+		auditNote(r, it.Name)
 		done++
 	}
 	trashItems = keep

@@ -12,6 +12,7 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"path"
 	"path/filepath"
 	"runtime"
 	"sort"
@@ -134,6 +135,7 @@ func main() {
 		fmt.Println(" !!", err)
 	}
 	loadTrash()
+	loadAudit()
 	go trashJanitor()
 	root, err = filepath.Abs(*dir)
 	if err != nil {
@@ -145,28 +147,8 @@ func main() {
 	// The check for plain (not yet encrypted) files runs in the background so
 	// the server comes up at once even when the shared folder is large.
 	go func() {
-		stop := make(chan struct{})
-		go func() {
-			t := time.NewTicker(10 * time.Second)
-			defer t.Stop()
-			for {
-				select {
-				case <-stop:
-					return
-				case <-t.C:
-					fmt.Printf(" (background) checking for unencrypted files: %d checked, %d encrypted so far...\n", plainScanned.Load(), plainDone.Load())
-				}
-			}
-		}()
-		n, bad := encryptPlain(root)
-		close(stop)
-		if n > 0 || bad > 0 {
-			fmt.Printf(" Encrypted %d existing item(s)", n)
-			if bad > 0 {
-				fmt.Printf(", %d could not be encrypted (still readable!)", bad)
-			}
-			fmt.Println()
-		}
+		runPlainScan()
+		warmIndex() // read every name once so searches are fast
 	}()
 
 	mux := http.NewServeMux()
@@ -229,6 +211,13 @@ func main() {
 	mux.HandleFunc("/api/mkdir", handleMkdir)
 	mux.HandleFunc("/api/delete", handleDelete)
 	mux.HandleFunc("/api/rename", handleRename)
+	mux.HandleFunc("/api/move", handleMove)
+	mux.HandleFunc("/api/search", handleSearch)
+	mux.HandleFunc("/api/archive-file", handleArchiveFile)
+	mux.HandleFunc("/api/audit", handleAudit)
+	mux.HandleFunc("/api/alerts", handleAlerts)
+	mux.HandleFunc("/api/enc", handleEnc)
+	mux.HandleFunc("/api/decoys", handleDecoys)
 	mux.HandleFunc("/dl/", handleDownload)
 	mux.HandleFunc("/api/zip", handleZip)
 	mux.HandleFunc("/api/users", handleUsers)
@@ -236,7 +225,7 @@ func main() {
 	mux.HandleFunc("/api/send", handleSend)
 	mux.HandleFunc("/api/trash", handleTrash)
 
-	handler := logMW(secureMW(authMW(mux)))
+	handler := logMW(secureMW(auditMW(authMW(mux))))
 	// Port 80 through Windows' own web server (http.sys): on PCs whose firewall
 	// drops everything else, this is the path that still gets through.
 	sysBase, sysShort, sysErr := startHTTPSys(handler)
@@ -558,6 +547,13 @@ func handleDownload(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "cannot read file", 500)
 		return
 	}
+	if m.Decoy {
+		how := "دانلود"
+		if r.URL.Query().Get("view") != "" {
+			how = "باز کردن / پیش‌نمایش"
+		}
+		decoyHit(r, m.Name, how, path.Dir(strings.TrimPrefix(r.URL.Path, "/dl")))
+	}
 	defer f.Close()
 	webPage := false
 	switch strings.ToLower(filepath.Ext(m.Name)) {
@@ -622,6 +618,7 @@ func handleUpload(w http.ResponseWriter, r *http.Request) {
 			fail(w, 500, "upload failed")
 			return
 		}
+		auditNote(r, name)
 		count++
 	}
 	writeJSON(w, map[string]int{"uploaded": count})
@@ -672,6 +669,9 @@ func handleDelete(w http.ResponseWriter, r *http.Request) {
 		fail(w, 400, "invalid path")
 		return
 	}
+	if n := decoyIn(full); n != "" {
+		decoyHit(r, n, "حذف", path.Dir(q.Path))
+	}
 	if err := toTrash(full, sr, q.Path, clientIP(r)); err != nil { // recycle bin, not erased
 		log.Printf("delete %q: %v", q.Path, err)
 		fail(w, 500, "cannot delete")
@@ -704,6 +704,9 @@ func handleRename(w http.ResponseWriter, r *http.Request) {
 	if exists(filepath.Join(filepath.Dir(full), nameID(q.Name))) {
 		fail(w, 400, "name already exists")
 		return
+	}
+	if n := decoyIn(full); n != "" {
+		decoyHit(r, n, "تغییر نام به «"+q.Name+"»", path.Dir(q.Path))
 	}
 	if err := renameItem(full, q.Name); err != nil {
 		fail(w, 500, "cannot rename")

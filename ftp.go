@@ -370,6 +370,9 @@ func (s *ftpSession) handle(cmd, arg string) bool {
 		if !ok {
 			break
 		}
+		if n := decoyIn(p); n != "" {
+			decoyHitAs(s.ip, "", n, "حذف با FTP", path.Dir(lp))
+		}
 		if p == root || isDir(p) || toTrash(p, root, lp, s.ip) != nil {
 			s.reply(550, "Cannot delete.")
 			break
@@ -419,6 +422,9 @@ func (s *ftpSession) handle(cmd, arg string) bool {
 		if p == root || !exists(p) {
 			s.reply(550, "Not found.")
 			break
+		}
+		if n := decoyIn(p); n != "" {
+			decoyHitAs(s.ip, "", n, "تغییر نام با FTP", "")
 		}
 		s.rnfr = p
 		s.reply(350, "Ready for RNTO.")
@@ -705,10 +711,13 @@ func (s *ftpSession) cmdRetr(arg string) {
 		s.reply(550, "Not a file.")
 		return
 	}
-	f, _, err := openEncrypted(p)
+	f, m, err := openEncrypted(p)
 	if err != nil {
 		s.reply(550, "File not found.")
 		return
+	}
+	if m.Decoy {
+		decoyHitAs(s.ip, "", m.Name, "دانلود با FTP", path.Dir(s.abs(arg)))
 	}
 	defer f.Close()
 	if rest > 0 {

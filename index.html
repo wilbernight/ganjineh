@@ -453,6 +453,126 @@ h2.sec:not(:first-child){margin-top:30px}
   .pvw .nav-b{display:none}
   .frm{grid-template-columns:1fr}
 }
+/* long names are never cut off: they wrap (two lines in cards, in full in the details and icon views) */
+.fcard{height:auto;min-height:56px;padding-block:8px}
+.fc-n b,.cell-n .nm b,.gc .meta b{white-space:normal;text-overflow:clip;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden;overflow-wrap:anywhere;line-height:1.5}
+.tr{height:auto;min-height:56px;padding-block:6px}
+.v-details .cell-n .nm b,.sr-list .cell-n .nm b{display:block;-webkit-line-clamp:unset;line-clamp:none;overflow:visible}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:6px}
+.tl{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px 8px 12px;border-radius:12px;text-align:center;user-select:none;transition:background .1s}
+.tl:hover{background:var(--row-hover)}
+.tl.sel{background:var(--primary-soft)}
+.tl .ti{width:64px;height:64px;display:grid;place-items:center;cursor:pointer;border-radius:8px;overflow:hidden}
+.tl .ti img{width:100%;height:100%;object-fit:cover}
+.tl .ti svg{width:44px;height:54px}
+.tl .ti .fold{width:64px;height:64px}
+.tl b{font-size:13.5px;font-weight:600;line-height:1.5;overflow-wrap:anywhere;cursor:pointer;max-width:100%}
+.tl.sel b{color:var(--on-soft)}
+.tl small{font-size:12px;color:var(--text-3)}
+.tl .cb{position:absolute;top:8px;inset-inline-start:8px}
+.tl .cb input{opacity:0}
+.tl:hover .cb input,.tl.sel .cb input,.tiles.selecting .cb input{opacity:1}
+.tl .more{position:absolute;top:4px;inset-inline-end:4px}
+.tl:hover .more,.tl.sel .more{opacity:1}
+/* drag onto a folder to move */
+.drop-in{outline:2px dashed var(--primary);outline-offset:-2px;background:var(--primary-soft)!important}
+.dragghost{position:fixed;top:-100px;inset-inline-start:0;padding:6px 12px;border-radius:8px;background:var(--primary);color:#fff;font-size:13px;font-weight:600}
+/* menus */
+.menu .mh{padding:6px 12px 4px;font-size:12.5px;color:var(--text-3)}
+.menu button.on{color:var(--primary);font-weight:600}
+.menu button svg.ok{margin-inline-start:auto;color:var(--primary)}
+.sg .kbd{margin-inline-start:auto;font-size:12px;color:var(--text-3);border:1px solid var(--border);border-radius:5px;padding:1px 6px}
+.sg-w{max-width:45%;overflow:hidden;text-overflow:ellipsis;display:block}
+/* move dialog */
+.mv-sp{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.mv-sp button{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border:1px solid var(--border);border-radius:16px;background:var(--surface);color:var(--text-2);font:inherit;font-size:13.5px;cursor:pointer}
+.mv-sp button svg{width:16px;height:16px}
+.mv-sp button.on{background:var(--primary-soft);border-color:transparent;color:var(--on-soft);font-weight:600}
+.mv-crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:2px;margin:0 0 8px;font-size:14px}
+.mv-crumbs button{border:0;background:none;color:var(--text-2);font:inherit;cursor:pointer;padding:3px 6px;border-radius:6px}
+.mv-crumbs button:last-of-type{color:var(--text);font-weight:600}
+.mv-crumbs button:hover{background:var(--surface-2)}
+.mv-crumbs svg{width:14px;height:14px;color:var(--text-3)}
+.mv-list{display:flex;flex-direction:column;min-height:120px;max-height:min(42vh,340px);overflow:auto;border:1px solid var(--border);border-radius:12px;padding:4px;margin:0 0 12px}
+.mv-list button{display:flex;align-items:center;gap:12px;width:100%;min-height:42px;padding:6px 10px;border:0;border-radius:8px;background:none;color:var(--text);font:inherit;font-size:14.5px;text-align:start;cursor:pointer}
+.mv-list button:hover{background:var(--surface-2)}
+.mv-list button:disabled{opacity:.4;cursor:not-allowed}
+.mv-list button span{flex:1;min-width:0;overflow-wrap:anywhere}
+.mv-list .fold{width:22px;height:22px;flex:none}
+.mv-list button>svg.i{width:16px;height:16px;color:var(--text-3)}
+.mv-empty{padding:28px 12px;text-align:center;color:var(--text-3);font-size:14px}
+.mv-empty.err{color:var(--danger)}
+.mv-new{display:flex;gap:8px;margin:0 0 12px}
+.mv-new .input{flex:1;margin:0}
+.mv-new[hidden]{display:none}
+.mv-q{display:flex;align-items:center;gap:8px;margin:0 0 12px}
+.mv-q svg{width:18px;height:18px;color:var(--text-3);flex:none}
+.mv-q .input{flex:1;margin:0}
+.mv-list button small{display:block;font-size:12px;color:var(--text-3);font-weight:400}
+.mv-list .mv-up{color:var(--primary);font-weight:600;border-bottom:1px solid var(--border);border-radius:8px 8px 0 0}
+.mv-list .mv-up svg{width:16px;height:16px}
+.mv-here{font-size:13px;color:var(--text-2);margin:0 0 10px;overflow-wrap:anywhere}
+.inarch{display:inline-flex;align-items:center;gap:4px;margin-inline-start:2px;padding:0 6px;border-radius:6px;background:var(--surface-2);color:var(--text-2);font-size:11.5px;vertical-align:middle}
+.inarch svg{width:12px;height:12px}
+/* search results */
+.sr-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:0 0 16px}
+.sr-t{display:flex;align-items:center;gap:8px;font-size:15px;color:var(--text-2)}
+.sr-t svg{width:18px;height:18px}
+.sr-t b{color:var(--text)}
+.chips{display:flex;flex-wrap:wrap;align-items:center;gap:6px;flex:1}
+.chips .sep{width:1px;height:20px;background:var(--border);margin:0 4px}
+.chip{height:32px;padding:0 14px;border:1px solid var(--border);border-radius:16px;background:var(--surface);color:var(--text-2);font:inherit;font-size:13.5px;cursor:pointer}
+.chip.on{background:var(--primary-soft);border-color:transparent;color:var(--on-soft);font-weight:600}
+.sr-list .tr{cursor:pointer}
+.sr-list.busy{opacity:.6}
+mark{background:color-mix(in srgb,var(--primary) 20%,transparent);color:inherit;border-radius:3px;padding:0 1px}
+.sg-n mark{color:var(--text);font-weight:700}
+.loc{display:inline-flex;align-items:center;gap:5px;max-width:100%;margin-top:2px;padding:1px 6px 1px 4px;border:0;border-radius:6px;background:none;color:var(--text-3);font:inherit;font-size:12.5px;cursor:pointer;text-align:start}
+.loc:hover{background:var(--surface-2);color:var(--primary)}
+.loc svg{width:14px;height:14px;flex:none}
+.loc span{overflow-wrap:anywhere}
+@media (max-width:900px){
+  .tiles{grid-template-columns:repeat(auto-fill,minmax(110px,1fr))}
+  .tl .more{opacity:1}
+  .sg-w{display:none}
+}
+/* admin: activity log, alerts, encryption */
+.alertbar{position:fixed;top:0;inset-inline:0;z-index:70;display:flex;align-items:center;gap:12px;min-height:52px;padding:8px 16px;background:#c62828;color:#fff;box-shadow:0 4px 14px rgba(0,0,0,.25);animation:abIn .25s ease}
+.alertbar[hidden]{display:none}
+.alertbar>svg{width:24px;height:24px;flex:none;animation:abPulse 1.2s ease-in-out infinite}
+.alertbar .ab-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.alertbar .ab-t b{font-size:15px}
+.alertbar .ab-t>span{font-size:13px;opacity:.92;overflow-wrap:anywhere}
+.alertbar .ab-n{font-size:12.5px;background:rgba(255,255,255,.2);border-radius:10px;padding:2px 8px;white-space:nowrap}
+.alertbar .btn{background:rgba(255,255,255,.16);border:0;color:#fff}
+.alertbar .btn:hover{background:rgba(255,255,255,.28)}
+@keyframes abIn{from{transform:translateY(-100%)}to{transform:none}}
+@keyframes abPulse{50%{opacity:.45}}
+.bell{position:relative}
+.bell.hot{color:#c62828}
+.bell .bdg{position:absolute;top:3px;inset-inline-end:2px;min-width:18px;height:18px;padding:0 4px;border-radius:9px;background:#c62828;color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center}
+.bell .bdg[hidden]{display:none}
+.kvs{display:flex;flex-direction:column;border:1px solid var(--border);border-radius:12px;margin:0 0 12px}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:9px 14px;border-bottom:1px solid var(--border);font-size:14px}
+.kv:last-child{border-bottom:0}
+.kv span{color:var(--text-2)}
+.kv b{font-weight:600;text-align:end;overflow-wrap:anywhere}
+.dz{color:var(--danger)}
+.frm.pw3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.lgf{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr) auto;gap:8px;margin:0 0 10px}
+.lgf .input{margin:0}
+.lgl{display:flex;flex-direction:column;max-height:min(46vh,420px);overflow:auto;border:1px solid var(--border);border-radius:12px}
+.lg{display:grid;grid-template-columns:150px 150px minmax(0,1fr);gap:10px;padding:8px 12px;border-bottom:1px solid var(--border);font-size:13.5px;align-items:start}
+.lg:last-child{border-bottom:0}
+.lg.al{background:color-mix(in srgb,#c62828 7%,transparent)}
+.lg-t{color:var(--text-3);font-size:12.5px}
+.lg-w,.lg-a{display:flex;flex-direction:column;gap:2px;min-width:0}
+.lg-w small,.lg-a small{color:var(--text-3);font-size:12.5px;overflow-wrap:anywhere}
+.lg-w small{text-align:right}
+.lg-a .tg{align-self:flex-start;font-size:11.5px;padding:0 6px;border-radius:6px;background:var(--danger-soft)}
+.sw{display:flex;align-items:center;gap:10px;font-size:14px;margin:0 0 8px;cursor:pointer}
+.sw input{width:18px;height:18px}
+@media (max-width:700px){.frm.pw3,.lgf{grid-template-columns:1fr}.lg{grid-template-columns:1fr}.alertbar{flex-wrap:wrap}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -462,6 +582,7 @@ h2.sec:not(:first-child){margin-top:30px}
   <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11m0 0 4-4m-4 4-4-4"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></symbol>
   <symbol id="i-folder-plus" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M12 10v6m-3-3h6"/></symbol>
   <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5h3.6l2 2h7.4A2.5 2.5 0 0 1 21 9.5v8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/></symbol>
+  <symbol id="i-move" viewBox="0 0 24 24"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5h3.6l2 2h7.4A2.5 2.5 0 0 1 21 9.5v8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/><path d="M8.5 13.5h7m-2.5-2.5 2.5 2.5-2.5 2.5"/></symbol>
   <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M15 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h3"/></symbol>
 <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
   <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
@@ -523,6 +644,7 @@ h2.sec:not(:first-child){margin-top:30px}
     </div>
     <div class="top-acts">
       <div class="host" id="host" title="سرور"><span class="dot"></span><span id="hostName">سرور</span></div>
+      <button class="ticon bell" id="bellBtn" title="هشدارهای امنیتی" hidden><svg class="i"><use href="#i-alert"/></svg><span class="bdg num" id="bellN" hidden></span></button>
       <button class="ticon" id="themeBtn" title="حالت روشن / تیره"><svg class="i"><use href="#i-moon"/></svg></button>
       <button class="ticon" id="admBtn" title="تنظیمات" hidden><svg class="i"><use href="#i-settings"/></svg></button>
       <a class="ticon" href="/logout" title="خروج"><svg class="i"><use href="#i-logout"/></svg></a>
@@ -566,6 +688,7 @@ h2.sec:not(:first-child){margin-top:30px}
           <b id="selCount"></b>
           <div class="sp"></div>
           <button class="btn" id="selZip"><svg class="i"><use href="#i-download"/></svg><span>دانلود</span></button>
+          <button class="btn w" id="selMove"><svg class="i"><use href="#i-move"/></svg><span>انتقال</span></button>
           <button class="btn w" id="selDel"><svg class="i"><use href="#i-trash"/></svg><span>حذف</span></button>
         </div>
         <div id="view"></div>
@@ -578,6 +701,7 @@ h2.sec:not(:first-child){margin-top:30px}
 <input type="file" id="fileIn" multiple hidden>
 <input type="file" id="dirIn" webkitdirectory multiple hidden>
 <div id="drop"><div><svg class="i"><use href="#i-upload"/></svg><b>رها کنید تا آپلود شود</b><small id="dropTo"></small></div></div>
+<div class="alertbar" id="alertBar" role="alert" hidden></div>
 <div class="menu" id="menu"></div>
 <div class="scrim" id="scrim"><div class="dlg" id="dlg"></div></div>
 <div class="pvw" id="pvw"><div class="bar"><button class="btn icon" id="pvClose"><svg class="i"><use href="#i-x"/></svg></button><b id="pvName"></b><span id="pvIdx" class="num" style="color:#9aa3b5;font-size:14px"></span><button class="btn" id="pvDl"><svg class="i"><use href="#i-download"/></svg><span>دانلود</span></button></div><div class="stage" id="pvStage"></div></div>
@@ -587,8 +711,8 @@ h2.sec:not(:first-child){margin-top:30px}
 <script>
 "use strict";
 const $ = s => document.querySelector(s);
-const S = {cur: "/", items: [], ro: false, view: "list", sort: {k: "name", asc: true}, filter: "all", q: "", sel: new Set(), anchor: null, loading: true, admin: false, me: null, people: [], ip: ""};
-try { S.view = localStorage.getItem("lfs-view") || "list"; const so = JSON.parse(localStorage.getItem("lfs-sort") || "null"); if (so) S.sort = so; } catch {}
+const S = {cur: "/", items: [], ro: false, view: "details", sr: null, sort: {k: "name", asc: true}, filter: "all", q: "", sel: new Set(), anchor: null, loading: true, admin: false, me: null, people: [], ip: ""};
+try { S.view = ({list: "details"})[localStorage.getItem("lfs-view")] || localStorage.getItem("lfs-view") || "details"; const so = JSON.parse(localStorage.getItem("lfs-sort") || "null"); if (so) S.sort = so; } catch {}
 
 /* ---------- helpers ---------- */
 const enc = p => p.split("/").map(encodeURIComponent).join("/");
@@ -644,7 +768,7 @@ async function api(url, body) {
   if (!r.ok) throw new Error(errFa(j.error || r.statusText));
   return j;
 }
-const errFa = e => ({"invalid name": "نام نامعتبر است", "name already exists": "این نام از قبل وجود دارد", "cannot create folder (exists?)": "پوشه ساخته نشد؛ شاید از قبل وجود دارد", "read-only mode": "سرور در حالت فقط‌خواندنی است", "folder not found": "پوشه پیدا نشد", "cannot delete": "حذف انجام نشد", "cannot rename": "تغییر نام انجام نشد", "private folder": "این پوشه اختصاصی است و شما به آن دسترسی ندارید", "admin only": "فقط مدیران به این بخش دسترسی دارند", "server only": "فقط روی خود سرور قابل تغییر است", "folder not empty": "پوشه‌ی این سیستم خالی نیست؛ اول فایل‌هایش را حذف کنید", "ip required": "حداقل یک IP وارد کنید", "invalid path": "مسیر نامعتبر است", "upload failed": "ذخیره‌ی فایل روی سرور انجام نشد", "bad upload": "آپلود نامعتبر بود", "upload interrupted": "آپلود نیمه‌کاره قطع شد", "not found": "پیدا نشد"}[e] || (/^ip already used by /.test(e) ? "این IP قبلا برای «" + e.slice(19) + "» ثبت شده" : /^invalid ip: /.test(e) ? "IP نامعتبر: " + e.slice(12) : e));
+const errFa = e => ({"invalid name": "نام نامعتبر است", "name already exists": "این نام از قبل وجود دارد", "cannot create folder (exists?)": "پوشه ساخته نشد؛ شاید از قبل وجود دارد", "read-only mode": "سرور در حالت فقط‌خواندنی است", "folder not found": "پوشه پیدا نشد", "cannot delete": "حذف انجام نشد", "cannot rename": "تغییر نام انجام نشد", "private folder": "این پوشه اختصاصی است و شما به آن دسترسی ندارید", "admin only": "فقط مدیران به این بخش دسترسی دارند", "server only": "فقط روی خود سرور قابل تغییر است", "folder not empty": "پوشه‌ی این سیستم خالی نیست؛ اول فایل‌هایش را حذف کنید", "ip required": "حداقل یک IP وارد کنید", "invalid path": "مسیر نامعتبر است", "upload failed": "ذخیره‌ی فایل روی سرور انجام نشد", "bad upload": "آپلود نامعتبر بود", "upload interrupted": "آپلود نیمه‌کاره قطع شد", "not found": "پیدا نشد", "cannot move a folder into itself": "نمی‌توان پوشه را به داخل خودش منتقل کرد", "cannot move": "انتقال انجام نشد", "wrong password": "رمز فعلی اشتباه است", "too short": "رمز جدید باید حداقل ۸ کاراکتر باشد", "english only": "رمز فقط می‌تواند حروف، اعداد و علامت‌های انگلیسی داشته باشد", "already running": "بررسی همین حالا در حال انجام است", "cannot save": "ذخیره انجام نشد", "vault.json is damaged": "فایل vault.json خراب است"}[e] || (/^ip already used by /.test(e) ? "این IP قبلا برای «" + e.slice(19) + "» ثبت شده" : /^invalid ip: /.test(e) ? "IP نامعتبر: " + e.slice(12) : e));
 
 /* ---------- toasts ---------- */
 function toast(msg, type = "ok") {
@@ -697,6 +821,7 @@ function dialog({title, text = "", input = null, ok = "تایید", danger = fal
 
 /* ---------- data ---------- */
 async function load(p, keepSel) {
+  if (!keepSel && S.sr) clearSearch(); // opening a folder leaves the search results
   S.loading = !S.items.length || p !== S.cur;
   if (S.loading) render();
   try { const items = await api("/api/list?path=" + encodeURIComponent(p)); S.items = items; S.cur = p; }
@@ -730,11 +855,30 @@ function visible() {
 }
 
 /* ---------- render ---------- */
+const VIEWS = [["details", "list", "جزئیات (فهرست کامل)"], ["cards", "folder", "پوشه‌ها کارتی، فایل‌ها فهرستی"], ["tiles", "files", "آیکن (نام کامل زیر آیکن)"], ["grid", "grid", "پیش‌نمایش بزرگ"]];
+const selCls = () => S.sel.size ? "selecting" : "";
+const isSel = it => S.sel.has(it.name);
+function rowHtml(it) {
+  const p = join(S.cur, it.name), meta = it.isDir ? "پوشه" : fmt(it.size);
+  return `<div class="tr ${isSel(it) ? "sel" : ""}" data-n="${esc(it.name)}">
+    <label class="cb"><input type="checkbox" ${isSel(it) ? "checked" : ""}></label>
+    <div class="cell-n"><div class="fi" data-open>${thumb(it, p)}</div><div class="nm" data-open><b title="${esc(it.name)}">${esc(it.name)}</b><small class="num">${meta} · ${when(it.mtime)}</small></div></div>
+    <div class="cell-d num">${when(it.mtime)}</div>
+    <div class="cell-s num">${it.isDir ? "—" : fmt(it.size)}</div>
+    <div><button class="btn ghost sm icon more" data-more>${icon("more")}</button></div></div>`;
+}
+function tableHtml(rows, all) {
+  const sh = (k, t, c) => `<div class="${c || ""}"><button data-sort="${k}" class="${S.sort.k === k ? "on" + (S.sort.asc ? " asc" : "") : ""}">${t}${icon("down")}</button></div>`;
+  return `<div class="panel ${selCls()}"><div class="thead"><label class="cb"><input type="checkbox" id="selAll" ${all ? "checked" : ""}></label>${sh("name", "نام")}${sh("mtime", "آخرین تغییر", "hd-d")}${sh("size", "اندازه", "hd-s")}<div></div></div>` + rows.map(rowHtml).join("") + "</div>";
+}
 function render() {
   renderCrumbs(); renderNav(); renderSpaces(); renderBanner(); renderStore();
   const v = $("#view");
+  v.className = "v-" + S.view;
   let list = visible();
-  $("#vToggle use").setAttribute("href", S.view === "list" ? "#i-grid" : "#i-list"); $("#vToggle").title = S.view === "list" ? "نمای کارتی" : "نمای فهرست";
+  const vw = VIEWS.find(x => x[0] === S.view) || VIEWS[0];
+  $("#vToggle use").setAttribute("href", "#i-" + vw[1]); $("#vToggle").title = "شیوه‌ی نمایش: " + vw[2];
+  if (S.sr) return renderResults();
   const files = S.items.filter(i => !i.isDir), dirs = S.items.length - files.length;
   $("#stats").textContent = S.loading ? "در حال بارگذاری…" : [dirs ? faNum(dirs) + " پوشه" : "", files.length ? faNum(files.length) + " فایل" : "", files.length ? fmt(files.reduce((s, i) => s + i.size, 0)) : "", spaceOf(S.cur) ? (spaceOf(S.cur).kind === "inbox" ? "ارسالی‌ها" : isUnit(spaceOf(S.cur)) ? "واحد" : "اختصاصی") : ""].filter(Boolean).join(" · ") || "خالی";
   if (S.loading) { v.innerHTML = `<div class="panel">${Array.from({length: 6}, (_, i) => `<div class="skel"><i style="width:36px;height:36px;border-radius:8px"></i><i style="width:${30 + (i * 13) % 35}%"></i></div>`).join("")}</div>`; renderSel(); return; }
@@ -748,23 +892,20 @@ function render() {
         <div class="meta"><div><b title="${esc(it.name)}">${esc(it.name)}</b><small class="num">${it.isDir ? "پوشه" : fmt(it.size)}</small></div>
         <button class="btn ghost sm icon" data-more>${icon("more")}</button></div></div>`;
     }).join("") + "</div>";
+  } else if (S.view === "tiles") {
+    v.innerHTML = `<div class="tiles ${selCls()}">` + list.map(it => `<div class="tl ${isSel(it) ? "sel" : ""}" data-n="${esc(it.name)}" title="${esc(it.name)}">
+      <label class="cb"><input type="checkbox" ${isSel(it) ? "checked" : ""}></label>
+      <button class="btn ghost sm icon more" data-more>${icon("more")}</button>
+      <div class="ti" data-open>${thumb(it, join(S.cur, it.name))}</div>
+      <b data-open>${esc(it.name)}</b><small class="num">${it.isDir ? when(it.mtime) : fmt(it.size)}</small></div>`).join("") + "</div>";
   } else {
-    const all = list.length && list.every(i => S.sel.has(i.name)), some = list.some(i => S.sel.has(i.name));
-    const sh = (k, t, c) => `<div class="${c || ""}"><button data-sort="${k}" class="${S.sort.k === k ? "on" + (S.sort.asc ? " asc" : "") : ""}">${t}${icon("down")}</button></div>`;
-    const dl = list.filter(i => i.isDir), fl = list.filter(i => !i.isDir);
-    const fcards = dl.length ? `<h2 class="sec">پوشه‌ها</h2><div class="fcards ${S.sel.size ? "selecting" : ""}">` + dl.map(it => `<div class="fcard ${S.sel.has(it.name) ? "sel" : ""}" data-n="${esc(it.name)}" title="${esc(it.name)} · ${when(it.mtime)}"><label class="cb"><input type="checkbox" ${S.sel.has(it.name) ? "checked" : ""}></label><span class="fc-ic" data-open>${FOLDER}</span><span class="fc-n" data-open><b>${esc(it.name)}</b></span><button class="btn ghost sm icon more" data-more>${icon("more")}</button></div>`).join("") + `</div>` : "";
-    list = fl;
-    v.innerHTML = fcards + (fl.length ? `<h2 class="sec">فایل‌ها</h2>` : "") + (!fl.length ? "" : `<div class="panel ${S.sel.size ? "selecting" : ""}"><div class="thead"><label class="cb"><input type="checkbox" id="selAll" ${all ? "checked" : ""}></label>${sh("name", "نام")}${sh("mtime", "آخرین تغییر", "hd-d")}${sh("size", "اندازه", "hd-s")}<div></div></div>` +
-      list.map(it => {
-        const p = join(S.cur, it.name), meta = it.isDir ? "پوشه" : fmt(it.size);
-        return `<div class="tr ${S.sel.has(it.name) ? "sel" : ""}" data-n="${esc(it.name)}">
-          <label class="cb"><input type="checkbox" ${S.sel.has(it.name) ? "checked" : ""}></label>
-          <div class="cell-n"><div class="fi" data-open>${thumb(it, p)}</div><div class="nm" data-open><b title="${esc(it.name)}">${esc(it.name)}</b><small class="num">${meta} · ${when(it.mtime)}</small></div></div>
-          <div class="cell-d num">${when(it.mtime)}</div>
-          <div class="cell-s num">${it.isDir ? "—" : fmt(it.size)}</div>
-          <div><button class="btn ghost sm icon more" data-more>${icon("more")}</button></div></div>`;
-      }).join("") + "</div>");
-    list = visible();
+    const all = list.length && list.every(isSel), some = list.some(isSel);
+    if (S.view === "details") v.innerHTML = tableHtml(list, all);
+    else {
+      const dl = list.filter(i => i.isDir), fl = list.filter(i => !i.isDir);
+      const fcards = dl.length ? `<h2 class="sec">پوشه‌ها</h2><div class="fcards ${selCls()}">` + dl.map(it => `<div class="fcard ${isSel(it) ? "sel" : ""}" data-n="${esc(it.name)}" title="${esc(it.name)} · ${when(it.mtime)}"><label class="cb"><input type="checkbox" ${isSel(it) ? "checked" : ""}></label><span class="fc-ic" data-open>${FOLDER}</span><span class="fc-n" data-open><b>${esc(it.name)}</b></span><button class="btn ghost sm icon more" data-more>${icon("more")}</button></div>`).join("") + `</div>` : "";
+      v.innerHTML = fcards + (fl.length ? `<h2 class="sec">فایل‌ها</h2>` + tableHtml(fl, all) : "");
+    }
     const sa = $("#selAll"); if (sa) { sa.indeterminate = some && !all; sa.onchange = () => { list.forEach(i => sa.checked ? S.sel.add(i.name) : S.sel.delete(i.name)); render(); }; }
     v.querySelectorAll("[data-sort]").forEach(b => b.onclick = () => { const k = b.dataset.sort; S.sort = {k, asc: S.sort.k === k ? !S.sort.asc : k === "name"}; try { localStorage.setItem("lfs-sort", JSON.stringify(S.sort)); } catch {} render(); });
   }
@@ -788,7 +929,7 @@ function renderCrumbs() {
   $("#crumbs").innerHTML = h;
   $("#ptitle").textContent = parts.at(-1) || rootName;
   $("#heroIc").innerHTML = parts.length ? icon("files") : (sp ? avatar(sp) : icon("globe"));
-  $("#crumbs").querySelectorAll("button").forEach(b => b.onclick = () => load(b.dataset.p));
+  $("#crumbs").querySelectorAll("button").forEach(b => { b.onclick = () => load(b.dataset.p); if (!S.ro) dropTarget(b, () => b.dataset.p); });
   $("#dropTo").textContent = "به «" + (parts.at(-1) || rootName) + "»";
   document.title = (parts.at(-1) || rootName) + " · گنجینه";
 }
@@ -817,6 +958,19 @@ function bindItem(el, list) {
   };
   el.onclick = e => clickSel(e, name, list);
   el.ondblclick = () => open(it);
+  // drag items onto a folder (or a breadcrumb) to move them
+  if (!S.ro) {
+    el.draggable = true;
+    el.ondragstart = e => {
+      if (!S.sel.has(name)) { S.sel.clear(); S.sel.add(name); S.anchor = name; }
+      const paths = selected().map(i => join(S.cur, i.name));
+      e.dataTransfer.setData(DRAG, JSON.stringify(paths)); e.dataTransfer.effectAllowed = "move";
+      const g = document.createElement("div"); g.className = "dragghost"; g.textContent = paths.length > 1 ? faNum(paths.length) + " مورد" : name;
+      document.body.appendChild(g); e.dataTransfer.setDragImage(g, 0, 0); setTimeout(() => g.remove(), 0);
+      setTimeout(renderSel, 0);
+    };
+    if (it.isDir) dropTarget(el, () => join(S.cur, name));
+  }
   el.oncontextmenu = e => { e.preventDefault(); if (!S.sel.has(name)) { S.sel.clear(); S.sel.add(name); S.anchor = name; render(); } showMenu({left: e.clientX, right: e.clientX, top: e.clientY, bottom: e.clientY}, it); };
 }
 function clickSel(e, name, list) {
@@ -838,9 +992,9 @@ function showMenu(r, it) {
   const m = $("#menu"), multi = S.sel.size > 1;
   const b = (a, ic, t, k, cls = "") => `<button data-a="${a}" class="${cls}">${icon(ic)}<span>${t}</span>${k ? `<span class="kbd">${k}</span>` : ""}</button>`;
   m.innerHTML = multi
-    ? b("zip", "download", `دانلود ${faNum(S.sel.size)} مورد (zip)`) + (S.ro ? "" : "<hr>" + b("del", "trash", "حذف موارد انتخاب‌شده", "Del", "dz"))
+    ? b("zip", "download", `دانلود ${faNum(S.sel.size)} مورد (zip)`) + (S.ro ? "" : "<hr>" + b("mv", "move", `انتقال ${faNum(S.sel.size)} مورد به…`, "Ctrl+M") + b("del", "trash", "حذف موارد انتخاب‌شده", "Del", "dz"))
     : (it.isDir ? b("open", "open", "باز کردن", "Enter") + b("zip", "zip", "دانلود به‌صورت zip") : b("open", "eye", "پیش‌نمایش", "Enter") + b("dl", "download", "دانلود")) +
-      (S.ro ? "" : "<hr>" + b("ren", "edit", "تغییر نام", "F2") + b("del", "trash", "حذف", "Del", "dz"));
+      (S.ro ? "" : "<hr>" + b("mv", "move", "انتقال به…", "Ctrl+M") + b("ren", "edit", "تغییر نام", "F2") + b("del", "trash", "حذف", "Del", "dz"));
   m.classList.add("show");
   const W = m.offsetWidth, H = m.offsetHeight;
   let x = r.right - W, y = r.bottom + 4;
@@ -849,7 +1003,7 @@ function showMenu(r, it) {
   m.style.left = Math.max(8, x) + "px"; m.style.top = y + "px";
   m.querySelectorAll("button").forEach(btn => btn.onclick = () => { hideMenu(); act(btn.dataset.a, it); });
 }
-const hideMenu = () => { $("#menu").classList.remove("show"); $("#newBtn").classList.remove("open"); $("#upBtn").classList.remove("open"); };
+const hideMenu = () => { $("#menu").classList.remove("show"); $("#menu").dataset.k = ""; $("#newBtn").classList.remove("open"); $("#upBtn").classList.remove("open"); };
 function ripple(b, e) {
   const r = b.getBoundingClientRect(), d = Math.max(r.width, r.height), s = document.createElement("span");
   s.className = "rip"; s.style.width = s.style.height = d + "px";
@@ -867,9 +1021,97 @@ async function act(a, it) {
     if (a === "zip") return zipDl(S.sel.size > 1 ? selected().map(i => i.name) : [it.name]);
     if (a === "ren") return rename(it);
     if (a === "del") return del(S.sel.size > 1 ? selected() : [it]);
+    if (a === "mv") return moveDlg((S.sel.size > 1 ? selected() : [it]).map(i => join(S.cur, i.name)));
   } catch (e) { if (e.message !== "login") toast(e.message, "err"); }
 }
-function download(it) { const a = document.createElement("a"); a.href = "/dl" + enc(join(S.cur, it.name)); a.download = it.name; document.body.appendChild(a); a.click(); a.remove(); }
+
+/* ---------- move between folders ---------- */
+const DRAG = "application/x-ganjineh-items";
+const parentOf = p => p.replace(/\/[^/]+$/, "") || "/";
+// el accepts items dragged from the list; dest() is the folder they move into
+function dropTarget(el, dest) {
+  const ours = e => [...(e.dataTransfer?.types || [])].includes(DRAG);
+  el.addEventListener("dragover", e => { if (!ours(e)) return; e.preventDefault(); e.stopPropagation(); e.dataTransfer.dropEffect = "move"; el.classList.add("drop-in"); });
+  el.addEventListener("dragleave", () => el.classList.remove("drop-in"));
+  el.addEventListener("drop", e => {
+    if (!ours(e)) return;
+    e.preventDefault(); e.stopPropagation(); el.classList.remove("drop-in");
+    let paths = []; try { paths = JSON.parse(e.dataTransfer.getData(DRAG)); } catch {}
+    const d = dest();
+    paths = paths.filter(p => p !== d && parentOf(p) !== d && !d.startsWith(p + "/"));
+    if (paths.length) moveTo(paths, d);
+  });
+}
+async function moveTo(paths, dest) {
+  try {
+    const r = await api("/api/move", {paths, dest});
+    const where = dest === spaceRoot(dest) ? spaceName(dest) : dest.split("/").pop();
+    if (r.moved) toast((r.moved === 1 ? "منتقل شد" : faNum(r.moved) + " مورد منتقل شد") + " به «" + where + "»");
+    if (r.failed) toast(faNum(r.failed) + " مورد منتقل نشد" + (r.error ? ": " + errFa(r.error) : ""), "err");
+    if (!r.moved && !r.failed) toast("این موارد از قبل در همین پوشه هستند");
+    S.sel.clear(); SQ.cache.clear();
+    if (S.sr) runResults(); else await load(S.cur, true);
+  } catch (e) { if (e.message !== "login") toast(e.message, "err"); }
+}
+const spaceName = p => { const sp = spaceOf(p); return !sp ? "فضای مشترک" : S.me && S.me.id === sp.id ? "پوشه‌ی من" : sp.name; };
+// folder picker for "move to…"
+async function moveDlg(paths) {
+  if (S.ro || !paths.length) return;
+  const one = paths.length === 1, title = one ? `انتقال «${paths[0].split("/").pop()}»` : `انتقال ${faNum(paths.length)} مورد`;
+  const spaces = [["/", icon("globe"), "فضای مشترک"]];
+  if (S.me) spaces.push(["/:" + S.me.id, icon("lock"), "پوشه‌ی من"]);
+  if (S.inbox) spaces.push(["/:inbox", icon("send"), inboxName()]);
+  S.people.filter(p => (!S.me || p.id !== S.me.id) && (p.member || S.admin)).forEach(p => spaces.push(["/:" + p.id, isUnit(p) ? icon("users") : icon("lock"), p.name]));
+  const st = {cur: S.sr ? parentOf(paths[0]) : S.cur, dirs: [], busy: false};
+  const done = sheet(`<div class="ic">${icon("move")}</div><h3>${esc(title)}</h3><p>پوشه‌ی مقصد را انتخاب کنید. می‌توانید موارد را با کشیدن روی یک پوشه هم جابه‌جا کنید.</p>
+    <div class="mv-q">${icon("search")}<input class="input" id="mvQ" placeholder="جستجوی پوشه‌ی مقصد در همه‌جا (نام پوشه را بنویسید)" autocomplete="off"></div><div class="mv-sp" id="mvSp"></div><div class="mv-crumbs" id="mvCr"></div><div class="mv-list" id="mvList"></div>
+    <div class="mv-new" id="mvNewRow" hidden><input class="input" id="mvNewIn" placeholder="نام پوشه‌ی جدید" autocomplete="off"><button class="btn primary" id="mvNewOk">ساختن</button></div>
+    <div class="mv-here" id="mvHere"></div><div class="acts"><button class="btn" id="mvNew">${icon("folder-plus")}پوشه‌ی جدید</button><span style="flex:1"></span><button class="btn" data-r="">انصراف</button><button class="btn primary" id="mvOk">${icon("move")}انتقال به اینجا</button></div>`, true);
+  const d = $("#dlg");
+  const bad = p => paths.some(s => p === s || p.startsWith(s + "/")); // into itself
+  const draw = () => {
+    const root = spaceRoot(st.cur);
+    d.querySelector("#mvSp").innerHTML = spaces.map(([p, ic, n]) => `<button class="${p === root ? "on" : ""}" data-go="${esc(p)}">${ic}<span>${esc(n)}</span></button>`).join("");
+    const parts = st.cur.slice(root === "/" ? 0 : root.length).split("/").filter(Boolean);
+    let acc = root === "/" ? "" : root, h = `<button data-go="${esc(root)}">${esc(spaceName(root))}</button>`;
+    for (const x of parts) { acc += "/" + x; h += icon("chev") + `<button data-go="${esc(acc)}">${esc(x)}</button>`; }
+    d.querySelector("#mvCr").innerHTML = h;
+    const row = (p, label, sub) => { const x = bad(p); return `<button data-go="${esc(p)}" ${x ? "disabled title='نمی‌توان پوشه را به داخل خودش برد'" : ""}>${FOLDER}<span>${esc(label)}${sub ? `<small>${esc(sub)}</small>` : ""}</span>${icon("chev")}</button>`; };
+    const up = st.cur !== root ? `<button class="mv-up" data-go="${esc(parentOf(st.cur))}">${icon("chev-r")}<span>پوشه‌ی بالاتر: «${esc(parentOf(st.cur) === spaceRoot(st.cur) ? spaceName(st.cur) : parentOf(st.cur).split("/").pop())}»</span></button>` : "";
+    d.querySelector("#mvList").innerHTML = st.found ? (st.found.length ? st.found.map(x => row(x.path, x.name, locLabel(parentOf(x.path)))).join("") : `<div class="mv-empty">پوشه‌ای با این نام پیدا نشد.</div>`)
+      : up + (st.busy ? `<div class="mv-empty">در حال بارگذاری…</div>` : st.err ? `<div class="mv-empty err">${esc(st.err)}</div>` : st.dirs.length ? st.dirs.map(it => row(join(st.cur, it.name), it.name)).join("") : `<div class="mv-empty">این پوشه زیرپوشه ندارد. می‌توانید همین‌جا منتقل کنید یا پوشه‌ی جدید بسازید.</div>`);
+    d.querySelector("#mvHere").textContent = "مقصد: " + locLabel(st.cur) + (paths.every(p => parentOf(p) === st.cur) ? " — موارد همین حالا در این پوشه هستند؛ پوشه‌ی دیگری (بالاتر، پایین‌تر یا هرجای دیگر) را انتخاب کنید." : "");
+    const same = paths.every(p => parentOf(p) === st.cur);
+    const ok = d.querySelector("#mvOk"); ok.disabled = same || bad(st.cur) || !!st.err; ok.title = same ? "موارد همین حالا در این پوشه هستند" : "";
+    d.querySelectorAll("[data-go]").forEach(b => b.onclick = () => go(b.dataset.go));
+  };
+  const go = async p => {
+    st.cur = p; st.busy = true; st.found = null; st.err = ""; d.querySelector("#mvQ").value = ""; draw();
+    try { st.dirs = (await api("/api/list?path=" + encodeURIComponent(p))).filter(i => i.isDir); }
+    catch (e) { st.dirs = []; st.err = e.message === "Failed to fetch" ? "ارتباط با سرور برقرار نیست؛ سرور را اجرا کنید و دوباره امتحان کنید." : e.message; }
+    st.busy = false; draw();
+  };
+  d.querySelector("#mvOk").onclick = () => d.done(st.cur);
+  let qt = 0;
+  d.querySelector("#mvQ").oninput = e => {
+    clearTimeout(qt); const q = e.target.value.trim();
+    if (!q) { st.found = null; return draw(); }
+    qt = setTimeout(async () => { try { const j = await searchApi(q, {type: "folder", limit: 40, arch: false}); if (d.querySelector("#mvQ").value.trim() === q) { st.found = j.results.filter(x => !x.inner); draw(); } } catch (e) {} }, 150);
+  };
+  d.querySelector("#mvNew").onclick = () => { d.querySelector("#mvNewRow").hidden = false; d.querySelector("#mvNewIn").focus(); };
+  const mk = async () => {
+    const n = d.querySelector("#mvNewIn").value.trim(); if (!n) return;
+    try { await api("/api/mkdir", {path: st.cur, name: n}); d.querySelector("#mvNewRow").hidden = true; d.querySelector("#mvNewIn").value = ""; await go(join(st.cur, n)); }
+    catch (e) { if (e.message !== "login") toast(e.message, "err"); }
+  };
+  d.querySelector("#mvNewOk").onclick = mk;
+  d.querySelector("#mvNewIn").onkeydown = e => { if (e.key === "Enter") { e.preventDefault(); e.stopPropagation(); mk(); } };
+  go(st.cur);
+  const dest = await done;
+  if (dest) moveTo(paths, dest);
+}
+const pathOf = it => it.path || join(S.cur, it.name);
+function download(it) { const a = document.createElement("a"); a.href = it.inner ? innerDl(it) : "/dl" + enc(pathOf(it)); a.download = it.name; document.body.appendChild(a); a.click(); a.remove(); }
 function zipDl(names) {
   if (names.length === 1) { const it = S.items.find(i => i.name === names[0]); if (it && !it.isDir) return download(it); }
   location.href = "/api/zip?path=" + encodeURIComponent(S.cur) + names.map(n => "&n=" + encodeURIComponent(n)).join("");
@@ -901,15 +1143,17 @@ async function mkdir() {
 /* ---------- preview ---------- */
 let PV = {list: [], i: 0};
 const noOpen = it => /^(html?|xhtml|shtml|mht|mhtml|svg|svgz|xml|xsl|js|mjs|hta)$/.test(ext(it.name));
+const archKind = n => (/\.(zip|rar)$/i.exec(n) || [""])[0].slice(1).toLowerCase();
 function open(it) {
-  if (it.isDir) return load(join(S.cur, it.name));
+  if (it.inner) return goItem(it.path, false, false); // inside a .zip/.rar: show the archive in its folder
+  if (it.isDir) return load(pathOf(it));
   if (noOpen(it)) return download(it); // web pages: download only, never opened
-  const list = visible().filter(i => !i.isDir && !noOpen(i));
-  PV = {list, i: list.findIndex(i => i.name === it.name)};
+  const list = (it.path ? S.sr.res : visible()).filter(i => !i.isDir && !i.inner && !noOpen(i));
+  PV = {list, i: list.findIndex(i => pathOf(i) === pathOf(it))};
   $("#pvw").classList.add("show"); showPv();
 }
 function showPv() {
-  const it = PV.list[PV.i], url = "/dl" + enc(join(S.cur, it.name)), k = kind(it), e = ext(it.name), st = $("#pvStage");
+  const it = PV.list[PV.i], url = "/dl" + enc(pathOf(it)), k = kind(it), e = ext(it.name), st = $("#pvStage");
   $("#pvName").textContent = it.name;
   $("#pvIdx").textContent = PV.list.length > 1 ? faNum(PV.i + 1) + " از " + faNum(PV.list.length) : "";
   let h;
@@ -1166,7 +1410,7 @@ async function sendTo() {
 
 /* ---------- admin settings (tabs) ---------- */
 const sendBase = () => location.origin + location.pathname.replace(/\/[^/]*$/, "/");
-const TABS = [["units", "users", "سیستم‌ها و واحدها"], ["send", "send", "ارسال به واحد"], ["net", "globe", "شبکه"], ["admins", "shield", "مدیران"], ["bin", "trash", "سطل زباله"]];
+const TABS = [["units", "users", "سیستم‌ها و واحدها"], ["send", "send", "ارسال به واحد"], ["net", "globe", "شبکه"], ["admins", "shield", "مدیران"], ["enc", "lock", "رمزگذاری"], ["log", "list", "گزارش فعالیت‌ها"], ["alerts", "alert", "هشدارها"], ["bin", "trash", "سطل زباله"]];
 const fixDigits = v => String(v).replace(/[۰-۹]/g, d => "۰۱۲۳۴۵۶۷۸۹".indexOf(d)).replace(/[٠-٩]/g, d => "٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/٫/g, ".");
 const octOK = x => /^\d{1,3}$/.test(x) && +x <= 255;
 function toIp(t, prefix) { t = fixDigits(t).trim(); if (octOK(t) && prefix) return prefix + (+t); const p = t.split("."); return p.length === 4 && p.every(octOK) ? p.map(Number).join(".") : ""; }
@@ -1223,9 +1467,12 @@ async function adminDlg(tab) {
       <p class="hint">فایل‌ها و پوشه‌هایی که کاربران حذف می‌کنند پاک نمی‌شوند؛ به سطل زباله می‌روند و مدیر می‌تواند بازیابی‌شان کند یا برای همیشه حذفشان کند.</p>
       <div class="pacts"><button class="btn" id="openBin">${icon("trash")}باز کردن سطل زباله</button><button class="btn primary" id="daysSave">${icon("check")}ذخیره</button></div>
     </section>
+    <section data-pane="enc"><div id="encBox"><div class="empty-s">در حال بارگذاری…</div></div></section>
+    <section data-pane="log"><div id="logBox"></div></section>
+    <section data-pane="alerts"><div id="alBox"></div></section>
     <div class="acts"><button class="btn" data-r="">بستن</button></div>`;
   const pr = sheet(html, true), d = $("#dlg");
-  const showTab = k => { S.admTab = k; d.querySelectorAll("[data-tab]").forEach(b => { b.classList.toggle("on", b.dataset.tab === k); b.setAttribute("aria-selected", b.dataset.tab === k); }); d.querySelectorAll("[data-pane]").forEach(s => s.hidden = s.dataset.pane !== k); };
+  const showTab = k => { S.admTab = k; d.querySelectorAll("[data-tab]").forEach(b => { b.classList.toggle("on", b.dataset.tab === k); b.setAttribute("aria-selected", b.dataset.tab === k); }); d.querySelectorAll("[data-pane]").forEach(s => s.hidden = s.dataset.pane !== k); admPane(d, k); };
   d.querySelectorAll("[data-tab]").forEach(b => b.onclick = () => showTab(b.dataset.tab));
   showTab(tab);
   const reopen = async () => { d.done(null); await refreshInfo(); adminDlg(S.admTab); };
@@ -1360,13 +1607,136 @@ async function binDlg() {
   $("#bSet").onclick = () => { d.done(null); adminDlg("bin"); };
   await pr;
 }
+/* ---------- admin: encryption, activity log, alerts, decoys ---------- */
+const tfull = new Intl.DateTimeFormat("fa-IR", {year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit"});
+const tAt = ms => ms > 0 ? tfull.format(new Date(ms)) : "—";
+const AL_KIND = {"unknown-ip": "IP ناشناس", "failed": "ورود ناموفق", "decoy": "فایل طعمه"};
+function admPane(d, k) {
+  if (k === "enc") encPane(d);
+  else if (k === "log") logPane(d);
+  else if (k === "alerts") { alertPane(d); markAlertsSeen(); }
+}
+async function encPane(d) {
+  const box = d.querySelector("#encBox"); if (!box || d.querySelector("[data-pane=enc]").hidden) return;
+  let j; try { j = await api("/api/enc"); } catch (e) { box.innerHTML = `<div class="empty-s">${esc(e.message)}</div>`; return; }
+  const kv = (k, v) => `<div class="kv"><span>${k}</span><b>${v}</b></div>`;
+  box.innerHTML = `<div class="sec-t">وضعیت رمزگذاری</div>
+    <div class="kvs">${kv("رمزگذاری محتوای فایل‌ها", "فعال · " + esc(j.cipher))}${kv("نام فایل‌ها و پوشه‌ها", "رمز شده")}${kv("ساخت کلید از رمز", `<span dir="ltr">${esc(j.kdf)}</span>`)}
+      ${kv("موارد رمزشده (فهرست جستجو)", faNum(j.items))}${kv("گزارش فعالیت‌ها", "رمز شده · " + faNum(j.auditLines) + " رکورد")}
+      ${kv("آخرین ذخیره‌ی فایل کلید (vault.json)", tAt(j.vaultTime))}${kv("اجرا با روشن شدن ویندوز (رمز ذخیره‌شده)", j.autostart ? "روشن" : "خاموش")}</div>
+    <div class="sec-t">فایل‌های رمزنشده</div>
+    <p class="hint">فایل‌هایی که مستقیم (بیرون از برنامه) در پوشه‌ی سرور کپی شوند، رمز نشده‌اند. برنامه هنگام اجرا آن‌ها را در پس‌زمینه رمز می‌کند؛ با دکمه‌ی زیر همین حالا هم می‌شود بررسی کرد.</p>
+    <div class="kvs">${j.running ? kv("وضعیت", `در حال بررسی… ${faNum(j.scanned)} مورد بررسی و ${faNum(j.encrypted)} مورد رمز شد`) : kv("آخرین بررسی", j.lastEnd > 0 ? tAt(j.lastEnd) + ` · ${faNum(j.lastDone)} مورد رمز شد` + (j.lastBad ? ` · <span class="dz">${faNum(j.lastBad)} مورد رمز نشد</span>` : "") : "—")}</div>
+    <div class="pacts"><button class="btn" id="encScan" ${j.running ? "disabled" : ""}>${icon("refresh")}بررسی و رمزگذاری همین حالا</button></div>
+    <div class="sec-t">تغییر رمز رمزگذاری</div>
+    ${j.server ? `<p class="hint">این رمز کلید اصلی همه‌ی فایل‌ها را باز می‌کند و هنگام اجرای برنامه پرسیده می‌شود. فایل‌ها دوباره رمز نمی‌شوند؛ فقط کلید اصلی با رمز جدید قفل می‌شود. <b class="dz">اگر رمز جدید را فراموش کنید، هیچ‌کس نمی‌تواند فایل‌ها را باز کند.</b></p>
+      <div class="frm pw3"><input class="input" type="password" id="pwOld" placeholder="رمز فعلی" autocomplete="current-password" dir="ltr"><input class="input" type="password" id="pwNew" placeholder="رمز جدید (حداقل ۸ کاراکتر انگلیسی)" autocomplete="new-password" dir="ltr"><input class="input" type="password" id="pwNew2" placeholder="تکرار رمز جدید" autocomplete="new-password" dir="ltr"></div>
+      <div class="pacts"><button class="btn primary" id="pwSave">${icon("lock")}تغییر رمز</button></div>`
+    : `<p class="hint"><b>برای امنیت، رمز رمزگذاری فقط روی خود کامپیوتر سرور قابل تغییر است</b> (این صفحه را روی سرور با آدرس localhost باز کنید).</p>`}
+    <p class="hint">پوشه‌ی داده‌ها: <span dir="ltr" class="num">${esc(j.data)}</span> · پوشه‌ی فایل‌ها: <span dir="ltr" class="num">${esc(j.root)}</span></p>`;
+  const sc = box.querySelector("#encScan");
+  if (sc) sc.onclick = async () => { try { await api("/api/enc", {op: "scan"}); toast("بررسی شروع شد"); setTimeout(() => encPane(d), 800); } catch (e) { if (e.message !== "login") toast(e.message, "err"); } };
+  if (j.running) setTimeout(() => encPane(d), 3000);
+  const ps = box.querySelector("#pwSave");
+  if (ps) ps.onclick = async () => {
+    const o = box.querySelector("#pwOld").value, n = box.querySelector("#pwNew").value, n2 = box.querySelector("#pwNew2").value;
+    if (!o || !n) return toast("رمز فعلی و رمز جدید را وارد کنید", "err");
+    if (n !== n2) return toast("تکرار رمز جدید یکسان نیست", "err");
+    if (!/^[\x21-\x7e ]{8,}$/.test(n)) return toast(errFa(n.length < 8 ? "too short" : "english only"), "err");
+    ps.disabled = true;
+    try { const r = await api("/api/enc", {op: "password", old: o, new: n}); toast("رمز رمزگذاری تغییر کرد" + (r.warn ? " (رمز ذخیره‌شده‌ی اجرای خودکار به‌روز نشد)" : "")); encPane(d); }
+    catch (e) { ps.disabled = false; if (e.message !== "login") toast(e.message, "err"); }
+  };
+}
+const LG = {q: "", who: "", act: "", items: [], more: false};
+async function logPane(d, append) {
+  const box = d.querySelector("#logBox"); if (!box) return;
+  let j;
+  const before = append && LG.items.length ? LG.items[LG.items.length - 1].t : 0;
+  try { j = await api(`/api/audit?q=${encodeURIComponent(LG.q)}&who=${encodeURIComponent(LG.who)}&act=${encodeURIComponent(LG.act)}&before=${before}&limit=150`); }
+  catch (e) { box.innerHTML = `<div class="empty-s">${esc(e.message)}</div>`; return; }
+  LG.items = append ? LG.items.concat(j.items) : j.items; LG.more = j.more;
+  const people = Object.entries(j.people || {}).sort((a, b) => (a[1] || a[0]).localeCompare(b[1] || b[0], "fa"));
+  const row = e => `<div class="lg ${e.alert ? "al" : ""} ${e.ok || e.alert ? "" : "bad"}"><div class="lg-t num">${tAt(e.t)}</div><div class="lg-w"><b>${esc(e.who || "ناشناس")}</b><small dir="ltr" class="num">${esc(e.ip)}</small></div><div class="lg-a"><b>${esc(e.act)}</b>${e.alert ? `<span class="tg dz">${esc(AL_KIND[e.alert] || "هشدار")}</span>` : !e.ok ? `<span class="tg dz">ناموفق</span>` : ""}${e.path ? `<small>${esc(e.path)}</small>` : ""}${e.detail ? `<small>${esc(e.detail)}</small>` : ""}</div></div>`;
+  if (!append || !box.querySelector(".lgf")) box.innerHTML = `<p class="hint">همه‌ی کارهای کاربران (ورود، آپلود، دانلود، حذف، تغییر نام، انتقال، تنظیمات…) با زمان و IP. این گزارش رمز شده ذخیره می‌شود و فقط مدیران آن را می‌بینند.</p>
+    <div class="lgf"><input class="input" id="lgQ" placeholder="جستجو در نام فایل، مسیر، IP…" value="${esc(LG.q)}" autocomplete="off">
+      <select class="input" id="lgWho"><option value="">همه‌ی کاربران</option>${people.map(([ip, n]) => `<option value="${esc(ip)}" ${ip === LG.who ? "selected" : ""}>${esc(n ? n + " · " + ip : ip)}</option>`).join("")}</select>
+      <select class="input" id="lgAct"><option value="">همه‌ی کارها</option>${(j.acts || []).map(a => `<option ${a === LG.act ? "selected" : ""}>${esc(a)}</option>`).join("")}</select>
+      <button class="btn" id="lgCsv" title="دانلود همین فهرست برای Excel">${icon("download")}CSV</button></div>
+    <div class="lgl" id="lgL"></div>`;
+  box.querySelector("#lgL").innerHTML = LG.items.length ? LG.items.map(row).join("") + (LG.more ? `<div class="pacts"><button class="btn" id="lgMore">موارد قدیمی‌تر</button></div>` : "") : `<div class="empty-s">موردی ثبت نشده است.</div>`;
+  let t = 0;
+  box.querySelector("#lgQ").oninput = e => { clearTimeout(t); t = setTimeout(() => { LG.q = e.target.value.trim(); logPane(d); }, 250); };
+  box.querySelector("#lgWho").onchange = e => { LG.who = e.target.value; logPane(d); };
+  box.querySelector("#lgAct").onchange = e => { LG.act = e.target.value; logPane(d); };
+  box.querySelector("#lgCsv").onclick = () => { location.href = `/api/audit?csv=1&q=${encodeURIComponent(LG.q)}&who=${encodeURIComponent(LG.who)}&act=${encodeURIComponent(LG.act)}`; };
+  const m = box.querySelector("#lgMore"); if (m) m.onclick = () => logPane(d, true);
+}
+async function alertPane(d) {
+  const box = d.querySelector("#alBox"); if (!box) return;
+  let j, dc;
+  try { [j, dc] = await Promise.all([api("/api/alerts?since=0"), api("/api/decoys")]); } catch (e) { box.innerHTML = `<div class="empty-s">${esc(e.message)}</div>`; return; }
+  const canNotify = "Notification" in window && window.isSecureContext;
+  box.innerHTML = `<div class="sec-t">هشدار ورود</div>
+    <label class="sw"><input type="checkbox" id="alOn" ${j.off ? "" : "checked"}><span>هشدار برای ورود از IP ناشناس و تلاش‌های ناموفق ورود</span></label>
+    <p class="hint">IP ناشناس یعنی IP که نه سیستم ثبت‌شده است، نه عضو واحدی است و نه مدیر. هشدار برای همه‌ی مدیران به‌صورت نوار قرمز بالای صفحه می‌آید${canNotify ? "؛ اعلان دسکتاپ هم می‌توانید فعال کنید." : " (اعلان دسکتاپ ویندوز فقط روی خود سرور با آدرس localhost ممکن است)."}</p>
+    ${canNotify ? `<div class="pacts"><button class="btn" id="alDesk">${icon("alert")}${Notification.permission === "granted" ? "اعلان دسکتاپ فعال است" : "فعال کردن اعلان دسکتاپ"}</button></div>` : ""}
+    <div class="sec-t">طعمه‌ها (Honeypot)</div>
+    <p class="hint">سه فایل جعلی که شبیه اطلاعات حساس‌اند: بکاپ دیتابیس <b dir="ltr">prod-db-backup.sql.gz</b>، فایل رمزها <b dir="ltr">.env</b> و کلیدهای API <b dir="ltr">aws-access-keys.csv</b>. کار عادی هیچ‌کس به این فایل‌ها نمی‌رسد؛ هر کس دانلود، باز، zip، تغییر نام، جابه‌جا یا حذفشان کند، فوراً برای مدیران هشدار می‌آید (این هشدار خاموش نمی‌شود). کلیدهای داخلشان تصادفی و بی‌اثرند.</p>
+    <div class="frm two"><input class="input" id="dcDir" dir="ltr" value="/" placeholder="/" autocomplete="off"><button class="btn primary" id="dcMake">${icon("plus")}ساختن سه طعمه در این پوشه</button></div>
+    <div class="plist" style="max-height:200px">${dc.items.length ? dc.items.map(x => `<div class="pi" style="cursor:default"><span class="sg-i">${fileSvg({name: x.name})}</span><div class="t"><b dir="ltr" style="text-align:right">${esc(x.name)}</b><small>${esc(locLabel(parentOf(x.path)))}</small></div><button class="btn ghost sm icon" data-dcrm="${esc(x.path)}" title="حذف طعمه (بدون هشدار)">${icon("trash")}</button></div>`).join("") : `<div class="empty-s">هنوز طعمه‌ای ساخته نشده است.</div>`}</div>
+    <div class="sec-t">هشدارهای اخیر</div>
+    <div class="lgl">${j.items.length ? j.items.map(e => `<div class="lg al"><div class="lg-t num">${tAt(e.t)}</div><div class="lg-w"><b>${esc(e.who || "ناشناس")}</b><small dir="ltr" class="num">${esc(e.ip)}</small></div><div class="lg-a"><b>${esc(e.act)}</b><span class="tg dz">${esc(AL_KIND[e.alert] || "هشدار")}</span>${e.detail ? `<small>${esc(e.detail)}</small>` : ""}</div></div>`).join("") : `<div class="empty-s">هشداری ثبت نشده است.</div>`}</div>`;
+  box.querySelector("#alOn").onchange = async e => { try { await api("/api/alerts", {off: !e.target.checked}); toast(e.target.checked ? "هشدار ورود روشن شد" : "هشدار ورود خاموش شد"); } catch (er) { toast(er.message, "err"); } };
+  const dk = box.querySelector("#alDesk"); if (dk) dk.onclick = async () => { await Notification.requestPermission(); alertPane(d); };
+  box.querySelector("#dcMake").onclick = async () => { try { const r = await api("/api/decoys", {op: "create", path: box.querySelector("#dcDir").value.trim() || "/"}); toast(faNum(r.made.length) + " طعمه ساخته شد"); alertPane(d); load(S.cur, true); } catch (e) { if (e.message !== "login") toast(e.message, "err"); } };
+  box.querySelectorAll("[data-dcrm]").forEach(b => b.onclick = async () => { try { await api("/api/decoys", {op: "remove", path: b.dataset.dcrm}); toast("طعمه حذف شد"); alertPane(d); load(S.cur, true); } catch (e) { if (e.message !== "login") toast(e.message, "err"); } });
+}
+/* alerts for admins: red bar on top, bell badge, desktop notification */
+const AL = {seen: 0, notified: 0, timer: 0, items: []};
+try { AL.seen = AL.notified = +localStorage.getItem("lfs-alert-seen") || 0; } catch {}
+function markAlertsSeen() {
+  AL.seen = Math.max(AL.seen, ...AL.items.map(a => a.t), Date.now() - 1000); AL.items = [];
+  try { localStorage.setItem("lfs-alert-seen", AL.seen); } catch {}
+  renderAlertBar();
+}
+function renderAlertBar() {
+  const n = AL.items.length, b = $("#alertBar");
+  $("#bellN").hidden = !n; $("#bellN").textContent = n > 99 ? "۹۹+" : faNum(n);
+  $("#bellBtn").classList.toggle("hot", n > 0);
+  if (!n) { b.hidden = true; document.title = document.title.replace(/^\(\S+\) /, ""); return; }
+  const a = AL.items[0];
+  b.hidden = false;
+  b.innerHTML = `${icon("alert")}<div class="ab-t"><b>هشدار امنیتی: ${esc(a.act)}</b><span>${esc(a.who || "ناشناس")} · <span dir="ltr" class="num">${esc(a.ip)}</span> · ${when(a.t / 1000)}${a.detail ? " · " + esc(a.detail) : ""}</span></div>${n > 1 ? `<span class="ab-n">${faNum(n - 1)} هشدار دیگر</span>` : ""}<button class="btn sm" id="abView">مشاهده</button><button class="btn sm icon" id="abX" title="دیدم">${icon("x")}</button>`;
+  $("#abView").onclick = () => adminDlg("alerts");
+  $("#abX").onclick = markAlertsSeen;
+  document.title = "(" + faNum(n) + ") " + document.title.replace(/^\(\S+\) /, "");
+}
+async function pollAlerts() {
+  if (!S.admin) return;
+  try {
+    const j = await api("/api/alerts?since=" + AL.seen);
+    AL.items = j.items;
+    const fresh = j.items.filter(a => a.t > AL.notified);
+    if (fresh.length) {
+      AL.notified = Math.max(...fresh.map(a => a.t));
+      if ("Notification" in window && Notification.permission === "granted") fresh.slice(0, 3).forEach(a => { try { new Notification("گنجینه — " + a.act, {body: (a.who ? a.who + " · " : "") + a.ip + (a.detail ? "\n" + a.detail : ""), tag: "g" + a.t, requireInteraction: true}); } catch {} });
+    }
+    renderAlertBar();
+  } catch {}
+}
+function startAlerts() {
+  $("#bellBtn").hidden = !S.admin;
+  if (!S.admin || AL.timer) return;
+  pollAlerts(); AL.timer = setInterval(pollAlerts, 5000);
+}
 async function refreshInfo() {
   const i = await api("/api/info");
   S.ro = i.readOnly; S.admin = !!i.admin; S.me = i.me || null; S.people = i.people || []; S.inbox = i.inbox || null; S.ip = i.ip || ""; S.myName = i.myName || "";
   $("#hostName").textContent = i.host || "سرور";
   $("#ver").textContent = "نسخه " + faNum(i.version || "") + (S.ro ? " · فقط‌خواندنی" : "");
   if (S.ro) document.querySelectorAll(".w").forEach(b => b.style.display = "none");
-  renderMe(); renderDisk(i); render();
+  renderMe(); renderDisk(i); render(); startAlerts();
   return i;
 }
 
@@ -1380,11 +1750,11 @@ $("#sideScrim").onclick = closeSide;
 $("#newBtn").onclick = e => { e.stopPropagation(); const b = e.currentTarget; ripple(b, e); if (b.classList.contains("open")) return hideMenu(); upMenu(b.getBoundingClientRect()); b.classList.add("open"); };
 $("#shareBtn").onclick = () => sendTo();
 $("#ptitleBtn").onclick = e => { e.stopPropagation(); if (!S.ro) upMenu(e.currentTarget.getBoundingClientRect()); };
-$("#vToggle").onclick = () => setView(S.view === "list" ? "grid" : "list");
 $("#admBtn").onclick = () => { closeSide(); adminDlg(); };
 $("#binBtn").onclick = () => { closeSide(); binDlg(); };
 $("#admBtn2").onclick = () => { closeSide(); adminDlg(); };
 $("#outBtn2").onclick = () => { location.href = "/logout"; };
+$("#bellBtn").onclick = () => adminDlg("alerts");
 
 /* ---------- wiring ---------- */
 $("#upBtn").onclick = e => { e.stopPropagation(); const b = e.currentTarget; ripple(b, e); if (b.classList.contains("open")) return hideMenu(); upMenu(b.getBoundingClientRect()); b.classList.add("open"); };
@@ -1404,42 +1774,165 @@ $("#content").addEventListener("contextmenu", e => {
 });
 $("#fileIn").onchange = e => { enqueue([...e.target.files].map(f => ({f, rel: f.name})), UQ.pickDest || S.cur); e.target.value = ""; };
 $("#dirIn").onchange = e => { enqueue([...e.target.files].filter(f => !/^(thumbs\.db|desktop\.ini)$/i.test(f.name)).map(f => ({f, rel: f.webkitRelativePath || f.name})), UQ.pickDest || S.cur); e.target.value = ""; };
-$("#refBtn").onclick = () => load(S.cur, true);
-/* ---------- search with suggestions ---------- */
+$("#refBtn").onclick = () => { if (S.sr) { SQ.cache.clear(); runResults(); } else load(S.cur, true); };
+/* ---------- search everywhere (all folders and subfolders, like Spotlight) ---------- */
+// mark the query words inside a name, folding letters the same way the server does
+function hlq(name, raw) {
+  const toks = nz(raw).split(" ").filter(Boolean);
+  const ch = Array.from(name);
+  let f = ""; const pos = [];
+  ch.forEach((c, i) => { for (const x of nz(c)) { f += x; pos.push(i); } });
+  const mark = new Array(ch.length).fill(false);
+  for (const t of [nz(raw).replace(/ /g, ""), ...toks]) {
+    const k = t ? f.indexOf(t) : -1;
+    if (k >= 0) for (let j = k; j < k + t.length; j++) mark[pos[j]] = true;
+  }
+  let h = "", on = false;
+  ch.forEach((c, i) => { if (mark[i] !== on) { h += mark[i] ? "<mark>" : "</mark>"; on = mark[i]; } h += esc(c); });
+  return h + (on ? "</mark>" : "");
+}
+// where a search hit is; for a name inside a .zip/.rar: "... › archive.zip › folder in it"
+const hitLoc = x => x.inner ? locLabel(x.path) + (x.inner.includes("/") ? " › " + x.inner.replace(/\/[^/]*$/, "").split("/").join(" › ") : "") : locLabel(parentOf(x.path));
+const hitKey = x => x.path + "\n" + (x.inner || "");
+const innerDl = x => "/api/archive-file?path=" + encodeURIComponent(x.path) + "&inner=" + encodeURIComponent(x.inner);
+const locLabel = p => { const r = spaceRoot(p); return [spaceName(r), ...p.slice(r === "/" ? 0 : r.length).split("/").filter(Boolean)].join(" › "); };
+const SQ = {ctl: null, cache: new Map(), t: 0, g: null};
+async function searchApi(q, o = {}) {
+  const u = "/api/search?q=" + encodeURIComponent(q) + (o.here ? "&here=1&path=" + encodeURIComponent(o.here) : "") + (o.type ? "&type=" + o.type : "") + (o.arch === false ? "&arch=0" : "") + "&limit=" + (o.limit || 300);
+  const c = SQ.cache.get(u); if (c && Date.now() - c.t < 4000) return c.j;
+  SQ.ctl?.abort(); const ctl = SQ.ctl = new AbortController();
+  const r = await fetch(u, {signal: ctl.signal, cache: "no-store"});
+  if (r.status === 401) { location.href = "/login"; throw new Error("login"); }
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(errFa(j.error || r.statusText));
+  if (SQ.cache.size > 40) SQ.cache.clear();
+  SQ.cache.set(u, {t: Date.now(), j}); return j;
+}
 function sugg() {
   const box = $("#sugg"), raw = S.q.trim(), q = nz(raw);
   $("#qClear").hidden = !S.q;
-  $("#searchBox").classList.toggle("open", !!q && document.activeElement === $("#q"));
-  if (!q || document.activeElement !== $("#q")) { box.hidden = true; return; }
-  const m = S.items.filter(i => nz(i.name).includes(q));
-  const ds = m.filter(i => i.isDir), fs = m.filter(i => !i.isDir);
-  const where = esc($("#ptitle").textContent);
-  const hl = n => { const k = nz(n).indexOf(q); return k < 0 ? esc(n) : esc(n.slice(0, k)) + "<b>" + esc(n.slice(k, k + raw.length)) + "</b>" + esc(n.slice(k + raw.length)); };
-  const row = it => `<button class="sg" data-sg="${esc(it.name)}"><span class="sg-i">${it.isDir ? FOLDER : fileSvg(it)}</span><span class="sg-n">${hl(it.name)}</span><span class="sg-w">${where}${FOLDER}</span></button>`;
-  const sec = (t, list, f, n) => list.length ? `<div class="sg-h"><span>${t}</span>${list.length > n ? `<button data-all="${f}">نمایش همه (${faNum(list.length)})</button>` : ""}</div>` + list.slice(0, n).map(row).join("") : "";
-  box.innerHTML = `<button class="sg sg-q" data-all="all">${icon("search")}<span class="sg-n">جستجوی «<b>${esc(raw)}</b>» در این پوشه</span></button>` +
-    (m.length ? sec("پوشه‌ها", ds, "folder", 3) + sec("فایل‌ها", fs, "files", 5) : `<div class="sg-none">در این پوشه موردی با این نام نیست.</div>`);
-  box.hidden = false;
-  box.querySelectorAll("[data-sg]").forEach(b => b.onmousedown = e => { e.preventDefault(); const it = S.items.find(x => x.name === b.dataset.sg); $("#q").blur(); if (it.isDir) { S.q = ""; $("#q").value = ""; load(join(S.cur, it.name)); } else open(it); });
-  box.querySelectorAll("[data-all]").forEach(b => b.onmousedown = e => { e.preventDefault(); const f = b.dataset.all; S.filter = f === "folder" ? "folder" : "all"; $("#q").blur(); render(); });
+  const show = !!q && document.activeElement === $("#q") && !S.sr;
+  $("#searchBox").classList.toggle("open", show);
+  if (!show) { box.hidden = true; return; }
+  const kb = [...box.querySelectorAll(".sg")].findIndex(b => b.classList.contains("kb"));
+  const here = S.items.filter(i => nz(i.name).includes(q) || nz(i.name).replace(/ /g, "").includes(q.replace(/ /g, ""))).slice(0, 3);
+  const g = SQ.g && SQ.g.q === raw ? SQ.g.j : null;
+  const row = (it, p) => `<button class="sg" data-p="${esc(p)}" data-d="${it.isDir && !it.inner ? 1 : ""}"><span class="sg-i">${it.isDir ? FOLDER : fileSvg(it)}</span><span class="sg-n">${hlq(it.name, raw)}</span><span class="sg-w">${it.inner ? icon("zip") : ""}${esc(it.path ? hitLoc(it) : locLabel(parentOf(p)))}</span></button>`;
+  let h = `<button class="sg sg-q" data-all="1">${icon("search")}<span class="sg-n">همه‌ی نتایج «<b>${esc(raw)}</b>» در همه‌ی پوشه‌ها و زیرپوشه‌ها</span><span class="kbd">Enter</span></button>`;
+  if (here.length) h += `<div class="sg-h"><span>در همین پوشه</span></div>` + here.map(it => row(it, join(S.cur, it.name))).join("");
+  const seen = new Set(here.map(it => join(S.cur, it.name) + "\n"));
+  if (!g) h += `<div class="sg-h"><span>همه‌جا</span></div><div class="sg-none">در حال جستجو…</div>`;
+  else {
+    const l = g.results.filter(x => !seen.has(hitKey(x))).slice(0, 8);
+    h += `<div class="sg-h"><span>همه‌جا</span>${g.total > l.length ? `<button data-all="1">نمایش همه (${faNum(g.total)})</button>` : ""}</div>` +
+      (l.length ? l.map(x => row(x, x.path)).join("") : `<div class="sg-none">${here.length ? "جای دیگری پیدا نشد." : "هیچ فایل یا پوشه‌ای با این نام پیدا نشد."}</div>`);
+  }
+  box.innerHTML = h; box.hidden = false;
+  const bs = box.querySelectorAll(".sg"); if (kb >= 0 && bs[kb]) bs[kb].classList.add("kb");
+  box.querySelectorAll("[data-p]").forEach(b => b.onmousedown = e => { e.preventDefault(); $("#q").blur(); goItem(b.dataset.p, !!b.dataset.d); });
+  box.querySelectorAll("[data-all]").forEach(b => b.onmousedown = e => { e.preventDefault(); $("#q").blur(); showResults(); });
 }
-$("#q").oninput = e => { S.q = e.target.value; render(); sugg(); };
+// open a search hit: folders are entered; files open in their folder, selected and previewed
+async function goItem(p, isDir, preview = true) {
+  clearSearch();
+  if (isDir) return load(p);
+  await load(parentOf(p));
+  const it = S.items.find(i => i.name === p.split("/").pop());
+  if (!it) return;
+  S.sel.clear(); S.sel.add(it.name); S.anchor = it.name; render();
+  const el = [...document.querySelectorAll("#view [data-n]")].find(x => x.dataset.n === it.name);
+  if (el) el.scrollIntoView({block: "center"});
+  if (preview) open(it);
+}
+function clearSearch() { S.q = ""; $("#q").value = ""; S.sr = null; S.filter = "all"; $("#qClear").hidden = true; $("#sugg").hidden = true; }
+function showResults() {
+  const raw = S.q.trim(); if (!raw) return;
+  S.sr = {q: raw, scope: S.sr?.scope || "all", type: S.sr?.type || "", from: S.sr?.from || S.cur, res: [], total: 0, busy: true};
+  S.sel.clear(); runResults();
+}
+async function runResults() {
+  const s = S.sr; if (!s) return;
+  s.busy = true; render();
+  try {
+    const j = await searchApi(s.q, {here: s.scope === "here" ? s.from : "", type: s.type, limit: 500});
+    if (S.sr !== s) return;
+    Object.assign(s, {res: j.results, total: j.total, scanned: j.scanned, ms: j.ms, complete: j.complete});
+  } catch (e) { if (e.name === "AbortError" || e.message === "login") return; toast(e.message, "err"); }
+  s.busy = false; if (S.sr === s) render();
+}
+function renderResults() {
+  const s = S.sr, v = $("#view");
+  $("#nav").hidden = true;
+  $("#ptitle").textContent = "نتایج جستجو"; document.title = "جستجو · گنجینه";
+  $("#stats").textContent = s.busy ? "در حال جستجو…" : faNum(s.total) + " نتیجه" + (s.total > s.res.length ? " (" + faNum(s.res.length) + " نتیجه‌ی بهتر نمایش داده شده)" : "") + " · " + faNum(s.scanned || 0) + " مورد بررسی شد" + (s.complete === false ? " · جستجو کامل نشد" : "");
+  const chip = (k, val, t) => `<button class="chip ${s[k] === val ? "on" : ""}" data-k="${k}" data-v="${val}">${t}</button>`;
+  const fromName = s.from === spaceRoot(s.from) ? spaceName(s.from) : s.from.split("/").pop();
+  let h = `<div class="sr-bar"><div class="sr-t">${icon("search")}<span>نتایج «<b>${esc(s.q)}</b>»</span></div>
+    <div class="chips">${chip("scope", "all", "همه‌ی پوشه‌ها")}${chip("scope", "here", "فقط داخل «" + esc(fromName) + "»")}<span class="sep"></span>${chip("type", "", "همه")}${chip("type", "folder", "پوشه‌ها")}${chip("type", "file", "فایل‌ها")}</div>
+    <button class="btn sm" id="srClose">${icon("x")}بستن جستجو</button></div>`;
+  if (s.busy && !s.res.length) h += `<div class="panel">${Array.from({length: 5}, (_, i) => `<div class="skel"><i style="width:36px;height:36px;border-radius:8px"></i><i style="width:${30 + (i * 13) % 35}%"></i></div>`).join("")}</div>`;
+  else if (!s.res.length) h += `<div class="panel"><div class="empty"><h3>چیزی پیدا نشد</h3><p>بخشی از نام را بنویسید یا املای دیگری را امتحان کنید. جستجو نام همه‌ی فایل‌ها و پوشه‌ها را در همه‌ی زیرپوشه‌ها بررسی می‌کند (حروف عربی/فارسی، اعداد فارسی و نیم‌فاصله یکسان در نظر گرفته می‌شوند).</p></div></div>`;
+  else h += `<div class="panel sr-list ${s.busy ? "busy" : ""}"><div class="thead"><div></div><div>نام و محل</div><div class="hd-d">آخرین تغییر</div><div class="hd-s">اندازه</div><div></div></div>` +
+    s.res.map((it, i) => `<div class="tr" data-i="${i}">
+      <div></div>
+      <div class="cell-n"><div class="fi" data-open>${it.isDir ? FOLDER : it.inner ? fileSvg(it) : thumb(it, it.path)}</div><div class="nm"><b data-open title="${esc(it.name)}">${hlq(it.name, s.q)}</b>${it.inner ? `<span class="inarch">${icon("zip")}داخل فایل فشرده</span>` : ""}<button class="loc" data-loc title="${it.inner ? "باز کردن پوشه‌ی فایل فشرده" : "باز کردن پوشه‌ای که این مورد در آن است"}">${icon(it.inner ? "zip" : spaceOf(it.path) ? "lock" : "folder")}<span>${esc(hitLoc(it))}</span></button></div></div>
+      <div class="cell-d num">${when(it.mtime)}</div><div class="cell-s num">${it.isDir ? "—" : fmt(it.size)}</div>
+      <div><button class="btn ghost sm icon more" data-more>${icon("more")}</button></div></div>`).join("") + "</div>";
+  v.innerHTML = h;
+  v.querySelectorAll(".chip").forEach(b => b.onclick = () => { s[b.dataset.k] = b.dataset.v; runResults(); });
+  $("#srClose").onclick = () => { clearSearch(); render(); };
+  v.querySelectorAll(".tr[data-i]").forEach(el => {
+    const it = s.res[+el.dataset.i];
+    el.onclick = e => { if (e.target.closest("[data-loc],[data-more]")) return; open(it); };
+    el.querySelector("[data-loc]").onclick = e => { e.stopPropagation(); goItem(it.path, false, false); };
+    const menu = r => {
+      const m = $("#menu"), b = (a, ic, t) => `<button data-a="${a}">${icon(ic)}<span>${t}</span></button>`;
+      const zipFile = it.inner && !it.isDir && archKind(it.path) === "zip";
+      m.innerHTML = it.inner ? (zipFile ? b("idl", "download", "دانلود همین فایل از داخل zip") : "") + b("loc", "zip", "رفتن به فایل فشرده") + b("adl", "download", "دانلود کل فایل فشرده")
+        : (it.isDir ? b("open", "open", "باز کردن") : b("open", "eye", "پیش‌نمایش") + b("dl", "download", "دانلود")) + b("loc", "folder", "رفتن به محل آن") + (S.ro ? "" : "<hr>" + b("mv", "move", "انتقال به…"));
+      m.classList.add("show");
+      m.style.left = Math.max(8, Math.min(r.right - m.offsetWidth, innerWidth - m.offsetWidth - 8)) + "px";
+      m.style.top = (r.bottom + 4 + m.offsetHeight > innerHeight - 8 ? Math.max(8, r.top - m.offsetHeight - 4) : r.bottom + 4) + "px";
+      m.querySelectorAll("button").forEach(x => x.onclick = () => { hideMenu(); ({open: () => open(it), dl: () => download(it), idl: () => download(it), adl: () => download({path: it.path, name: it.path.split("/").pop()}), loc: () => goItem(it.path, false, false), mv: () => moveDlg([it.path])})[x.dataset.a](); });
+    };
+    el.querySelector("[data-more]").onclick = e => { e.stopPropagation(); menu(e.currentTarget.getBoundingClientRect()); };
+    el.oncontextmenu = e => { e.preventDefault(); e.stopPropagation(); menu({left: e.clientX, right: e.clientX, top: e.clientY, bottom: e.clientY}); };
+  });
+  renderSel();
+}
+$("#q").oninput = e => {
+  S.q = e.target.value; const raw = S.q.trim();
+  clearTimeout(SQ.t);
+  if (S.sr) { if (!raw) { S.sr = null; render(); } else { S.sr.q = raw; SQ.t = setTimeout(runResults, 220); } return; }
+  render(); sugg();
+  if (raw) SQ.t = setTimeout(() => searchApi(raw, {limit: 60}).then(j => { SQ.g = {q: raw, j}; sugg(); }).catch(() => {}), 140);
+};
 $("#q").onfocus = sugg;
 $("#q").onblur = () => setTimeout(sugg, 0);
 $("#q").addEventListener("keydown", e => {
   const bs = [...$("#sugg").querySelectorAll(".sg")], k = bs.indexOf(document.querySelector(".sg.kb"));
   if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); bs.forEach(b => b.classList.remove("kb")); const n = bs[(k + (e.key === "ArrowDown" ? 1 : -1) + bs.length) % bs.length]; if (n) n.classList.add("kb"); }
-  else if (e.key === "Enter") { e.preventDefault(); const b = k >= 0 ? bs[k] : null; if (b) b.dispatchEvent(new MouseEvent("mousedown")); else $("#q").blur(); }
+  else if (e.key === "Enter") { e.preventDefault(); const b = k >= 0 ? bs[k] : null; if (b) b.dispatchEvent(new MouseEvent("mousedown")); else { $("#q").blur(); if (!S.sr) showResults(); else { clearTimeout(SQ.t); runResults(); } } }
 });
-$("#qClear").onclick = () => { S.q = ""; $("#q").value = ""; render(); $("#q").focus(); sugg(); };
-$("#vList").onclick = () => setView("list"); $("#vGrid").onclick = () => setView("grid");
+$("#qClear").onclick = () => { clearSearch(); render(); $("#q").focus(); };
+$("#vList").onclick = () => setView("details"); $("#vGrid").onclick = () => setView("grid");
 function setView(v) { S.view = v; try { localStorage.setItem("lfs-view", v); } catch {} render(); }
+$("#vToggle").onclick = e => {
+  e.stopPropagation(); const r = e.currentTarget.getBoundingClientRect(), m = $("#menu");
+  if (m.classList.contains("show") && m.dataset.k === "view") return hideMenu();
+  m.dataset.k = "view";
+  m.innerHTML = `<div class="mh">شیوه‌ی نمایش</div>` + VIEWS.map(([k, ic, t]) => `<button data-v="${k}" class="${S.view === k ? "on" : ""}">${icon(ic)}<span>${t}</span>${S.view === k ? icon("check", "i ok") : ""}</button>`).join("");
+  m.classList.add("show");
+  m.style.left = Math.max(8, Math.min(r.left, innerWidth - m.offsetWidth - 8)) + "px"; m.style.top = (r.bottom + 6) + "px";
+  m.querySelectorAll("[data-v]").forEach(b => b.onclick = () => { hideMenu(); setView(b.dataset.v); });
+};
 document.querySelectorAll("#nav button").forEach(b => b.onclick = () => { S.filter = b.dataset.f; S.sel.clear(); closeSide(); render(); });
 document.querySelector(".brand").style.cursor = "pointer";
 document.querySelector(".brand").onclick = () => goSpace("/");
 $("#selClear").onclick = () => { S.sel.clear(); render(); };
 $("#selZip").onclick = () => zipDl(selected().map(i => i.name));
 $("#selDel").onclick = () => del(selected());
+$("#selMove").onclick = () => moveDlg(selected().map(i => join(S.cur, i.name)));
 $("#content").addEventListener("click", e => { if (!e.target.closest("[data-n],.selbar,.hero,button") && S.sel.size) { S.sel.clear(); render(); } });
 
 let dc = 0;
@@ -1448,6 +1941,7 @@ addEventListener("dragleave", () => { if (--dc <= 0) { dc = 0; $("#drop").classL
 addEventListener("dragover", e => e.preventDefault());
 addEventListener("drop", async e => {
   e.preventDefault(); dc = 0; $("#drop").classList.remove("show");
+  if ([...(e.dataTransfer?.types || [])].includes(DRAG)) return; // an item moved inside the page, not an upload
   if (S.ro || !e.dataTransfer?.items?.length && !e.dataTransfer?.files?.length) return;
   const dest = S.cur, entries = await dropEntries(e.dataTransfer);
   if (entries.length) enqueueTree(entries, dest);
@@ -1460,8 +1954,10 @@ addEventListener("keydown", e => {
     return;
   }
   const typing = /INPUT|TEXTAREA/.test(document.activeElement.tagName);
-  if (e.key === "Escape") { hideMenu(); if (typing) { $("#q").blur(); } else if (S.sel.size) { S.sel.clear(); render(); } return; }
+  if (e.key === "Escape") { hideMenu(); if (typing) { $("#q").blur(); } else if (S.sel.size) { S.sel.clear(); render(); } else if (S.sr || S.q) { clearSearch(); render(); } return; }
   if (typing) return;
+  if (S.sr) { if (e.key === "/" || ((e.ctrlKey || e.metaKey) && e.code === "KeyK")) { e.preventDefault(); $("#q").focus(); $("#q").select(); } else if (e.key === "Backspace") { clearSearch(); render(); } return; }
+  if ((e.ctrlKey || e.metaKey) && e.code === "KeyM" && S.sel.size && !S.ro) { e.preventDefault(); moveDlg(selected().map(i => join(S.cur, i.name))); return; }
   if (e.key === "/" || ((e.ctrlKey || e.metaKey) && (e.key === "k" || e.key === "K" || e.code === "KeyK"))) { e.preventDefault(); $("#q").focus(); $("#q").select(); }
   else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "a") { e.preventDefault(); visible().forEach(i => S.sel.add(i.name)); render(); }
   else if (e.key === "Delete" && S.sel.size && !S.ro) del(selected());

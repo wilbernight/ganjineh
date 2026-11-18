@@ -43,6 +43,11 @@ func handleZip(w http.ResponseWriter, r *http.Request) {
 	if len(q["n"]) == 1 {
 		zipName = q["n"][0]
 	}
+	for _, it := range items {
+		if n := decoyIn(it.phys); n != "" {
+			decoyHit(r, n, "دانلود zip", q.Get("path"))
+		}
+	}
 	w.Header().Set("Content-Type", "application/zip")
 	w.Header().Set("Content-Disposition", "attachment; filename*=UTF-8''"+urlEscape(zipName+".zip"))
 
